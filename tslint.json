@@ -14,6 +14,7 @@
       true,
       "never"
     ],
+    "radix": false,
     "no-string-literal": [false],
     "deprecation": [false],
     "import-blacklist": [

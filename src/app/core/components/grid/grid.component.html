@@ -1,25 +1,27 @@
-<div class="grid">
-  <div class="table-wrapper">
+<div class="grid" [style.height]="height + 'px'" [style.width]="width + 'px'">
+  <div class="table-wrapper" [style.height]="height - 80 + 'px'">
     <table>
       <thead>
         <tr><th *ngFor="let column of model.fields">{{ column.displayName }}</th></tr>
       </thead>
       <tbody>
         <tr *ngFor="let row of model.data">
-          <td *ngFor="let column of model.fields">{{ row[column.name] }}</td>
+          <td *ngFor="let column of model.fields">{{ formatCellValue(row[column.name], column) }}</td>
         </tr>
       <tbody>
     </table>
   </div>
   <div class="toolbar">
-      <span class="page-first toolbar-button" (click)="model.firstPage()">&nbsp;</span>
-      <span class="page-prev toolbar-button" (click)="model.prevPage()">&nbsp;</span>
+      <span class="page-first paging-button" (click)="model.firstPage()">&nbsp;</span>
+      <span class="page-prev paging-button" (click)="model.prevPage()">&nbsp;</span>
       Page
       <input class="pageInput" type="number" (input)="model.load($event.target.value)" [value]="model.page">
       of {{ model.lastPageIndex }}
-      <span class="page-next toolbar-button" (click)="model.nextPage()">&nbsp;</span>
-      <span class="page-last toolbar-button" (click)="model.lastPage()">&nbsp;</span>
-      <span class="page-refresh toolbar-button" (click)="model.load()">&nbsp;</span>
+      <span class="page-next paging-button" (click)="model.nextPage()">&nbsp;</span>
+      <span class="page-last paging-button" (click)="model.lastPage()">&nbsp;</span>
+      <span class="page-refresh paging-button" (click)="model.load()">&nbsp;</span>
       {{ model.startIndex }} - {{ model.endIndex }} of {{ model.totalCount }}
+      <button class="toolbar-button">Új tétel felvétele</button>
+      <button class="toolbar-button">Lista exportálása</button>
   </div>
 </div>

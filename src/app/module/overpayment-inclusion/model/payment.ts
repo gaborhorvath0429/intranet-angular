@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http'
 @Injectable({
   providedIn: 'root'
 })
-export default class PaymentModel extends Model {
+export class PaymentModel extends Model {
   constructor(http: HttpClient) {
     super(http)
     if (this.autoLoad) this.load()
@@ -23,36 +23,30 @@ export default class PaymentModel extends Model {
     }
   }
 
-  fields = [ {
+  fields = [{
     name: 'OP_INCLUSION_ID',
     displayName: 'Beszámítás azonosító',
-    type: 'int',
-    useNull: true
+    type: 'int'
   }, {
     name: 'OP_CEID',
     displayName: 'Túlfizetéses CEID',
-    type: 'int',
-    useNull: true
+    type: 'int'
   }, {
     name: 'INCL_CEID',
     displayName: 'Beszámításos CEID',
-    type: 'int',
-    useNull: true
+    type: 'int'
   }, {
     name: 'INCLUSION_DATE',
     displayName: 'Beszámítás dátuma',
     type: 'date',
-    dateFormat: 'Y.m.d',
-    submitFormat: 'Y.m.d'
+    dateFormat: 'YYYY-MM-DD'
   }, {
     name: 'INCLUSION_AMOUNT',
     displayName: 'Beszámítás összege',
-    type: 'float',
-    useNull: true
+    type: 'float'
   }, {
     name: 'AFTER_INCLUSION_BALANCE',
     displayName: 'Beszámítás utáni egyenleg',
-    type: 'float',
-    useNull: true
-  } ]
+    type: 'float'
+  }]
 }

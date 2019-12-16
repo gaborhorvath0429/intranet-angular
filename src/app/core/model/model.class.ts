@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment'
 import { BehaviorSubject } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 
-interface ModelProxy {
+export interface ModelProxy {
   type: string
   url: string
   reader: {
@@ -12,13 +12,11 @@ interface ModelProxy {
   }
 }
 
-interface Field {
+export interface Field {
   name: string
   displayName: string
   type: string
-  useNull?: boolean
   dateFormat?: string
-  submitFormat?: string
 }
 
 export default abstract class Model {

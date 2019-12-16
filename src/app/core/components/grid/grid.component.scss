@@ -1,12 +1,9 @@
 .grid {
   font-size: 12px;
-  height: 400px;
-  width: 900px;
 }
 
 .table-wrapper{
   overflow: auto;
-  height: 320px;
   width: 100%;
   border-top: 1px solid silver;
 }
@@ -42,6 +39,7 @@ table {
 }
 
 .toolbar {
+  background-color: #fafafa;
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -50,14 +48,15 @@ table {
   input[type=number] {
     -moz-appearance:textfield;
   }
-  background-color: #f5f5f5;
   padding: 1rem;
+
   .pageInput {
     width: 30px;
     height: 25px;
     margin: 0 5px;
   }
-  .toolbar-button {
+
+  .paging-button {
     cursor: pointer;
     background-repeat: no-repeat;
     text-align: center;
@@ -80,6 +79,32 @@ table {
     &.page-refresh {
       background-image: url('/assets/refresh.png');
       margin: 0 0.8rem;
+    }
+  }
+
+  .toolbar-button {
+    margin: 0 4px;
+    color: #666;
+    font-weight: bold;
+    font-size: 12px;
+    float: right;
+    border-radius: 4px;
+    padding: 4px 5px;
+    border-width: 1px;
+    border-color: #e1e1e1;
+    border-style: solid;
+    background-image: none;
+    background-color: #f5f5f5;
+    background-image: -webkit-linear-gradient(top,#f6f6f6,#f5f5f5 50%,#e8e8e8 51%,#f5f5f5);
+    position: relative;
+    zoom: 1;
+    outline: 0;
+    cursor: pointer;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-decoration: none;
+    &:active {
+      background-image: -webkit-linear-gradient(top,#e1e1e1,#d5d5d5 50%,#e1e1e1 51%,#e4e4e4);
     }
   }
 }

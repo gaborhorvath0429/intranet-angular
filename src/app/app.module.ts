@@ -10,7 +10,6 @@ import { CredentialsProvider } from './core/services/authentication.service'
 import { LoginComponent } from './core/components/login/login.component'
 import { GridComponent } from './core/components/grid/grid.component'
 import { OverpaymentInclusionComponent } from './module/overpayment-inclusion/overpayment-inclusion.component'
-import PaymentModel from './module/overpayment-inclusion/model/payment'
 
 @NgModule({
   declarations: [
@@ -33,8 +32,6 @@ import PaymentModel from './module/overpayment-inclusion/model/payment'
       useClass: CredentialsProvider,
       multi: true
     },
-    // Models
-    PaymentModel
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { OverpaymentInclusionService } from './service/overpayment-inclusion.service'
-import PaymentModel from './model/payment'
+import { PaymentModel } from './model/payment'
 
 @Component({
   selector: 'app-overpayment-inclusion',
