@@ -4,11 +4,18 @@
     "codelyzer"
   ],
   "rules": {
+    "indent": [false],
+    "curly": [false],
+    "forin": [false],
+    "prefer-const": [false],
     "array-type": false,
     "arrow-parens": false,
-    "deprecation": {
-      "severity": "warn"
-    },
+    "semicolon": [
+      true,
+      "never"
+    ],
+    "no-string-literal": [false],
+    "deprecation": [false],
     "import-blacklist": [
       true,
       "rxjs/Rx"

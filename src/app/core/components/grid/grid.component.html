@@ -1,0 +1,25 @@
+<div class="grid">
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th *ngFor="let column of model.fields">{{ column.displayName }}</th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of model.data">
+          <td *ngFor="let column of model.fields">{{ row[column.name] }}</td>
+        </tr>
+      <tbody>
+    </table>
+  </div>
+  <div class="toolbar">
+      <span class="page-first toolbar-button" (click)="model.firstPage()">&nbsp;</span>
+      <span class="page-prev toolbar-button" (click)="model.prevPage()">&nbsp;</span>
+      Page
+      <input class="pageInput" type="number" (input)="model.load($event.target.value)" [value]="model.page">
+      of {{ model.lastPageIndex }}
+      <span class="page-next toolbar-button" (click)="model.nextPage()">&nbsp;</span>
+      <span class="page-last toolbar-button" (click)="model.lastPage()">&nbsp;</span>
+      <span class="page-refresh toolbar-button" (click)="model.load()">&nbsp;</span>
+      {{ model.startIndex }} - {{ model.endIndex }} of {{ model.totalCount }}
+  </div>
+</div>
