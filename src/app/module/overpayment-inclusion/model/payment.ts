@@ -16,7 +16,7 @@ export class PaymentModel extends Model {
 
   proxy = {
     type: 'ajax',
-    url: 'overpaymentInclusion/overpaymentSearch',
+    url: '/overpaymentInclusion/overpaymentSearch',
     reader: {
       root: 'result',
       totalProperty: 'totalCount'
