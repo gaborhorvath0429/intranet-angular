@@ -2,11 +2,11 @@
   <div class="table-wrapper" [style.height]="height - 40 + 'px'">
     <table>
       <thead>
-        <tr><th *ngFor="let column of model.fields">{{ column.displayName }}</th></tr>
+        <tr><th [hidden]="hiddenColumns.includes(column)" *ngFor="let column of model.fields">{{ column.displayName }}</th></tr>
       </thead>
       <tbody>
         <tr *ngFor="let row of model.data">
-          <td *ngFor="let column of model.fields">{{ formatCellValue(row[column.name], column) }}</td>
+          <td [hidden]="hiddenColumns.includes(column)" *ngFor="let column of model.fields">{{ formatCellValue(row[column.name], column) }}</td>
         </tr>
       <tbody>
     </table>
@@ -41,9 +41,8 @@
       </table>
     </div>
     <div class="columns-toolbar" [style.height]="'40px'">
-      <button class="toolbar-button">Előnézet</button>
-      <button class="toolbar-button">Mentés</button>
-      <button class="toolbar-button">Alaphelyzetbe</button>
+      <button class="toolbar-button" [disabled]="!selectedColumns.length" (click)="filterColumns()">Előnézet</button>
+      <button class="toolbar-button" [disabled]="!selectedColumns.length" (click)="createSavedView()">Mentés</button>
     </div>
   </div>
   <div class="saved-views" [style.height]="'250px'">
@@ -53,16 +52,16 @@
           <tr><th>Saved views</th></tr>
         </thead>
         <tbody>
-          <tr *ngFor="let view of savedViewCollection">
+          <tr (click)="selectView(view)" [ngClass]="{'selected-row': selectedView === view}" *ngFor="let view of savedViewCollection">
             <td>{{ view.name }}</td>
           </tr>
         <tbody>
       </table>
     </div>
     <div class="columns-toolbar" [style.height]="'40px'">
-      <button class="toolbar-button">Alkalmaz</button>
-      <button class="toolbar-button">Törlés</button>
-      <button class="toolbar-button">Alaphelyzetbe</button>
+      <button class="toolbar-button" [disabled]="!selectedView" (click)="filterColumns()">Alkalmaz</button>
+      <button class="toolbar-button" [disabled]="!selectedView" (click)="deleteSavedView()">Törlés</button>
+      <button class="toolbar-button" (click)="selectedColumns = []; selectedView = null; filterColumns()">Alaphelyzetbe</button>
     </div>
   </div>
 </div>

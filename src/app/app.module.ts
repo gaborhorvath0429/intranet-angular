@@ -11,14 +11,16 @@ import { CredentialsProvider } from './core/services/authentication.service'
 import { LoginComponent } from './core/components/login/login.component'
 import { GridComponent } from './core/components/grid/grid.component'
 import { OverpaymentInclusionComponent } from './module/overpayment-inclusion/overpayment-inclusion.component'
-import { NotificationService, GridViewService, MostVisitedMenusService } from './core/services/socket.service'
+import { NotificationService, GridViewService, MostVisitedMenusService } from './core/services/socket.service';
+import { SavedViewsDirective } from './core/components/grid/directive/saved-views.directive'
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     GridComponent,
-    OverpaymentInclusionComponent
+    OverpaymentInclusionComponent,
+    SavedViewsDirective
   ],
   imports: [
     BrowserModule,

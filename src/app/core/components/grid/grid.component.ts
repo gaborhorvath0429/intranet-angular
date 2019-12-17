@@ -26,6 +26,8 @@ export class GridComponent implements OnInit {
 
   public savedViewCollection: GridView[]
   public selectedColumns: Field[] = []
+  public hiddenColumns: Field[] = []
+  public selectedView: GridView
 
   constructor(private gridViewService: GridViewService) { }
 
@@ -45,16 +47,23 @@ export class GridComponent implements OnInit {
     })
   }
 
-  createSavedView(columns = [], sorters = [], filters = []): void {
+  createSavedView(): void {
+    let sorters = []
+    let filters = []
     this.gridViewService.emit('create', {
       module: this.module,
       view: 'grid',
       records: [{
-        name: 'mnvm',
-        columns,
+        name: 'test',
+        columns: this.selectedColumns.map(e => e.name),
         sorters,
         filters
       }]
+    })
+
+    this.gridViewService.emit('read', {
+      module: this.module,
+      view: 'grid'
     })
   }
 
@@ -68,6 +77,33 @@ export class GridComponent implements OnInit {
 
   isColumnSelected(column: Field): boolean {
     return this.selectedColumns.indexOf(column) > -1
+  }
+
+  filterColumns(): void {
+    if (!this.selectedColumns.length) {
+      this.hiddenColumns = []
+    } else {
+      this.hiddenColumns = this.model.fields.filter(e => !this.selectedColumns.includes(e))
+    }
+  }
+
+  selectView(view: GridView): void {
+    this.selectedView = view
+    this.selectedColumns = []
+    view.columns.forEach(column => this.selectedColumns.push(this.model.fields.find(e => e.name === column)))
+  }
+
+  deleteSavedView(): void {
+    this.gridViewService.emit('destroy', {
+      module: this.module,
+      view: 'grid',
+      records: [{ id: this.selectedView.id }]
+    })
+    this.selectedView = null
+    this.gridViewService.emit('read', {
+      module: this.module,
+      view: 'grid'
+    })
   }
 
   formatCellValue(value: any, column: Field): string | number {

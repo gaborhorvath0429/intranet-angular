@@ -76,6 +76,11 @@ table {
   }
 }
 
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 .toolbar {
   border-top: 1px solid rgb(206, 206, 206);
   grid-area: toolbar;
