@@ -1,4 +1,4 @@
-<div class="grid" [style.height]="height + 10 + 'px'" [style.width]="width + 'px'">
+<div class="grid" [style.height]="height + 10 + 'px'" [style.width]="width + 'px'" [style.grid-template-columns]="savedViews ? 'auto 250px' : 'auto'">
   <div class="table-wrapper" [style.height]="height - 40 + 'px'">
     <table #table>
       <thead>

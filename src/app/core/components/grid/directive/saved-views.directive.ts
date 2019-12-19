@@ -1,14 +1,16 @@
 import { Directive } from '@angular/core'
 import { GridComponent, GridView } from '../grid.component'
 import { Field } from 'src/app/core/model/model.class'
+import { GridViewService } from 'src/app/core/services/socket.service'
 
 @Directive({
   selector: '[showSavedViews]'
 })
 export class SavedViewsDirective {
 
-  constructor(host: GridComponent) {
+  constructor(host: GridComponent, gridViewService: GridViewService) {
     host.savedViews = true
+    host.gridViewService = gridViewService
     host.ngOnInit = this.initSavedViews.bind(host)
     host.createSavedView = this.createSavedView.bind(host)
     host.selectColumn = this.selectColumn.bind(host)
@@ -81,7 +83,6 @@ export class SavedViewsDirective {
   }
 
   deleteSavedView = function(): void {
-    console.log(this.selectedView)
     this.gridViewService.emit('destroy', {
       module: this.module,
       view: 'grid',

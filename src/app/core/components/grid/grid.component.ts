@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit, ElementRef } from '@angular/core'
+import { GridViewService } from '../../services/socket.service'
 import Model, { Field } from '../../model/model.class'
 import * as moment from 'moment'
-import { GridViewService } from '../../services/socket.service'
 declare var $: any
 
 export interface GridView {
@@ -25,14 +25,16 @@ export class GridComponent implements OnInit, AfterViewInit {
   @Input() width?: number
   @Input() savedViews = false
 
+  // Attributes needed for saved views.
+  public gridViewService: GridViewService
   public savedViewCollection: GridView[]
   public selectedColumns: Field[] = []
   public hiddenColumns: Field[] = []
   public selectedView: GridView
 
-  @ViewChild('table') table: ElementRef
+  @ViewChild('table') table: ElementRef<HTMLTableElement>
 
-  constructor(public gridViewService: GridViewService) {}
+  constructor() {}
 
   ngOnInit() {}
 
