@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, AfterViewInit, ElementRef } from '
 import { GridViewService } from '../../services/socket.service'
 import Model, { Field } from '../../model/model.class'
 import * as moment from 'moment'
+import { ModalService } from '../../services/modal-service.service'
 declare var $: any
 
 export interface GridView {
@@ -31,10 +32,11 @@ export class GridComponent implements OnInit, AfterViewInit {
   public selectedColumns: Field[] = []
   public hiddenColumns: Field[] = []
   public selectedView: GridView
+  public savedViewName = ''
 
   @ViewChild('table') table: ElementRef<HTMLTableElement>
 
-  constructor() {}
+  constructor(public modalService: ModalService) {}
 
   ngOnInit() {}
 
@@ -64,4 +66,5 @@ export class GridComponent implements OnInit, AfterViewInit {
   filterColumns(): void {}
   selectView(view: GridView): void {}
   deleteSavedView(): void {}
+  onSaveNewViewButtonClick(): void {}
 }

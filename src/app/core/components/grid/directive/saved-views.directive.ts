@@ -18,6 +18,7 @@ export class SavedViewsDirective {
     host.filterColumns = this.filterColumns.bind(host)
     host.selectView = this.selectView.bind(host)
     host.deleteSavedView = this.deleteSavedView.bind(host)
+    host.onSaveNewViewButtonClick = this.onSaveNewViewButtonClick.bind(host)
   }
 
   initSavedViews = function(): void {
@@ -35,7 +36,7 @@ export class SavedViewsDirective {
     let sorters = []
     let filters = []
     let record = {
-      name: 'test3',
+      name: this.savedViewName || this.selectedView.name,
       columns: this.selectedColumns.map(e => e.name),
       sorters,
       filters
@@ -54,6 +55,12 @@ export class SavedViewsDirective {
     if (this.selectedView) {
       setTimeout(() => this.selectedView = this.savedViewCollection.find(e => e.id === this.selectedView.id), 100)
     }
+  }
+
+  onSaveNewViewButtonClick = function(): void {
+    this.createSavedView()
+    this.savedViewName = ''
+    this.modalService.close('viewSaveModal')
   }
 
   selectColumn = function(column: Field): void {

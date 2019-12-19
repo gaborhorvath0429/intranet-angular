@@ -8,6 +8,23 @@
 }
 
 body{
+  font-size: 13px;
   font-family: Helvetica, arial, verdana, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+app-modal {
+  /* modals are hidden by default */
+  display: none;
+}
+
+input[type=text] {
+  color: black;
+  padding: 4px 6px 3px 6px;
+  background: white repeat-x 0 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: silver #d9d9d9 #d9d9d9;
+  height: 24px;
+  line-height: 15px;
 }

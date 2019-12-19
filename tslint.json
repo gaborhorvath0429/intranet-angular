@@ -14,6 +14,7 @@
       true,
       "never"
     ],
+    "only-arrow-functions": false,
     "directive-selector": false,
     "ban-types": false,
     "radix": false,

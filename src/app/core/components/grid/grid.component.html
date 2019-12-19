@@ -13,17 +13,17 @@
     <div class="loading" *ngIf="model.loading"></div>
   </div>
   <div class="toolbar" [style.height]="'40px'">
-      <span class="page-first paging-button" [style.cursor]="model.page === 1 ? 'default' : 'pointer'" [style.opacity]="model.page === 1 ? 0.5 : 1" (click)="model.firstPage()">&nbsp;</span>
-      <span class="page-prev paging-button" [style.cursor]="model.page === 1 ? 'default' : 'pointer'" [style.opacity]="model.page === 1 ? 0.5 : 1" (click)="model.prevPage()">&nbsp;</span>
-      Page
-      <input class="pageInput" type="number" min="1" [max]="model.lastPageIndex" (input)="model.load($event.target.value)" [value]="model.page">
-      of {{ model.lastPageIndex }}
-      <span class="page-next paging-button" [style.cursor]="model.page === model.lastPageIndex ? 'default' : 'pointer'" [style.opacity]="model.page === model.lastPageIndex ? 0.5 : 1" (click)="model.nextPage()">&nbsp;</span>
-      <span class="page-last paging-button" [style.cursor]="model.page === model.lastPageIndex ? 'default' : 'pointer'" [style.opacity]="model.page === model.lastPageIndex ? 0.5 : 1" (click)="model.lastPage()">&nbsp;</span>
-      <span class="page-refresh paging-button" (click)="model.load()">&nbsp;</span>
-      {{ model.startIndex }} - {{ model.endIndex }} of {{ model.totalCount }}
-      <button class="toolbar-button">Új tétel felvétele</button>
-      <button class="toolbar-button">Lista exportálása</button>
+    <span class="page-first paging-button" [style.cursor]="model.page === 1 ? 'default' : 'pointer'" [style.opacity]="model.page === 1 ? 0.5 : 1" (click)="model.firstPage()">&nbsp;</span>
+    <span class="page-prev paging-button" [style.cursor]="model.page === 1 ? 'default' : 'pointer'" [style.opacity]="model.page === 1 ? 0.5 : 1" (click)="model.prevPage()">&nbsp;</span>
+    Page
+    <input class="pageInput" type="number" min="1" [max]="model.lastPageIndex" (input)="model.load($event.target.value)" [value]="model.page">
+    of {{ model.lastPageIndex }}
+    <span class="page-next paging-button" [style.cursor]="model.page === model.lastPageIndex ? 'default' : 'pointer'" [style.opacity]="model.page === model.lastPageIndex ? 0.5 : 1" (click)="model.nextPage()">&nbsp;</span>
+    <span class="page-last paging-button" [style.cursor]="model.page === model.lastPageIndex ? 'default' : 'pointer'" [style.opacity]="model.page === model.lastPageIndex ? 0.5 : 1" (click)="model.lastPage()">&nbsp;</span>
+    <span class="page-refresh paging-button" (click)="model.load()">&nbsp;</span>
+    {{ model.startIndex }} - {{ model.endIndex }} of {{ model.totalCount }}
+    <app-toolbar-button>Új tétel felvétele</app-toolbar-button>
+    <app-toolbar-button>Lista exportálása</app-toolbar-button>
   </div>
   <ng-container *ngIf="savedViews">
     <div class="columns" [style.height]="height - 250 + 'px'">
@@ -43,8 +43,8 @@
         </table>
       </div>
       <div class="columns-toolbar" [style.height]="'40px'">
-        <button class="toolbar-button" [disabled]="!selectedColumns.length" (click)="filterColumns()">Előnézet</button>
-        <button class="toolbar-button" [disabled]="!selectedColumns.length" (click)="createSavedView()">Mentés</button>
+        <app-toolbar-button [disabled]="!selectedColumns.length" (click)="filterColumns()">Előnézet</app-toolbar-button>
+        <app-toolbar-button [disabled]="!selectedColumns.length" (click)="selectedView ? createSavedView() : modalService.open('viewSaveModal')">Mentés</app-toolbar-button>
       </div>
     </div>
     <div class="saved-views" [style.height]="'250px'">
@@ -61,10 +61,16 @@
         </table>
       </div>
       <div class="columns-toolbar" [style.height]="'40px'">
-        <button class="toolbar-button" [disabled]="!selectedView" (click)="filterColumns()">Alkalmaz</button>
-        <button class="toolbar-button" [disabled]="!selectedView" (click)="deleteSavedView()">Törlés</button>
-        <button class="toolbar-button" (click)="selectedColumns = []; selectedView = null; filterColumns()">Alaphelyzetbe</button>
+        <app-toolbar-button [disabled]="!selectedView" (click)="filterColumns()">Alkalmaz</app-toolbar-button>
+        <app-toolbar-button [disabled]="!selectedView" (click)="deleteSavedView()">Törlés</app-toolbar-button>
+        <app-toolbar-button (click)="selectedColumns = []; selectedView = null; filterColumns()">Alaphelyzetbe</app-toolbar-button>
       </div>
     </div>
+    <app-modal id="viewSaveModal" title="The name of the view">
+      Please enter the name:<br>
+      <input type="text" [(ngModel)]="savedViewName"/>
+      <button (click)="modalService.close('viewSaveModal')">Cancel</button>
+      <button (click)="onSaveNewViewButtonClick()">Save</button>
+    </app-modal>
   </ng-container>
 </div>
