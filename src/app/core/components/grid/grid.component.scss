@@ -36,12 +36,14 @@
 }
 
 .table-wrapper{
+  position: relative;
   grid-area: table;
   overflow: auto;
   border-top: 1px solid silver;
 }
 
 table {
+  table-layout: fixed;
   position: relative;
   overflow-y: scroll;
   border-radius: 5px;
@@ -49,21 +51,31 @@ table {
   border: none;
   border-collapse: collapse;
   width: 100%;
-  max-width: 100%;
   white-space: nowrap;
   background-color: white;
 
   th {
-    position: sticky;
+    border: 1px solid rgb(204, 204, 204);
+    position: sticky !important;
     top: 0;
     background-color: #e0e0e0;
     color: #666;
     font-weight: bold;
   }
 
+  td {
+    border: 1px solid rgb(236, 236, 236);
+  }
+
   td, th {
     text-align: left;
     padding: 9px;
+    overflow: hidden;
+    white-space: nowrap;
+    -moz-text-overflow: ellipsis;
+       -ms-text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+           text-overflow: ellipsis;
   }
 
   tr:not(.selected-row):hover td {
@@ -142,7 +154,7 @@ button:disabled {
 .saved-views {
   grid-area: saved-views;
   border-left: 2px solid #626c77;
-  .saved-views-table-wrapper{
+  .saved-views-table-wrapper {
     overflow: auto;
   }
 }
@@ -158,4 +170,15 @@ button:disabled {
 
 .selected-row {
   background-color: rgb(206, 206, 206) !important;
+}
+
+.loading {
+  background: url('/assets/loading.gif') no-repeat center center;
+  background-color: rgba($color: #ffffff, $alpha: 0.4);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 9999999;
 }

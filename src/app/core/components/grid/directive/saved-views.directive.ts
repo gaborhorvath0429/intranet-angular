@@ -3,8 +3,7 @@ import { GridComponent, GridView } from '../grid.component'
 import { Field } from 'src/app/core/model/model.class'
 
 @Directive({
-  selector: '[appSavedViews]',
-  exportAs: 'savedViews'
+  selector: '[showSavedViews]'
 })
 export class SavedViewsDirective {
 
@@ -21,7 +20,6 @@ export class SavedViewsDirective {
 
   initSavedViews = function(): void {
     this.gridViewService.fromEvent('read').subscribe((views: GridView[]) => {
-      console.log(views)
       this.savedViewCollection = views
     })
 
@@ -51,6 +49,9 @@ export class SavedViewsDirective {
       module: this.module,
       view: 'grid'
     })
+    if (this.selectedView) {
+      setTimeout(() => this.selectedView = this.savedViewCollection.find(e => e.id === this.selectedView.id), 100)
+    }
   }
 
   selectColumn = function(column: Field): void {

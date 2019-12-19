@@ -26,6 +26,7 @@ export default abstract class Model {
   private data$ = new BehaviorSubject<any[]>([])
   private page$ = new BehaviorSubject<number>(1)
   private totalCount$ = new BehaviorSubject<number>(0)
+  public loading = false
 
   constructor(private http: HttpClient) {}
 
@@ -37,6 +38,7 @@ export default abstract class Model {
   get lastPageIndex() { return Math.ceil(this.totalCount / this.pageSize) }
 
   load(page = 1): void {
+    this.loading = true
     let params = {
       page: page.toString(),
       start: ((page - 1) * this.pageSize).toString(),
@@ -48,9 +50,10 @@ export default abstract class Model {
         this.totalCount$.next(response[this.proxy.reader.totalProperty])
       }),
       map(response => response[this.proxy.reader.root])
-    ).subscribe(
-      root => this.data$.next(root)
-    )
+    ).subscribe(root => {
+        this.data$.next(root)
+        this.loading = false
+    })
   }
 
   loadData(data: any): void {

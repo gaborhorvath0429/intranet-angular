@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core'
+import { Component, OnInit, Input, ViewChild, AfterViewInit, ElementRef } from '@angular/core'
 import Model, { Field } from '../../model/model.class'
 import * as moment from 'moment'
 import { GridViewService } from '../../services/socket.service'
+declare var $: any
 
 export interface GridView {
   id?: string
@@ -16,7 +17,7 @@ export interface GridView {
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss']
 })
-export class GridComponent implements OnInit {
+export class GridComponent implements OnInit, AfterViewInit {
 
   @Input() module: string
   @Input() model: Model
@@ -29,9 +30,15 @@ export class GridComponent implements OnInit {
   public hiddenColumns: Field[] = []
   public selectedView: GridView
 
-  constructor(public gridViewService: GridViewService) { }
+  @ViewChild('table') table: ElementRef
+
+  constructor(public gridViewService: GridViewService) {}
 
   ngOnInit() {}
+
+  ngAfterViewInit() {
+    $(this.table.nativeElement).resizableColumns()
+  }
 
   formatCellValue(value: any, column: Field): string | number {
     switch (column.type) {

@@ -48,7 +48,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": ["node_modules/jquery/dist/jquery.js", "src/assets/js/resizableColumns.min.js"],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -83,6 +83,7 @@
           "options": {
             "browserTarget": "intranet-angular:build"
           },
+
           "configurations": {
             "production": {
               "browserTarget": "intranet-angular:build:production"
