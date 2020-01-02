@@ -1,30 +1,31 @@
+
 <div class="grid" [style.height]="height + 10 + 'px'" [style.width]="width + 'px'" [style.grid-template-columns]="savedViews ? 'auto 250px' : 'auto'">
-  <div class="table-wrapper" [style.height]="height - 40 + 'px'">
-    <table #table>
-      <thead>
-        <tr><th [hidden]="hiddenColumns.includes(column)" *ngFor="let column of model.fields">{{ column.displayName }}</th></tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let row of model.data">
-          <td [hidden]="hiddenColumns.includes(column)" *ngFor="let column of model.fields">{{ formatCellValue(row[column.name], column) }}</td>
-        </tr>
-      <tbody>
-    </table>
+  <div class="table-wrapper">
+    <div class="controls" [hidden]="!showFilters">
+      <div class="sorters">Sorter:</div>
+      <div class="filters">Filter:</div>
+    </div>
+    <div class="table-scroll" [style.height]="height - (hasToolbar ? 40 : 0) - (showFilters ? 70 : 0) + 'px'">
+      <table class="main-table" #table>
+        <thead>
+          <tr><th class="table-header" [hidden]="hiddenColumns.includes(column)" *ngFor="let column of model.fields">{{ column.displayName }}</th></tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of model.data">
+            <td [hidden]="hiddenColumns.includes(column)" *ngFor="let column of model.fields">{{ formatCellValue(row[column.name], column) }}</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
     <div class="loading" *ngIf="model.loading"></div>
   </div>
-  <div class="toolbar" [style.height]="'40px'">
-    <span class="page-first paging-button" [style.cursor]="model.page === 1 ? 'default' : 'pointer'" [style.opacity]="model.page === 1 ? 0.5 : 1" (click)="model.firstPage()">&nbsp;</span>
-    <span class="page-prev paging-button" [style.cursor]="model.page === 1 ? 'default' : 'pointer'" [style.opacity]="model.page === 1 ? 0.5 : 1" (click)="model.prevPage()">&nbsp;</span>
-    Page
-    <input class="pageInput" type="number" min="1" [max]="model.lastPageIndex" (input)="model.load($event.target.value)" [value]="model.page">
-    of {{ model.lastPageIndex }}
-    <span class="page-next paging-button" [style.cursor]="model.page === model.lastPageIndex ? 'default' : 'pointer'" [style.opacity]="model.page === model.lastPageIndex ? 0.5 : 1" (click)="model.nextPage()">&nbsp;</span>
-    <span class="page-last paging-button" [style.cursor]="model.page === model.lastPageIndex ? 'default' : 'pointer'" [style.opacity]="model.page === model.lastPageIndex ? 0.5 : 1" (click)="model.lastPage()">&nbsp;</span>
-    <span class="page-refresh paging-button" (click)="model.load()">&nbsp;</span>
-    {{ model.startIndex }} - {{ model.endIndex }} of {{ model.totalCount }}
-    <app-toolbar-button>Új tétel felvétele</app-toolbar-button>
-    <app-toolbar-button>Lista exportálása</app-toolbar-button>
+  <div class="toolbar" [style.height]="'40px'" [hidden]="!hasToolbar">
+    <app-paginator *ngIf="paginator" [model]="model"></app-paginator>
+    <app-toolbar-button #toolbarButton>Új tétel felvétele</app-toolbar-button>
+    <app-toolbar-button #toolbarButton>Lista exportálása</app-toolbar-button>
   </div>
+
+  <!-- SAVED VIEWS -->
   <ng-container *ngIf="savedViews">
     <div class="columns" [style.height]="height - 250 + 'px'">
       <div class="columns-table-wrapper" [style.height]="height - 290 + 'px'">
@@ -69,8 +70,11 @@
     <app-modal id="viewSaveModal" title="The name of the view">
       Please enter the name:<br>
       <input type="text" [(ngModel)]="savedViewName"/>
-      <button (click)="modalService.close('viewSaveModal')">Cancel</button>
-      <button (click)="onSaveNewViewButtonClick()">Save</button>
+      <div class="modal-footer">
+        <app-button (click)="modalService.close('viewSaveModal')">Cancel</app-button>
+        <app-button (click)="onSaveNewViewButtonClick()" [disabled]="!savedViewName">Save</app-button>
+      </div>
     </app-modal>
   </ng-container>
 </div>
+<div id="drag-label"></div>

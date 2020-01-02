@@ -12,9 +12,13 @@ import { LoginComponent } from './core/components/login/login.component'
 import { GridComponent } from './core/components/grid/grid.component'
 import { OverpaymentInclusionComponent } from './module/overpayment-inclusion/overpayment-inclusion.component'
 import { NotificationService, GridViewService, MostVisitedMenusService } from './core/services/socket.service'
-import { SavedViewsDirective } from './core/components/grid/directive/saved-views.directive';
-import { ToolbarButtonComponent } from './core/components/grid/toolbar-button/toolbar-button.component';
+import { SavedViewsDirective } from './core/components/grid/directive/saved-views.directive'
+import { ToolbarButtonComponent } from './core/components/grid/toolbar-button/toolbar-button.component'
 import { ModalComponent } from './core/components/modal/modal.component'
+import { ButtonComponent } from './core/components/button/button.component'
+import { PaginatorComponent } from './core/components/grid/paginator/paginator.component';
+import { ShowPaginatorDirective } from './core/components/grid/directive/show-paginator.directive';
+import { ShowFiltersDirective } from './core/components/grid/directive/show-filters.directive'
 
 @NgModule({
   declarations: [
@@ -24,7 +28,11 @@ import { ModalComponent } from './core/components/modal/modal.component'
     OverpaymentInclusionComponent,
     SavedViewsDirective,
     ToolbarButtonComponent,
-    ModalComponent
+    ModalComponent,
+    ButtonComponent,
+    PaginatorComponent,
+    ShowPaginatorDirective,
+    ShowFiltersDirective,
   ],
   imports: [
     BrowserModule,

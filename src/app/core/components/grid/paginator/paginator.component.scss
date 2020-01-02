@@ -1,0 +1,31 @@
+.pageInput {
+  width: 30px;
+  height: 25px;
+  margin: 0 5px;
+}
+
+.paging-button {
+  cursor: pointer;
+  background-repeat: no-repeat;
+  text-align: center;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  margin: 0 5px;
+  &.page-next {
+    background-image: url('/assets/page-next.png');
+  }
+  &.page-prev {
+    background-image: url('/assets/page-prev.png');
+  }
+  &.page-first {
+    background-image: url('/assets/page-first.png');
+  }
+  &.page-last {
+    background-image: url('/assets/page-last.png');
+  }
+  &.page-refresh {
+    background-image: url('/assets/refresh.png');
+    margin: 0 0.8rem;
+  }
+}
