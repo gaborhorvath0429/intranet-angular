@@ -3,10 +3,11 @@ import { Component, OnInit, Input, ViewChild, ElementRef, ViewChildren,
 import { GridViewService } from '../../services/socket.service'
 import Model, { Field } from '../../model/model.class'
 import * as moment from 'moment'
-import { Observable, fromEvent } from 'rxjs'
+import { fromEvent } from 'rxjs'
 import { ModalService } from '../../services/modal-service.service'
 import { ToolbarButtonComponent } from './toolbar-button/toolbar-button.component'
-import { filter, map, tap } from 'rxjs/operators'
+import { filter, map } from 'rxjs/operators'
+import { faSortAmountDown, faSortAmountDownAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 declare var $: any
 
 export interface GridView {
@@ -33,6 +34,13 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
 
   public hasToolbar = false
   public showFilters = false
+  public filterFields = new Set<Field>()
+  public sorterFields = new Set<Field>()
+
+  // Icons
+  faTimesCircle = faTimesCircle
+  faSortAmountDown = faSortAmountDown
+  faSortAmountDownAlt = faSortAmountDownAlt
 
   // Attributes needed for saved views.
   public gridViewService: GridViewService
@@ -66,13 +74,15 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
     let headers = document.getElementsByClassName('table-header')
     let label = document.getElementById('drag-label')
     let mouseisdown = false
+    let draggingField = null
     let startPos: { x: number, y: number}
 
-    Array.from(headers).forEach((header: any) => {
+    Array.from(headers).forEach(header => {
       fromEvent(header, 'mousedown').subscribe((e: MouseEvent) => {
           mouseisdown = true
-          label.innerHTML = header.textContent
+          draggingField = label.innerHTML = header.textContent
           startPos = { x: e.offsetX, y: e.offsetY}
+          label.style.display = 'block'
       })
 
       fromEvent(document, 'mouseup').pipe(
@@ -80,24 +90,38 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
       ).subscribe((e: any) => {
         mouseisdown = false
         label.style.display = 'none'
-        console.log(e.toElement)
+        if (e.toElement.classList.contains('filters')) {
+          this.filterFields.add(this.model.fields.find(field => field.displayName === draggingField))
+        } else if (e.toElement.classList.contains('sorters')) {
+          this.sorterFields.add(this.model.fields.find(field => field.displayName === draggingField))
+        }
       })
 
       fromEvent(document, 'mousemove').pipe(
-          filter(e => mouseisdown),
-          map((e: MouseEvent) => {
-            return {
-              left: e.clientX - startPos.x,
-              top: e.clientY - startPos.y
-            }
-          }),
-          tap(() => label.style.display = 'block')
+        filter(e => mouseisdown),
+        map((e: MouseEvent) => {
+          return {
+            left: e.clientX - startPos.x,
+            top: e.clientY - startPos.y
+          }
+        })
       )
       .subscribe(p => {
         label.style.top = p.top + 30 + 'px'
         label.style.left = p.left + 50 + 'px'
       })
     })
+  }
+
+  sortBy(field: Field) {
+    let existingSorter = this.model.sorters.find(e => e.field === field)
+    if (!existingSorter) {
+      this.model.sorters.push({field, type: 'ASC'})
+    } else if (existingSorter.type === 'ASC') {
+      existingSorter.type = 'DESC'
+    } else {
+      existingSorter.type = 'ASC'
+    }
   }
 
   formatCellValue(value: any, column: Field): string | number {

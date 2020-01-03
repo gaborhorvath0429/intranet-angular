@@ -27,6 +27,8 @@ export default abstract class Model {
   private page$ = new BehaviorSubject<number>(1)
   private totalCount$ = new BehaviorSubject<number>(0)
   public loading = false
+  public sorters: Array<{field: Field, type: 'ASC' | 'DESC'}> = []
+  public filters = []
 
   constructor(private http: HttpClient) {}
 
@@ -74,5 +76,15 @@ export default abstract class Model {
 
   lastPage(): void {
     this.load(this.lastPageIndex)
+  }
+
+  hasSorter(field: Field): string {
+    let sorter = this.sorters.find(e => e.field === field)
+    if (sorter) return sorter.type
+    return ''
+  }
+
+  deleteSort(field: Field): void {
+    this.sorters = this.sorters.filter(e => e.field !== field)
   }
 }

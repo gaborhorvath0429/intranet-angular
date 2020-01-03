@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core'
 export class ToolbarButtonComponent {
 
   @Input() disabled?: boolean
+  @Input() float?: 'left' | 'right'
 
   constructor() {}
 

@@ -2,10 +2,20 @@
 <div class="grid" [style.height]="height + 10 + 'px'" [style.width]="width + 'px'" [style.grid-template-columns]="savedViews ? 'auto 250px' : 'auto'">
   <div class="table-wrapper">
     <div class="controls" [hidden]="!showFilters">
-      <div class="sorters">Sorter:</div>
-      <div class="filters">Filter:</div>
+      <div class="sorters">
+        Sorter:
+        <button (click)="sortBy(field)" *ngFor="let field of sorterFields">
+          <fa-icon *ngIf="model.hasSorter(field) === 'DESC'" [icon]="faSortAmountDown"></fa-icon>
+          <fa-icon *ngIf="model.hasSorter(field) === 'ASC'" [icon]="faSortAmountDownAlt"></fa-icon>
+          {{ field.displayName }}
+          <fa-icon [icon]="faTimesCircle" class="close" (click)="sorterFields.delete(field); model.deleteSort(field)"></fa-icon>
+        </button>
+      </div>
+      <div class="filters">
+        Filter: <button *ngFor="let field of filterFields">{{ field.displayName }}<fa-icon [icon]="faTimesCircle" class="close" (click)="filterFields.delete(field)"></fa-icon></button>
+      </div>
     </div>
-    <div class="table-scroll" [style.height]="height - (hasToolbar ? 40 : 0) - (showFilters ? 70 : 0) + 'px'">
+    <div class="table-scroll" [style.height]="height - (hasToolbar ? 40 : 0) - (showFilters ? 80 : 0) + 'px'">
       <table class="main-table" #table>
         <thead>
           <tr><th class="table-header" [hidden]="hiddenColumns.includes(column)" *ngFor="let column of model.fields">{{ column.displayName }}</th></tr>
@@ -21,8 +31,8 @@
   </div>
   <div class="toolbar" [style.height]="'40px'" [hidden]="!hasToolbar">
     <app-paginator *ngIf="paginator" [model]="model"></app-paginator>
-    <app-toolbar-button #toolbarButton>Új tétel felvétele</app-toolbar-button>
-    <app-toolbar-button #toolbarButton>Lista exportálása</app-toolbar-button>
+    <app-toolbar-button float="right" #toolbarButton>Új tétel felvétele</app-toolbar-button>
+    <app-toolbar-button float="right" #toolbarButton>Lista exportálása</app-toolbar-button>
   </div>
 
   <!-- SAVED VIEWS -->

@@ -16,9 +16,10 @@ import { SavedViewsDirective } from './core/components/grid/directive/saved-view
 import { ToolbarButtonComponent } from './core/components/grid/toolbar-button/toolbar-button.component'
 import { ModalComponent } from './core/components/modal/modal.component'
 import { ButtonComponent } from './core/components/button/button.component'
-import { PaginatorComponent } from './core/components/grid/paginator/paginator.component';
-import { ShowPaginatorDirective } from './core/components/grid/directive/show-paginator.directive';
+import { PaginatorComponent } from './core/components/grid/paginator/paginator.component'
+import { ShowPaginatorDirective } from './core/components/grid/directive/show-paginator.directive'
 import { ShowFiltersDirective } from './core/components/grid/directive/show-filters.directive'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ShowFiltersDirective } from './core/components/grid/directive/show-filt
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    SocketIoModule
+    SocketIoModule,
+    FontAwesomeModule
   ],
   providers: [
     {
