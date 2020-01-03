@@ -3,6 +3,24 @@
   [model]="paymentModel"
   [height]="800"
   showPaginator
-  showFilters
-  showSavedViews
-></app-grid>
+>
+<div class="top-toolbar" #topToolbar>
+  <div class="search-input">
+    <div class="label">Túlfizetéses CEID:</div>
+    <div class="input"><input type="number"></div>
+  </div>
+  <div class="search-input">
+    <div class="label">Beszámításos CEID:</div>
+    <div class="input"><input type="number"></div>
+  </div>
+  <div class="search-input">
+    <div class="label">Beszámítás dátuma:</div>
+    <div class="input"><input type="text"></div>
+  </div>
+  <span class="dash">-</span>
+  <div class="search-input">
+    <div class="label"></div>
+    <div class="input"><input type="text"></div>
+  </div>
+</div>
+</app-grid>

@@ -9,16 +9,18 @@ import { GridViewService } from 'src/app/core/services/socket.service'
 export class SavedViewsDirective {
 
   constructor(host: GridComponent, gridViewService: GridViewService) {
-    host.savedViews = true
-    host.gridViewService = gridViewService
-    host.ngOnInit = this.initSavedViews.bind(host)
-    host.createSavedView = this.createSavedView.bind(host)
-    host.selectColumn = this.selectColumn.bind(host)
-    host.isColumnSelected = this.isColumnSelected.bind(host)
-    host.filterColumns = this.filterColumns.bind(host)
-    host.selectView = this.selectView.bind(host)
-    host.deleteSavedView = this.deleteSavedView.bind(host)
-    host.onSaveNewViewButtonClick = this.onSaveNewViewButtonClick.bind(host)
+    Object.assign(host, {
+      savedViews: true,
+      gridViewService,
+      ngOnInit: this.initSavedViews.bind(host),
+      createSavedView: this.createSavedView.bind(host),
+      selectColumn: this.selectColumn.bind(host),
+      isColumnSelected: this.isColumnSelected.bind(host),
+      filterColumns: this.filterColumns.bind(host),
+      selectView: this.selectView.bind(host),
+      deleteSavedView: this.deleteSavedView.bind(host),
+      onSaveNewViewButtonClick: this.onSaveNewViewButtonClick.bind(host)
+    })
   }
 
   initSavedViews = function(): void {

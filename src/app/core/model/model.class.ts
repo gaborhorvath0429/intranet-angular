@@ -27,7 +27,7 @@ export default abstract class Model {
   private page$ = new BehaviorSubject<number>(1)
   private totalCount$ = new BehaviorSubject<number>(0)
   public loading = false
-  public sorters: Array<{field: Field, type: 'ASC' | 'DESC'}> = []
+  public sorters: { field: Field, type: 'ASC' | 'DESC' }[] = []
   public filters = []
 
   constructor(private http: HttpClient) {}
@@ -39,14 +39,15 @@ export default abstract class Model {
   get endIndex() { return this.page * this.pageSize > this.totalCount ? this.totalCount : this.page * this.pageSize }
   get lastPageIndex() { return Math.ceil(this.totalCount / this.pageSize) }
 
-  load(page = 1): void {
+  load(page: number = 1, extraParams: object = {}): void {
     this.loading = true
     let params = {
       page: page.toString(),
       start: ((page - 1) * this.pageSize).toString(),
-      limit: this.pageSize.toString()
+      limit: this.pageSize.toString(),
+      ...extraParams
     }
-    this.http.get(environment.apiUrl + this.proxy.url, { params }).pipe(
+    this.http.get(environment.apiUrl + this.proxy.url, {params}).pipe(
       tap(response => {
         this.page$.next(Number(page))
         this.totalCount$.next(response[this.proxy.reader.totalProperty])

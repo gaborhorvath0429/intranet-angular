@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, ViewChildren,
-  QueryList, ChangeDetectorRef, AfterViewChecked, AfterViewInit } from '@angular/core'
+import { Component, Input, ViewChild, ElementRef, ViewChildren,
+  QueryList, ChangeDetectorRef, AfterViewChecked, AfterViewInit, ContentChild, OnInit } from '@angular/core'
 import { GridViewService } from '../../services/socket.service'
 import Model, { Field } from '../../model/model.class'
 import * as moment from 'moment'
@@ -38,9 +38,9 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
   public sorterFields = new Set<Field>()
 
   // Icons
-  faTimesCircle = faTimesCircle
-  faSortAmountDown = faSortAmountDown
-  faSortAmountDownAlt = faSortAmountDownAlt
+  public faTimesCircle = faTimesCircle
+  public faSortAmountDown = faSortAmountDown
+  public faSortAmountDownAlt = faSortAmountDownAlt
 
   // Attributes needed for saved views.
   public gridViewService: GridViewService
@@ -52,13 +52,14 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
 
   @ViewChild('table') table: ElementRef<HTMLTableElement>
   @ViewChildren('toolbarButton') toolbarButtons: QueryList<ToolbarButtonComponent>
+  @ContentChild('topToolbar') topToolbarContent: ElementRef
 
   constructor(
     public modalService: ModalService,
     private cdRef: ChangeDetectorRef
   ) {}
 
-  ngOnInit(): void {} // overridden
+  ngOnInit(): void {}
 
   ngAfterViewChecked(): void {
     this.hasToolbar = this.paginator || Boolean(this.toolbarButtons.length)
