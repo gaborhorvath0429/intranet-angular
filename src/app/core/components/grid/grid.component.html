@@ -23,16 +23,15 @@
         <thead>
           <tr>
             <th class="table-header"
-              *ngFor="let column of model.fields"
-              [style.width]="column.width ? column.width + 'px' : rowWidth + 'px'"
-              [hidden]="hiddenColumns.includes(column) || !column.displayName"
-            >{{ column.displayName }}
-            </th>
+              *ngFor="let column of model.displayFields"
+              [style.width]="hiddenColumns.length ? '' : column.width ? column.width + 'px' : rowWidth + 'px'"
+              [hidden]="hiddenColumns.includes(column)"
+            >{{ column.displayName }}</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let row of model.data">
-            <td [hidden]="hiddenColumns.includes(column) || !column.displayName" *ngFor="let column of model.fields">{{ formatCellValue(row[column.name], column) }}</td>
+            <td [hidden]="hiddenColumns.includes(column)" *ngFor="let column of model.displayFields">{{ formatCellValue(row[column.name], column) }}</td>
           </tr>
         <tbody>
       </table>
@@ -53,7 +52,7 @@
             <tr><th>Columns</th></tr>
           </thead>
           <tbody>
-            <tr (click)="selectColumn(column)" [ngClass]="{'selected-row': isColumnSelected(column)}" *ngFor="let column of model.fields">
+            <tr (click)="selectColumn(column)" [ngClass]="{'selected-row': isColumnSelected(column)}" *ngFor="let column of model.displayFields">
               <td>
                 <input [checked]="isColumnSelected(column)" type="checkbox" class="column-checkbox">
                 {{ column.displayName }}

@@ -40,6 +40,10 @@ export default abstract class Model {
   get endIndex() { return this.page * this.pageSize > this.totalCount ? this.totalCount : this.page * this.pageSize }
   get lastPageIndex() { return Math.ceil(this.totalCount / this.pageSize) }
 
+  get displayFields(): Field[] {
+    return this.fields.filter(e => Boolean(e.displayName))
+  }
+
   load(page: number = 1, extraParams: object = {}): void {
     this.loading = true
     let params = {

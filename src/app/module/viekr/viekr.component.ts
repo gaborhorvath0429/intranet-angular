@@ -17,7 +17,6 @@ export class ViekrComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.grid)
   }
 
 }
