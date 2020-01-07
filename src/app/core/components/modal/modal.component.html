@@ -1,7 +1,7 @@
-<div class="modal">
+<div class="modal" [style.z-index]="zIndex">
   <div class="modal-window" [style.width]="width + 'px'">
     <div class="modal-header">
-      <div class="title">{{ title }}</div><div class="close" (click)="close()"></div>
+      <div>{{ title }}</div><div class="close" (click)="close()"></div>
     </div>
     <div class="modal-body" [style.height]="height + 'px'">
       <ng-content></ng-content>
@@ -11,4 +11,4 @@
     </div>
   </div>
 </div>
-<div class="modal-background"></div>
+<div class="modal-background" [style.z-index]="zIndex - 1"></div>

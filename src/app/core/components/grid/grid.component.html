@@ -21,11 +21,18 @@
     <div class="table-scroll" [style.height]="height - (hasToolbar ? 40 : 0) - (showFilters || topToolbarContent ? 80 : 0) + 'px'">
       <table class="main-table" #table>
         <thead>
-          <tr><th class="table-header" [hidden]="hiddenColumns.includes(column)" *ngFor="let column of model.fields">{{ column.displayName }}</th></tr>
+          <tr>
+            <th class="table-header"
+              *ngFor="let column of model.fields"
+              [style.width]="column.width ? column.width + 'px' : rowWidth + 'px'"
+              [hidden]="hiddenColumns.includes(column) || !column.displayName"
+            >{{ column.displayName }}
+            </th>
+          </tr>
         </thead>
         <tbody>
           <tr *ngFor="let row of model.data">
-            <td [hidden]="hiddenColumns.includes(column)" *ngFor="let column of model.fields">{{ formatCellValue(row[column.name], column) }}</td>
+            <td [hidden]="hiddenColumns.includes(column) || !column.displayName" *ngFor="let column of model.fields">{{ formatCellValue(row[column.name], column) }}</td>
           </tr>
         <tbody>
       </table>
@@ -33,9 +40,8 @@
     <div class="loading" *ngIf="model.loading"></div>
   </div>
   <div class="toolbar" [style.height]="'40px'" [hidden]="!hasToolbar">
-    <app-paginator *ngIf="paginator" [model]="model"></app-paginator>
-    <app-toolbar-button float="right" #toolbarButton>Új tétel felvétele</app-toolbar-button>
-    <app-toolbar-button float="right" #toolbarButton>Lista exportálása</app-toolbar-button>
+    <app-paginator *ngIf="paginator" [model]="model" [searchParams]="searchParams"></app-paginator>
+    <ng-content select=".bottom-toolbar"></ng-content>
   </div>
 
   <!-- SAVED VIEWS -->
@@ -80,7 +86,7 @@
         <app-toolbar-button (click)="selectedColumns = []; selectedView = null; filterColumns()">Alaphelyzetbe</app-toolbar-button>
       </div>
     </div>
-    <app-modal id="viewSaveModal" title="The name of the view">
+    <app-modal id="viewSaveModal" [title]="'The name of the view'">
       Please enter the name:<br>
       <input type="text" [(ngModel)]="savedViewName"/>
       <div class="modal-footer">

@@ -4,6 +4,16 @@
   margin: 0 5px;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance:textfield;
+  width: 35px;
+}
+
 .paging-button {
   cursor: pointer;
   background-repeat: no-repeat;

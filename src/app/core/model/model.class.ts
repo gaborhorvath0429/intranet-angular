@@ -17,6 +17,7 @@ export interface Field {
   displayName: string
   type: string
   dateFormat?: string
+  width?: number
 }
 
 export default abstract class Model {
@@ -54,8 +55,8 @@ export default abstract class Model {
       }),
       map(response => response[this.proxy.reader.root])
     ).subscribe(root => {
-        this.data$.next(root)
-        this.loading = false
+      this.data$.next(root)
+      this.loading = false
     })
   }
 
@@ -63,20 +64,20 @@ export default abstract class Model {
     this.data$.next(data)
   }
 
-  nextPage(): void {
-    if (this.page < this.lastPageIndex) this.load(this.page + 1)
+  nextPage(extraParams: object = {}): void {
+    if (this.page < this.lastPageIndex) this.load(this.page + 1, extraParams)
   }
 
-  prevPage(): void {
-    if (this.page > 1) this.load(this.page - 1)
+  prevPage(extraParams: object = {}): void {
+    if (this.page > 1) this.load(this.page - 1, extraParams)
   }
 
-  firstPage(): void {
-    this.load()
+  firstPage(extraParams: object = {}): void {
+    this.load(1, extraParams)
   }
 
-  lastPage(): void {
-    this.load(this.lastPageIndex)
+  lastPage(extraParams: object = {}): void {
+    this.load(this.lastPageIndex, extraParams)
   }
 
   hasSorter(field: Field): string {

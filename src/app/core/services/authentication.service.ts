@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
 import { environment } from '../../../environments/environment'
 import { Router } from '@angular/router'
+import { ModalService } from './modal-service.service'
 
 interface User {
   displayName: string,
@@ -50,8 +51,12 @@ export class AuthenticationService {
 }
 
 @Injectable()
-export class CredentialsProvider implements HttpInterceptor {
-  constructor(private authenticationService: AuthenticationService, private router: Router) { }
+export class RequestInterceptor implements HttpInterceptor {
+  constructor(
+    private authenticationService: AuthenticationService,
+    private modalService: ModalService,
+    private router: Router
+  ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     request = request.clone({
@@ -64,9 +69,9 @@ export class CredentialsProvider implements HttpInterceptor {
         this.authenticationService.logout()
         location.reload(true)
       }
+      this.modalService.showError(err)
 
-      const error = err.error.message || err.statusText
-      return throwError(error)
+      return throwError(err)
     }))
   }
 }

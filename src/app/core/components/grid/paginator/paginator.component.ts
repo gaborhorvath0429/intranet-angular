@@ -9,6 +9,7 @@ import Model from 'src/app/core/model/model.class'
 export class PaginatorComponent {
 
   @Input() model: Model
+  @Input() searchParams?: any
 
   constructor() { }
 

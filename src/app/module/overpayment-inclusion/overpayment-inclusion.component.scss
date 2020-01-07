@@ -4,13 +4,6 @@
   align-items: center;
   .search-input {
     padding: 0 10px;
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-    }
-    input[type=number] {
-      -moz-appearance:textfield;
-    }
     input {
       height: 1.5rem;
     }
@@ -20,5 +13,22 @@
   }
   .dash {
     margin-top: 15px;
+  }
+  .search-button {
+    margin-top: 15px;
+  }
+}
+.new-item-form {
+  .input {
+    margin-bottom: 10px;
+    display: flex;
+    span {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+    }
+    input, app-date-picker {
+      width: 150px;
+    }
   }
 }

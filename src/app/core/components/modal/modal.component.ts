@@ -12,8 +12,9 @@ export class ModalComponent implements OnInit, OnDestroy {
   @Input() width?: number
   @Input() height?: number
   private element: any
+  public zIndex: number
 
-  constructor(private modalService: ModalService, private el: ElementRef) {
+  constructor(public modalService: ModalService, el: ElementRef) {
     this.element = el.nativeElement
   }
 
@@ -36,10 +37,13 @@ export class ModalComponent implements OnInit, OnDestroy {
   open(): void {
     this.element.style.display = 'block'
     document.body.classList.add('modal-open')
+    this.zIndex = 100 + (2 * this.modalService.openModals.length)
+    this.modalService.openModals.push(this)
   }
 
   close(): void {
     this.element.style.display = 'none'
     document.body.classList.remove('modal-open')
+    this.modalService.openModals = this.modalService.openModals.filter(e => e !== this)
   }
 }

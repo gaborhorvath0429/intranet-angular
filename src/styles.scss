@@ -17,8 +17,13 @@ app-modal {
   /* modals are hidden by default */
   display: none;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 
-input[type=text] {
+input[type=number], input[type=text] {
+  -moz-appearance:textfield;
   color: black;
   padding: 4px 6px 3px 6px;
   background: white repeat-x 0 0;
@@ -27,4 +32,7 @@ input[type=text] {
   border-color: silver #d9d9d9 #d9d9d9;
   height: 24px;
   line-height: 15px;
+  &:focus {
+    outline-width: 0;
+  }
 }

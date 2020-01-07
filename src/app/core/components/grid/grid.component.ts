@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild, ElementRef, ViewChildren,
-  QueryList, ChangeDetectorRef, AfterViewChecked, AfterViewInit, ContentChild, OnInit } from '@angular/core'
+  QueryList, ChangeDetectorRef, AfterViewChecked, AfterViewInit, ContentChild, OnInit, ContentChildren } from '@angular/core'
 import { GridViewService } from '../../services/socket.service'
 import Model, { Field } from '../../model/model.class'
 import * as moment from 'moment'
@@ -27,8 +27,10 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
 
   @Input() module: string
   @Input() model: Model
+  @Input() searchParams?: any
   @Input() height?: number
   @Input() width?: number
+  @Input() rowWidth?: number
   @Input() savedViews = false
   @Input() paginator = false
 
@@ -51,7 +53,7 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
   public savedViewName = ''
 
   @ViewChild('table') table: ElementRef<HTMLTableElement>
-  @ViewChildren('toolbarButton') toolbarButtons: QueryList<ToolbarButtonComponent>
+  @ContentChildren('toolbarButton') toolbarButtons: QueryList<ToolbarButtonComponent>
   @ContentChild('topToolbar') topToolbarContent: ElementRef
 
   constructor(

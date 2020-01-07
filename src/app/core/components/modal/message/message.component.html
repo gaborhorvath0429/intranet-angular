@@ -1,0 +1,6 @@
+<app-modal id="message" [title]="modalService.messageTitle">
+    {{ modalService.message }}
+    <div class="modal-footer">
+      <app-button (click)="modalService.close('message')">OK</app-button>
+    </div>
+</app-modal>

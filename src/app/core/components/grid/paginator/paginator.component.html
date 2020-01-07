@@ -1,9 +1,9 @@
-<span class="page-first paging-button" [style.cursor]="model.page === 1 ? 'default' : 'pointer'" [style.opacity]="model.page === 1 ? 0.5 : 1" (click)="model.firstPage()">&nbsp;</span>
-<span class="page-prev paging-button" [style.cursor]="model.page === 1 ? 'default' : 'pointer'" [style.opacity]="model.page === 1 ? 0.5 : 1" (click)="model.prevPage()">&nbsp;</span>
+<span class="page-first paging-button" [style.cursor]="model.page === 1 ? 'default' : 'pointer'" [style.opacity]="model.page === 1 ? 0.5 : 1" (click)="model.firstPage(searchParams)">&nbsp;</span>
+<span class="page-prev paging-button" [style.cursor]="model.page === 1 ? 'default' : 'pointer'" [style.opacity]="model.page === 1 ? 0.5 : 1" (click)="model.prevPage(searchParams)">&nbsp;</span>
 Page
-<input class="pageInput" type="number" min="1" [max]="model.lastPageIndex" (input)="model.load($event.target.value)" [value]="model.page">
+<input class="pageInput" type="number" min="1" [max]="model.lastPageIndex" (input)="model.load($event.target.value, searchParams)" [value]="model.page">
 of {{ model.lastPageIndex }}
-<span class="page-next paging-button" [style.cursor]="model.page === model.lastPageIndex ? 'default' : 'pointer'" [style.opacity]="model.page === model.lastPageIndex ? 0.5 : 1" (click)="model.nextPage()">&nbsp;</span>
-<span class="page-last paging-button" [style.cursor]="model.page === model.lastPageIndex ? 'default' : 'pointer'" [style.opacity]="model.page === model.lastPageIndex ? 0.5 : 1" (click)="model.lastPage()">&nbsp;</span>
-<span class="page-refresh paging-button" (click)="model.load()">&nbsp;</span>
+<span class="page-next paging-button" [style.cursor]="model.page === model.lastPageIndex ? 'default' : 'pointer'" [style.opacity]="model.page === model.lastPageIndex ? 0.5 : 1" (click)="model.nextPage(searchParams)">&nbsp;</span>
+<span class="page-last paging-button" [style.cursor]="model.page === model.lastPageIndex ? 'default' : 'pointer'" [style.opacity]="model.page === model.lastPageIndex ? 0.5 : 1" (click)="model.lastPage(searchParams)">&nbsp;</span>
+<span class="page-refresh paging-button" (click)="model.load(1, searchParams)">&nbsp;</span>
 {{ model.startIndex }} - {{ model.endIndex }} of {{ model.totalCount }}

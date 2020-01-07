@@ -4,6 +4,10 @@ import { ModalComponent } from '../components/modal/modal.component'
 @Injectable({ providedIn: 'root' })
 export class ModalService {
   private modals: ModalComponent[] = []
+  public openModals: ModalComponent[] = []
+
+  public message: string
+  public messageTitle: string
 
   add(modal: ModalComponent) {
     this.modals.push(modal)
@@ -21,5 +25,21 @@ export class ModalService {
   close(id: string) {
     let modal: ModalComponent = this.modals.find(item => item.id === id)
     modal.close()
+  }
+
+  showError(err: any = null, message: string = '') {
+    this.messageTitle = 'Hiba'
+    if (err) {
+      this.message = err.error.error
+    } else if (message) {
+      this.message = message
+    }
+    this.open('message')
+  }
+
+  showMessage(message: string) {
+    this.messageTitle = 'Info'
+    this.message = message
+    this.open('message')
   }
 }
