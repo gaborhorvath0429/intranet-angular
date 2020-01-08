@@ -20,6 +20,21 @@ export interface Field {
   width?: number
 }
 
+export interface Filter {
+  field: string
+  data: {
+    type: string
+    mode: string
+    value: any
+    comparison?: 'eq' | 'lt' | 'gt'
+  }
+}
+
+export interface Sorter {
+  field: Field
+  type: 'ASC' | 'DESC'
+}
+
 export default abstract class Model {
   abstract proxy: ModelProxy
   abstract fields: Field[]
@@ -28,8 +43,8 @@ export default abstract class Model {
   private page$ = new BehaviorSubject<number>(1)
   private totalCount$ = new BehaviorSubject<number>(0)
   public loading = false
-  public sorters: { field: Field, type: 'ASC' | 'DESC' }[] = []
-  public filters = []
+  public sorters: Sorter[] = []
+  public filters: Filter[] = []
 
   constructor(private http: HttpClient) {}
 
@@ -50,6 +65,8 @@ export default abstract class Model {
       page: page.toString(),
       start: ((page - 1) * this.pageSize).toString(),
       limit: this.pageSize.toString(),
+      sort: this.getSorterString(),
+      filter: this.getFilterString(),
       ...extraParams
     }
     this.http.get(environment.apiUrl + this.proxy.url, {params}).pipe(
@@ -61,7 +78,7 @@ export default abstract class Model {
     ).subscribe(root => {
       this.data$.next(root)
       this.loading = false
-    })
+    }, () => this.loading = false)
   }
 
   loadData(data: any): void {
@@ -92,5 +109,33 @@ export default abstract class Model {
 
   deleteSort(field: Field): void {
     this.sorters = this.sorters.filter(e => e.field !== field)
+  }
+
+  deleteFilter(field: Field): void {
+    this.filters = this.filters.filter(e => e.field !== field.name)
+  }
+
+  getSorterString(): string {
+    let sorterArray = []
+    for (let sorter of this.sorters) {
+      sorterArray.push({
+        direction: sorter.type,
+        property: sorter.field.name
+      })
+    }
+    return JSON.stringify(sorterArray)
+  }
+
+  addFilters(filters: Filter[]): void {
+    // first we remove existing filters for these fields
+    for (let filter of filters) {
+      this.filters = this.filters.filter(e => e.field !== filter.field)
+    }
+    // add filters
+    this.filters = this.filters.concat(filters)
+  }
+
+  getFilterString(): string {
+    return JSON.stringify(this.filters)
   }
 }

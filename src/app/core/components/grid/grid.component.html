@@ -8,11 +8,17 @@
           <fa-icon *ngIf="model.hasSorter(field) === 'DESC'" [icon]="faSortAmountDown"></fa-icon>
           <fa-icon *ngIf="model.hasSorter(field) === 'ASC'" [icon]="faSortAmountDownAlt"></fa-icon>
           {{ field.displayName }}
-          <fa-icon [icon]="faTimesCircle" class="close" (click)="sorterFields.delete(field); model.deleteSort(field)"></fa-icon>
+          <fa-icon [icon]="faTimesCircle" class="close" (click)="deleteSort(field)"></fa-icon>
         </button>
       </div>
       <div class="filters">
-        Filter: <button *ngFor="let field of filterFields">{{ field.displayName }}<fa-icon [icon]="faTimesCircle" class="close" (click)="filterFields.delete(field)"></fa-icon></button>
+        Filter:
+        <button
+          (click)="showFilterWindow(field)"
+          *ngFor="let field of filterFields"
+        >{{ field.displayName }}
+          <fa-icon [icon]="faTimesCircle" class="close" (click)="deleteFilter(field)"></fa-icon>
+        </button>
       </div>
     </div>
     <div class="top-toolbar" *ngIf="topToolbarContent">
@@ -95,4 +101,33 @@
     </app-modal>
   </ng-container>
 </div>
+
+<!-- FILTER WINDOW -->
+<app-modal id="gridFilterModal" [title]="'Filter'">
+  <div *ngIf="selectedFilterField">
+    <div [ngSwitch]="selectedFilterField.type">
+      <div *ngSwitchCase="'string'" class="filter-types-radio-group">
+        <input type="radio" name="filter-type" [(ngModel)]="selectedFilterType" value="value">Value
+        <input style="margin-left: 20px;" type="radio" [(ngModel)]="selectedFilterType" name="filter-type" value="empty">Empty
+        <input style="margin-left: 20px;" type="radio" [(ngModel)]="selectedFilterType" name="filter-type" value="not-empty">Not empty
+        <div *ngIf="selectedFilterType === 'value'">
+          = <input type="text" style="margin-left: 20px;" [(ngModel)]="filterTextValue">
+        </div>
+      </div>
+      <div *ngSwitchCase="'int'" class="filter-types-radio-group">
+        <input type="radio" name="filter-type" [(ngModel)]="selectedFilterType" value="value">Value
+        <input style="margin-left: 20px;" type="radio" [(ngModel)]="selectedFilterType" name="filter-type" value="empty">Empty
+        <input style="margin-left: 20px;" type="radio" [(ngModel)]="selectedFilterType" name="filter-type" value="not-empty">Not empty
+        <div *ngIf="selectedFilterType === 'value'">
+          < <input type="number" style="margin-left: 20px;margin-bottom: 10px;" [(ngModel)]="filterLtValue"><br>
+          > <input type="number" style="margin-left: 20px;margin-bottom: 10px;" [(ngModel)]="filterGtValue"><br>
+          = <input type="number" style="margin-left: 20px;margin-bottom: 10px;" [(ngModel)]="filterNumberValue">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <app-button (click)="modalService.close('gridFilterModal'); onFilterButtonClick()">Filter</app-button>
+  </div>
+</app-modal>
 <div id="drag-label"></div>

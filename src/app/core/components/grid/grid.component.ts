@@ -36,8 +36,14 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
 
   public hasToolbar = false
   public showFilters = false
-  public filterFields = new Set<Field>()
   public sorterFields = new Set<Field>()
+  public filterFields = new Set<Field>()
+  public selectedFilterField: Field
+  public selectedFilterType = 'value'
+  public filterNumberValue: number | ''
+  public filterTextValue = ''
+  public filterLtValue = ''
+  public filterGtValue = ''
 
   // Icons
   public faTimesCircle = faTimesCircle
@@ -116,7 +122,7 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
     })
   }
 
-  sortBy(field: Field) {
+  sortBy(field: Field): void {
     let existingSorter = this.model.sorters.find(e => e.field === field)
     if (!existingSorter) {
       this.model.sorters.push({field, type: 'ASC'})
@@ -125,6 +131,80 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
     } else {
       existingSorter.type = 'ASC'
     }
+    this.model.load(1, this.searchParams)
+  }
+
+  showFilterWindow(field: Field): void {
+    let existingFilters = this.model.filters.filter(e => e.field === field.name)
+    if (existingFilters.length) {
+      for (let filter of existingFilters) {
+        if (filter.data.type === 'empty' && filter.data.value === true) this.selectedFilterType = 'empty'
+        if (filter.data.type === 'empty' && filter.data.value === false) this.selectedFilterType = 'not-empty'
+        if (filter.data.comparison === 'eq') this.filterNumberValue = filter.data.value
+        if (filter.data.comparison === 'lt') this.filterLtValue = filter.data.value
+        if (filter.data.comparison === 'gt') this.filterGtValue = filter.data.value
+        if (filter.data.type === 'string') this.filterTextValue = filter.data.value
+      }
+    } else {
+      this.filterGtValue = ''
+      this.filterLtValue = ''
+      this.filterTextValue = ''
+      this.filterNumberValue = ''
+    }
+    this.selectedFilterField = field
+    this.modalService.open('gridFilterModal')
+  }
+
+  deleteSort(field: Field): void {
+    this.sorterFields.delete(field)
+    this.model.deleteSort(field)
+    this.model.load(1, this.searchParams)
+  }
+
+  deleteFilter(field: Field): void {
+    this.filterFields.delete(field)
+    this.model.deleteFilter(field)
+    this.model.load(1, this.searchParams)
+  }
+
+  onFilterButtonClick(): void {
+    let filters = []
+    let field = this.selectedFilterField
+    switch (field.type) {
+      case 'string':
+        switch (this.selectedFilterType) {
+          case 'value':
+            filters.push({field: field.name, data: {type: 'string', mode: 'value', value: this.filterTextValue}})
+            break
+          case 'empty':
+            filters.push({field: field.name, data: {type: 'empty', value: true}})
+            break
+          case 'not-empty':
+            filters.push({field: field.name, data: {type: 'empty', value: false}})
+            break
+        }
+        break
+      case 'int':
+        switch (this.selectedFilterType) {
+          case 'value':
+            if (this.filterNumberValue)
+              filters.push({field: field.name, data: {type: 'numeric', mode: 'value', value: this.filterNumberValue, comparison: 'eq'}})
+            if (this.filterLtValue)
+              filters.push({field: field.name, data: {type: 'numeric', mode: 'value', value: this.filterLtValue, comparison: 'lt'}})
+            if (this.filterGtValue)
+              filters.push({field: field.name, data: {type: 'numeric', mode: 'value', value: this.filterGtValue, comparison: 'gt'}})
+            break
+          case 'empty':
+            filters.push({field: field.name, data: {type: 'empty', value: true}})
+            break
+          case 'not-empty':
+            filters.push({field: field.name, data: {type: 'empty', value: false}})
+            break
+        }
+    }
+
+    this.model.addFilters(filters)
+    this.model.load(1, this.searchParams)
   }
 
   formatCellValue(value: any, column: Field): string | number {

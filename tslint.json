@@ -11,6 +11,7 @@
     "array-type": false,
     "arrow-parens": false,
     "no-use-before-declare": false,
+    "no-shadowed-variable": false,
     "semicolon": [
       true,
       "never"
