@@ -12,6 +12,7 @@
     "arrow-parens": false,
     "no-use-before-declare": false,
     "no-shadowed-variable": false,
+    "object-literal-shorthand": false,
     "semicolon": [
       true,
       "never"

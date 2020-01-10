@@ -1,14 +1,20 @@
 import Model from 'src/app/core/model/model.class'
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
+import { StatusModel } from './statuses'
+import { DocumentTypesModel } from './documentTypes'
 
 @Injectable({
   providedIn: 'root'
 })
 export class IncomingModel extends Model {
-  constructor(http: HttpClient) {
+  constructor(
+    http: HttpClient,
+    private statusModel: StatusModel,
+    private documentTypesModel: DocumentTypesModel
+  ) {
     super(http)
-    if (this.autoLoad) this.load()
+    if (this.autoLoad && !this.data.length) this.load()
   }
 
   autoLoad = true
@@ -24,6 +30,11 @@ export class IncomingModel extends Model {
   }
 
   fields = [ {
+    name: 'id',
+    type: 'int',
+    width: 50,
+    mapping: 'csatolmany_id'
+  }, {
     name: 'sorszam',
     type: 'int',
     displayName: 'Ü#',
@@ -41,19 +52,22 @@ export class IncomingModel extends Model {
   }, {
     name: 'statusz',
     type: 'string',
-    displayName: 'Státusz'
+    displayName: 'Státusz',
+    filterModel: {
+      model: this.statusModel,
+      filterAttribute: 'id',
+      labelAttribute: 'name'
+    }
   }, {
     name: 'status_id',
-    type: 'int',
-    displayName: ''
+    type: 'int'
   }, {
     name: 'felado',
     type: 'string',
     displayName: 'Feladó'
   }, {
     name: 'beazonositas_id',
-    type: 'int',
-    displayName: ''
+    type: 'int'
   }, {
     name: 'ceid',
     type: 'string',
@@ -64,12 +78,10 @@ export class IncomingModel extends Model {
     displayName: 'Adós'
   }, {
     name: 'subscriber_id',
-    type: 'string',
-    displayName: ''
+    type: 'string'
   }, {
     name: 'felelos_id',
-    type: 'int',
-    displayName: ''
+    type: 'int'
   }, {
     name: 'felelos',
     type: 'string',
@@ -77,7 +89,12 @@ export class IncomingModel extends Model {
   }, {
     name: 'dokumentum_tipus',
     type: 'string',
-    displayName: 'Dokumentum típusa'
+    displayName: 'Dokumentum típusa',
+    filterModel: {
+      model: this.documentTypesModel,
+      filterAttribute: 'name',
+      labelAttribute: 'label'
+    }
   }, {
     name: 'hatarido',
     type: 'date',
@@ -89,16 +106,14 @@ export class IncomingModel extends Model {
     displayName: 'Jogi felelős'
   }, {
     name: 'csatolmany_db',
-    type: 'int',
-    displayName: ''
+    type: 'int'
   }, {
     name: 'vh_level_type',
     type: 'string',
     displayName: 'Levél VH-nak'
   }, {
     name: 'ownCase',
-    type: 'string',
-    displayName: ''
+    type: 'string'
   }, {
     name: 'atadaskor_jogis',
     type: 'string',

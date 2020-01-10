@@ -37,7 +37,11 @@
         </thead>
         <tbody>
           <tr *ngFor="let row of model.data">
-            <td [hidden]="hiddenColumns.includes(column)" *ngFor="let column of model.displayFields">{{ formatCellValue(row[column.name], column) }}</td>
+            <td
+              *ngFor="let column of model.displayFields"
+              [hidden]="hiddenColumns.includes(column)"
+              [title]="formatCellValue(row[column.name], column)"
+            >{{ formatCellValue(row[column.name], column) }}</td>
           </tr>
         <tbody>
       </table>
@@ -105,29 +109,45 @@
 <!-- FILTER WINDOW -->
 <app-modal id="gridFilterModal" [title]="'Filter'">
   <div *ngIf="selectedFilterField">
-    <div [ngSwitch]="selectedFilterField.type">
-      <div *ngSwitchCase="'string'" class="filter-types-radio-group">
-        <input type="radio" name="filter-type" [(ngModel)]="selectedFilterType" value="value">Value
-        <input style="margin-left: 20px;" type="radio" [(ngModel)]="selectedFilterType" name="filter-type" value="empty">Empty
-        <input style="margin-left: 20px;" type="radio" [(ngModel)]="selectedFilterType" name="filter-type" value="not-empty">Not empty
-        <div *ngIf="selectedFilterType === 'value'">
-          = <input type="text" style="margin-left: 20px;" [(ngModel)]="filterTextValue">
+    <input type="radio" name="filter-type" [(ngModel)]="selectedFilterType" value="value">Value
+    <input style="margin-left: 20px;" type="radio" [(ngModel)]="selectedFilterType" name="filter-type" value="empty">Empty
+    <input style="margin-left: 20px;" type="radio" [(ngModel)]="selectedFilterType" name="filter-type" value="not-empty">Not empty
+    <div [ngSwitch]="selectedFilterField.type" *ngIf="!selectedFilterField.filterModel && selectedFilterType === 'value'; else listFilter">
+      <div *ngSwitchCase="'string'">
+        <div>
+          <div class="filter-row"><span>=</span><input type="text" class="filter-input" [(ngModel)]="filterTextValue"></div>
         </div>
       </div>
-      <div *ngSwitchCase="'int'" class="filter-types-radio-group">
-        <input type="radio" name="filter-type" [(ngModel)]="selectedFilterType" value="value">Value
-        <input style="margin-left: 20px;" type="radio" [(ngModel)]="selectedFilterType" name="filter-type" value="empty">Empty
-        <input style="margin-left: 20px;" type="radio" [(ngModel)]="selectedFilterType" name="filter-type" value="not-empty">Not empty
-        <div *ngIf="selectedFilterType === 'value'">
-          < <input type="number" style="margin-left: 20px;margin-bottom: 10px;" [(ngModel)]="filterLtValue"><br>
-          > <input type="number" style="margin-left: 20px;margin-bottom: 10px;" [(ngModel)]="filterGtValue"><br>
-          = <input type="number" style="margin-left: 20px;margin-bottom: 10px;" [(ngModel)]="filterNumberValue">
+      <div *ngSwitchCase="'int'">
+        <div>
+          <div class="filter-row"><span><</span><input type="number" class="filter-input" [(ngModel)]="filterLtValue"></div>
+          <div class="filter-row"><span>></span><input type="number" class="filter-input" [(ngModel)]="filterGtValue"></div>
+          <div class="filter-row"><span>=</span><input type="number" class="filter-input" [(ngModel)]="filterNumberValue"></div>
+        </div>
+      </div>
+      <div *ngSwitchCase="'date'">
+        <div>
+          <div class="filter-row"><span><</span><app-date-picker placeholder="éééé.hh.nn" [(model)]="filterDateLtValue" [options]="dpOptions"></app-date-picker></div>
+          <div class="filter-row"><span>></span><app-date-picker placeholder="éééé.hh.nn" [(model)]="filterDateGtValue" [options]="dpOptions"></app-date-picker></div>
+          <div class="filter-row"><span>=</span><app-date-picker placeholder="éééé.hh.nn" [(model)]="filterDateValue" [options]="dpOptions"></app-date-picker></div>
         </div>
       </div>
     </div>
+    <ng-template #listFilter>
+      <div class='list-filter' *ngIf="selectedFilterType === 'value'">
+        <input type="text" class="search" placeholder="Keresés..." [(ngModel)]="filterListSearch">
+        <div class="filter-list-row" *ngFor="let item of selectedFilterField.filterModel.model.data | filterItemsSearch: filterListSearch">
+          <input type="checkbox"
+            (change)="toggleListFilterItem(item)"
+            [checked]="isFilterListItemChecked(item)">
+          {{ item[selectedFilterField.filterModel.labelAttribute] }}
+        </div>
+      </div>
+    </ng-template>
   </div>
   <div class="modal-footer">
     <app-button (click)="modalService.close('gridFilterModal'); onFilterButtonClick()">Filter</app-button>
+    <app-button (click)="modalService.close('gridFilterModal'); onRemoveFilterButtonClick()">Remove</app-button>
   </div>
 </app-modal>
 <div id="drag-label"></div>

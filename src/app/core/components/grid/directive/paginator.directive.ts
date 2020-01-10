@@ -2,11 +2,12 @@ import { Directive } from '@angular/core'
 import { GridComponent } from '../grid.component'
 
 @Directive({
-  selector: '[showFilters]'
+  selector: '[showPaginator]'
 })
-export class ShowFiltersDirective {
+export class PaginatorDirective {
 
   constructor(host: GridComponent) {
-    host.showFilters = true
+    host.paginator = true
   }
+
 }

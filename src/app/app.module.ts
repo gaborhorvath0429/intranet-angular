@@ -17,15 +17,16 @@ import { ToolbarButtonComponent } from './core/components/grid/toolbar-button/to
 import { ModalComponent } from './core/components/modal/modal.component'
 import { ButtonComponent } from './core/components/button/button.component'
 import { PaginatorComponent } from './core/components/grid/paginator/paginator.component'
-import { ShowPaginatorDirective } from './core/components/grid/directive/show-paginator.directive'
-import { ShowFiltersDirective } from './core/components/grid/directive/show-filters.directive'
+import { PaginatorDirective } from './core/components/grid/directive/paginator.directive'
+import { FiltersDirective } from './core/components/grid/directive/filters.directive'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { AngularMyDatePickerModule } from 'angular-mydatepicker'
 import { DatePickerComponent } from './core/components/input/date-picker/date-picker.component'
 import { CeidInputDirective } from './core/components/input/directives/ceid-input.directive'
 import { FormInputDirective } from './core/components/input/directives/form-input.directive'
-import { MessageComponent } from './core/components/modal/message/message.component';
-import { ViekrComponent } from './module/viekr/viekr.component'
+import { MessageComponent } from './core/components/modal/message/message.component'
+import { ViekrComponent } from './module/viekr/viekr.component';
+import { FilterItemsSearchPipe } from './core/components/grid/pipe/filter-items-search.pipe'
 
 @NgModule({
   declarations: [
@@ -38,13 +39,14 @@ import { ViekrComponent } from './module/viekr/viekr.component'
     ModalComponent,
     ButtonComponent,
     PaginatorComponent,
-    ShowPaginatorDirective,
-    ShowFiltersDirective,
+    PaginatorDirective,
+    FiltersDirective,
     DatePickerComponent,
     CeidInputDirective,
     FormInputDirective,
     MessageComponent,
     ViekrComponent,
+    FilterItemsSearchPipe,
   ],
   imports: [
     BrowserModule,

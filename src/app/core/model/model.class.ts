@@ -14,10 +14,18 @@ export interface ModelProxy {
 
 export interface Field {
   name: string
-  displayName: string
+  displayName?: string
   type: string
   dateFormat?: string
   width?: number
+  mapping?: string
+  defaultValue?: any
+  filterModel?: {
+    model: Model,
+    filterAttribute: string,
+    labelAttribute: string
+  }
+  convert?: (record: any) => any
 }
 
 export interface Filter {
@@ -38,7 +46,7 @@ export interface Sorter {
 export default abstract class Model {
   abstract proxy: ModelProxy
   abstract fields: Field[]
-  abstract pageSize: number
+  public pageSize?: number
   private data$ = new BehaviorSubject<any[]>([])
   private page$ = new BehaviorSubject<number>(1)
   private totalCount$ = new BehaviorSubject<number>(0)
@@ -63,10 +71,10 @@ export default abstract class Model {
     this.loading = true
     let params = {
       page: page.toString(),
-      start: ((page - 1) * this.pageSize).toString(),
-      limit: this.pageSize.toString(),
-      sort: this.getSorterString(),
-      filter: this.getFilterString(),
+      start: this.pageSize ? ((page - 1) * this.pageSize).toString() : '',
+      limit: this.pageSize ? this.pageSize.toString() : '',
+      sort: this.sorterString,
+      filter: this.filterString,
       ...extraParams
     }
     this.http.get(environment.apiUrl + this.proxy.url, {params}).pipe(
@@ -74,7 +82,17 @@ export default abstract class Model {
         this.page$.next(Number(page))
         this.totalCount$.next(response[this.proxy.reader.totalProperty])
       }),
-      map(response => response[this.proxy.reader.root])
+      map(response => {
+        let data = response[this.proxy.reader.root]
+        return data.map((item: any) => {
+          for (let field of this.fields) {
+            if (field.mapping) item[field.name] = item[field.mapping]
+            if (field.defaultValue) item[field.name] = field.defaultValue
+            if (field.convert) item[field.name] = field.convert(item)
+          }
+          return item
+        })
+      })
     ).subscribe(root => {
       this.data$.next(root)
       this.loading = false
@@ -115,7 +133,7 @@ export default abstract class Model {
     this.filters = this.filters.filter(e => e.field !== field.name)
   }
 
-  getSorterString(): string {
+  get sorterString(): string {
     let sorterArray = []
     for (let sorter of this.sorters) {
       sorterArray.push({
@@ -126,6 +144,10 @@ export default abstract class Model {
     return JSON.stringify(sorterArray)
   }
 
+  get filterString(): string {
+    return JSON.stringify(this.filters)
+  }
+
   addFilters(filters: Filter[]): void {
     // first we remove existing filters for these fields
     for (let filter of filters) {
@@ -133,9 +155,5 @@ export default abstract class Model {
     }
     // add filters
     this.filters = this.filters.concat(filters)
-  }
-
-  getFilterString(): string {
-    return JSON.stringify(this.filters)
   }
 }

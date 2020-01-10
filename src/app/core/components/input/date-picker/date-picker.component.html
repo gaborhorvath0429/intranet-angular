@@ -1,5 +1,5 @@
 <div class="input">
-  <input [style.border-color]="getBorderColor()" type="text" [placeholder]="placeholder"
+  <input class="date-picker-input" [style.border-color]="getBorderColor()" type="text" [placeholder]="placeholder"
   angular-mydatepicker name="mydate" (click)="dp.toggleCalendar()"
   [(ngModel)]="model" [options]="options"
   #dp="angular-mydatepicker" (ngModelChange)="modelChange.emit(model);onChange($event)"/>
