@@ -31,11 +31,20 @@ export class FormInputDirective {
           case 'required':
             this.setTooltip('A mező kitöltése kötelező!')
             return
+          case 'mustSelect':
+            this.setTooltip('Kérem válasszon ki egy lehetőséget a listából!')
+            return
           case 'minlength':
             this.setTooltip('A hosszának minimum ennyinek kell lennie: ' + this.input.errors[key].requiredLength)
             return
           case 'maxlength':
-            this.setTooltip('A hosszának maximum ennyinek kell lennie: ' + this.input.errors[key].requiredLength)
+            this.setTooltip('A hossza maximum ennyi lehet: ' + this.input.errors[key].requiredLength)
+            return
+          case 'min':
+            this.setTooltip('Az értékének minimum ennyinek kell lennie: ' + this.input.errors[key].min)
+            return
+          case 'max':
+            this.setTooltip('A értéke maximum ennyi lehet: ' + this.input.errors[key].max)
             return
         }
       })

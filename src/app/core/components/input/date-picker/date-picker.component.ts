@@ -1,22 +1,20 @@
 import { Component, Input, Output, EventEmitter, forwardRef,
-  ViewEncapsulation, ElementRef, ViewChild, AfterViewInit, OnChanges } from '@angular/core'
+  ViewEncapsulation, ElementRef, ViewChild, AfterViewInit } from '@angular/core'
 import { IMyDateModel, IAngularMyDpOptions } from 'angular-mydatepicker'
-import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms'
-
-export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => DatePickerComponent),
-  multi: true
-}
+import { NG_VALUE_ACCESSOR, FormControl, ControlValueAccessor } from '@angular/forms'
 
 @Component({
   selector: 'app-date-picker',
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => DatePickerComponent),
+    multi: true
+  }]
 })
-export class DatePickerComponent implements AfterViewInit {
+export class DatePickerComponent implements AfterViewInit, ControlValueAccessor {
 
   @Input() model: IMyDateModel
   @Output() modelChange = new EventEmitter<IMyDateModel>()
@@ -75,7 +73,7 @@ export class DatePickerComponent implements AfterViewInit {
 
   // From ControlValueAccessor interface
   writeValue(value: any) {
-      this.innerValue = value
+    this.innerValue = value
   }
 
   // From ControlValueAccessor interface

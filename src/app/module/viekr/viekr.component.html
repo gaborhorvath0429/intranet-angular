@@ -14,9 +14,11 @@
       <app-toolbar-button #toolbarButton>Új üzenet</app-toolbar-button>
     </span>
     <span class="bottom-toolbar">
-      <app-combo-box [model]="usersModel" listPosition="top"></app-combo-box>
-      Ü. száma: <input class="case-number" type="number" value="1" min="1">
-      <app-toolbar-button #toolbarButton>Felelős</app-toolbar-button>
+      <form [formGroup]="assignToUserForm">
+        <app-combo-box formControlName="user" [model]="usersModel" listPosition="top" [control]="assignToUserForm.controls.user" [form]="assignToUserForm" formInput></app-combo-box>
+        Ü. száma: <input formControlName="count" class="case-number" type="number" [form]="assignToUserForm" formInput>
+        <app-toolbar-button type="submit" (click)="onAssignToUserFormSubmit()" #toolbarButton>Felelős</app-toolbar-button>
+      </form>
       <app-toolbar-button float="right" #toolbarButton>Excel export</app-toolbar-button>
     </span>
     </app-grid>

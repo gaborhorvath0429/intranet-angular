@@ -9,6 +9,7 @@ export class ToolbarButtonComponent {
 
   @Input() disabled?: boolean
   @Input() float?: 'left' | 'right'
+  @Input() type?: string
 
   constructor() {}
 
