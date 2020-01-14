@@ -1,9 +1,26 @@
-<app-grid
-  module="viekr"
-  [model]="incomingModel"
-  [height]="800"
-  [rowWidth]="150"
-  showFilters
-  showPaginator
-  showSavedViews
-></app-grid>
+<app-tab-panel>
+  <app-tab [title]="'Bejövő'">
+    <app-grid
+      module="viekr"
+      [model]="incomingModel"
+      [height]="800"
+      [rowWidth]="150"
+      showFilters
+      showPaginator
+      showSavedViews
+    >
+    <span class="bottom-left-toolbar">
+      <app-toolbar-button #toolbarButton>Válasz</app-toolbar-button>
+      <app-toolbar-button #toolbarButton>Új üzenet</app-toolbar-button>
+    </span>
+    <span class="bottom-toolbar">
+      <app-combo-box [model]="usersModel" listPosition="top"></app-combo-box>
+      Ü. száma: <input class="case-number" type="number" value="1" min="1">
+      <app-toolbar-button #toolbarButton>Felelős</app-toolbar-button>
+      <app-toolbar-button float="right" #toolbarButton>Excel export</app-toolbar-button>
+    </span>
+    </app-grid>
+  </app-tab>
+  <app-tab [title]="'Kimenő'"></app-tab>
+  <app-tab [title]="'Elküldött'"></app-tab>
+</app-tab-panel>

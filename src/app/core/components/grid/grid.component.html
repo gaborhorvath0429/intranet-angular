@@ -28,6 +28,7 @@
       <table class="main-table" #table>
         <thead>
           <tr>
+            <th class="checkbox-column" *ngIf="selectionModel === 'checkbox'"><input type="checkbox" (click)="selectAll()" [checked]="isAllSelected"></th>
             <th class="table-header"
               *ngFor="let column of model.displayFields"
               [style.width]="hiddenColumns.length ? '' : column.width ? column.width + 'px' : rowWidth + 'px'"
@@ -36,7 +37,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let row of model.data">
+          <tr *ngFor="let row of model.data" (click)="selectRow(row)" [ngClass]="{'selected-row': isRowSelected(row)}">
+            <td *ngIf="selectionModel === 'checkbox'"><input type="checkbox" [checked]="isRowSelected(row)"></td>
             <td
               *ngFor="let column of model.displayFields"
               [hidden]="hiddenColumns.includes(column)"
@@ -49,6 +51,7 @@
     <div class="loading" *ngIf="model.loading"></div>
   </div>
   <div class="toolbar" [style.height]="'40px'" [hidden]="!hasToolbar">
+    <ng-content select=".bottom-left-toolbar"></ng-content>
     <app-paginator *ngIf="paginator" [model]="model" [searchParams]="searchParams"></app-paginator>
     <ng-content select=".bottom-toolbar"></ng-content>
   </div>

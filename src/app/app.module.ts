@@ -25,8 +25,12 @@ import { DatePickerComponent } from './core/components/input/date-picker/date-pi
 import { CeidInputDirective } from './core/components/input/directives/ceid-input.directive'
 import { FormInputDirective } from './core/components/input/directives/form-input.directive'
 import { MessageComponent } from './core/components/modal/message/message.component'
-import { ViekrComponent } from './module/viekr/viekr.component';
+import { ViekrComponent } from './module/viekr/viekr.component'
 import { FilterItemsSearchPipe } from './core/components/grid/pipe/filter-items-search.pipe'
+import { TabPanelComponent } from './core/components/tab-panel/tab-panel.component'
+import { TabComponent } from './core/components/tab-panel/tab/tab.component'
+import { ComboBoxComponent } from './core/components/input/combo-box/combo-box.component'
+import { SearchPipe } from './core/components/input/combo-box/combo-search.pipe'
 
 @NgModule({
   declarations: [
@@ -47,6 +51,10 @@ import { FilterItemsSearchPipe } from './core/components/grid/pipe/filter-items-
     MessageComponent,
     ViekrComponent,
     FilterItemsSearchPipe,
+    TabPanelComponent,
+    TabComponent,
+    ComboBoxComponent,
+    SearchPipe,
   ],
   imports: [
     BrowserModule,

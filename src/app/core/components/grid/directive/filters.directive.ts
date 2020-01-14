@@ -19,7 +19,8 @@ export class FiltersDirective {
       deleteFilter: this.deleteFilter.bind(host),
       onFilterButtonClick: this.onFilterButtonClick.bind(host),
       onRemoveFilterButtonClick: this.onRemoveFilterButtonClick.bind(host),
-      toggleListFilterItem: this.toggleListFilterItem.bind(host)
+      toggleListFilterItem: this.toggleListFilterItem.bind(host),
+      isFilterListItemChecked: this.isFilterListItemChecked.bind(host)
     })
   }
 
@@ -109,7 +110,7 @@ export class FiltersDirective {
         if (filter.data.type === 'list') {
           let checked = filter.data.value.split(',')
           for (let id in this.listFilterItems) {
-            if (checked.includes(id)) this.listFilterItems[id] = true
+            if (checked.includes(id.toString())) this.listFilterItems[id] = true
           }
         }
       }

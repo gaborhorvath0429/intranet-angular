@@ -7,6 +7,7 @@ import { ModalService } from '../../services/modal-service.service'
 import { ToolbarButtonComponent } from './toolbar-button/toolbar-button.component'
 import { faSortAmountDown, faSortAmountDownAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker'
+import * as _ from 'lodash'
 declare var $: any
 
 export interface GridView {
@@ -38,7 +39,9 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
   @Input() rowWidth?: number
   @Input() savedViews = false
   @Input() paginator = false
+  @Input() selectionModel: 'single' | 'checkbox' = 'single'
 
+  public selection: any[] = []
   public hasToolbar = false
 
   // Attributes needed for filters and sorters
@@ -104,6 +107,37 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
       default:
         console.error('Unknown data type in model: ' + column.type)
     }
+  }
+
+  selectRow(row: any): void {
+    switch (this.selectionModel) {
+      case 'single':
+        this.selection = [row]
+        return
+      case 'checkbox':
+        if (this.selection.includes(row)) {
+          this.selection = this.selection.filter(e => e !== row)
+        } else {
+          this.selection.push(row)
+        }
+        return
+    }
+  }
+
+  isRowSelected(row: any): boolean {
+    return this.selection.includes(row)
+  }
+
+  selectAll(): void {
+    if (this.isAllSelected) {
+      this.selection = []
+    } else {
+      this.selection = _.clone(this.model.data)
+    }
+  }
+
+  get isAllSelected(): boolean {
+    return this.selection.length && this.selection.length === this.model.data.length
   }
 
   // These methods are overridden by FiltersDirective

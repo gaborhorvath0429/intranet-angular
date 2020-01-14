@@ -54,7 +54,7 @@ export default abstract class Model {
   public sorters: Sorter[] = []
   public filters: Filter[] = []
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   get data() { return this.data$.getValue() }
   get page() { return this.page$.getValue() }

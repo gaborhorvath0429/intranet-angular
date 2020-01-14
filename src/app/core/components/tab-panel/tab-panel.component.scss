@@ -1,0 +1,23 @@
+ul {
+  display: flex;
+  background-color: #475360;
+  border-bottom: 5px solid #bec2c7;
+}
+li {
+  margin-right: 1px;
+  list-style: none;
+  border-radius: 3px 3px 0 0;
+  font-weight: bold;
+  padding: 8px 12px 7px 12px;
+  background-color: #717a84;
+  white-space: nowrap;
+  color: white;
+  cursor: pointer;
+  &.active {
+    background-color: #bec2c7;
+    color: #475360;
+  }
+  &:not(.active):hover {
+    background-color: #818992;
+  }
+}

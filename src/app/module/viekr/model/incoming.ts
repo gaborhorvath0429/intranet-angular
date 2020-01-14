@@ -32,7 +32,6 @@ export class IncomingModel extends Model {
   fields = [ {
     name: 'id',
     type: 'int',
-    width: 50,
     mapping: 'csatolmany_id'
   }, {
     name: 'sorszam',

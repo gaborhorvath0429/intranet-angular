@@ -1,0 +1,7 @@
+<span class="combobox">
+  <input #input type="text" [(ngModel)]="inputText" (ngModelChange)="inputChange()" class="combobox-input" (blur)="toggleListDisplay(false)" (focus)="toggleListDisplay(true)" [placeholder]="placeholder">
+  <div class="form-trigger" (click)="input.focus()"></div>
+  <div class="combobox-options" *ngIf="!listHidden" [style.bottom]="listPosition === 'top' ? '19px' : ''" [style.top]="listPosition === 'bottom' ? '19px' : ''">
+    <div class="list-item" *ngFor="let item of list | comboSearch:inputText:labelAttribute" (click)="selectItem(item)">{{item[labelAttribute]}}</div>
+  </div>
+</span>
