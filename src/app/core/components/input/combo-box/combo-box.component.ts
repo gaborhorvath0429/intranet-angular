@@ -80,7 +80,7 @@ export class ComboBoxComponent implements AfterViewInit, ControlValueAccessor {
       this.selected = null
       this.propagateChange(this.inputText)
     }
-    this.onTouched()
+    if (this.onTouched) this.onTouched()
   }
 
   // get accessor
