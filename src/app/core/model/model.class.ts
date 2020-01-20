@@ -25,7 +25,7 @@ export interface Field {
     filterAttribute: string,
     labelAttribute: string
   }
-  convert?: (record: any) => any
+  convert?: (record: any, value: any) => any
 }
 
 export interface Filter {
@@ -46,8 +46,9 @@ export interface Sorter {
 export default abstract class Model {
   abstract proxy: ModelProxy
   abstract fields: Field[]
+  abstract autoLoad: boolean
   public pageSize?: number
-  private data$ = new BehaviorSubject<any[]>([])
+  public data$ = new BehaviorSubject<any[]>([])
   private page$ = new BehaviorSubject<number>(1)
   private totalCount$ = new BehaviorSubject<number>(0)
   public loading = false
@@ -56,47 +57,57 @@ export default abstract class Model {
 
   constructor(private http: HttpClient) { }
 
-  get data() { return this.data$.getValue() }
-  get page() { return this.page$.getValue() }
-  get totalCount() { return this.totalCount$.getValue() }
-  get startIndex() { return (this.page - 1) * this.pageSize + 1 }
-  get endIndex() { return this.page * this.pageSize > this.totalCount ? this.totalCount : this.page * this.pageSize }
-  get lastPageIndex() { return Math.ceil(this.totalCount / this.pageSize) }
+  protected init(): void {
+    if (this.autoLoad && !this.data.length) this.load()
+  }
+
+  get data(): any { return this.data$.getValue() }
+  get page(): number { return this.page$.getValue() }
+  get totalCount(): number { return this.totalCount$.getValue() }
+  get startIndex(): number { return (this.page - 1) * this.pageSize + 1 }
+  get endIndex(): number { return this.page * this.pageSize > this.totalCount ? this.totalCount : this.page * this.pageSize }
+  get lastPageIndex(): number { return Math.ceil(this.totalCount / this.pageSize) }
 
   get displayFields(): Field[] {
     return this.fields.filter(e => Boolean(e.displayName))
   }
 
-  load(page: number = 1, extraParams: object = {}): void {
-    this.loading = true
-    let params = {
-      page: page.toString(),
-      start: this.pageSize ? ((page - 1) * this.pageSize).toString() : '',
-      limit: this.pageSize ? this.pageSize.toString() : '',
-      sort: this.sorterString,
-      filter: this.filterString,
-      ...extraParams
-    }
-    this.http.get(environment.apiUrl + this.proxy.url, {params}).pipe(
-      tap(response => {
-        this.page$.next(Number(page))
-        this.totalCount$.next(response[this.proxy.reader.totalProperty])
-      }),
-      map(response => {
-        let data = response[this.proxy.reader.root]
-        return data.map((item: any) => {
-          for (let field of this.fields) {
-            if (field.mapping) item[field.name] = item[field.mapping]
-            if (field.defaultValue) item[field.name] = field.defaultValue
-            if (field.convert) item[field.name] = field.convert(item)
-          }
-          return item
+  load(page: number = 1, extraParams: object = {}): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.loading = true
+      let params = {
+        page: page.toString(),
+        start: this.pageSize ? ((page - 1) * this.pageSize).toString() : '',
+        limit: this.pageSize ? this.pageSize.toString() : '',
+        sort: this.sorterString,
+        filter: this.filterString,
+        ...extraParams
+      }
+      this.http.get(environment.apiUrl + this.proxy.url, {params}).pipe(
+        tap(response => {
+          this.page$.next(Number(page))
+          this.totalCount$.next(response[this.proxy.reader.totalProperty])
+        }),
+        map(response => {
+          let data = response[this.proxy.reader.root]
+          return data.map((item: any) => {
+            for (let field of this.fields) {
+              if (field.mapping) item[field.name] = item[field.mapping]
+              if (field.defaultValue) item[field.name] = field.defaultValue
+              if (field.convert) item[field.name] = field.convert(item, item[field.name])
+            }
+            return item
+          })
         })
+      ).subscribe(root => {
+        this.data$.next(root)
+        this.loading = false
+        resolve(root)
+      }, (err) => {
+        this.loading = false
+        reject(err)
       })
-    ).subscribe(root => {
-      this.data$.next(root)
-      this.loading = false
-    }, () => this.loading = false)
+    })
   }
 
   loadData(data: any): void {

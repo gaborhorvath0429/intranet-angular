@@ -1,0 +1,11 @@
+<app-modal id="viekrAttachment" fullScreen="true" [title]="modalService.messageTitle">
+  <div *ngIf="attachmentData" class="container">
+    <div class="controls">asdas</div>
+    <div class="attachment">
+      <ngx-extended-pdf-viewer [src]="'https://intranet.eosksihu.net/viekr_docs/' + attachmentData.file_name" height="90vh" useBrowserLocale="true"></ngx-extended-pdf-viewer>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <app-button (click)="modalService.close('viekrAttachment')">OK</app-button>
+  </div>
+</app-modal>

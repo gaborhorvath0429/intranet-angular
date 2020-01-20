@@ -30,7 +30,10 @@ import { FilterItemsSearchPipe } from './core/components/grid/pipe/filter-items-
 import { TabPanelComponent } from './core/components/tab-panel/tab-panel.component'
 import { TabComponent } from './core/components/tab-panel/tab/tab.component'
 import { ComboBoxComponent } from './core/components/input/combo-box/combo-box.component'
-import { SearchPipe } from './core/components/input/combo-box/combo-search.pipe'
+import { SearchPipe } from './core/components/input/combo-box/combo-search.pipe';
+import { ConfirmComponent } from './core/components/modal/confirm/confirm.component';
+import { AttachmentComponent } from './module/viekr/window/attachment/attachment.component'
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -55,6 +58,8 @@ import { SearchPipe } from './core/components/input/combo-box/combo-search.pipe'
     TabComponent,
     ComboBoxComponent,
     SearchPipe,
+    ConfirmComponent,
+    AttachmentComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +70,8 @@ import { SearchPipe } from './core/components/input/combo-box/combo-search.pipe'
     ReactiveFormsModule,
     SocketIoModule,
     FontAwesomeModule,
-    AngularMyDatePickerModule
+    AngularMyDatePickerModule,
+    NgxExtendedPdfViewerModule,
   ],
   providers: [
     {

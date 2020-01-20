@@ -37,7 +37,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let row of model.data" (click)="selectRow(row)" [ngClass]="{'selected-row': isRowSelected(row)}">
+          <tr *ngFor="let row of model.data" (click)="selectRow(row)" (dblclick)="rowDoubleClick.emit(row)" [ngClass]="{'selected-row': isRowSelected(row)}">
             <td *ngIf="selectionModel === 'checkbox'"><input type="checkbox" [checked]="isRowSelected(row)"></td>
             <td
               *ngFor="let column of model.displayFields"

@@ -14,7 +14,7 @@ export class IncomingModel extends Model {
     private documentTypesModel: DocumentTypesModel
   ) {
     super(http)
-    if (this.autoLoad && !this.data.length) this.load()
+    super.init()
   }
 
   autoLoad = true

@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  justify-content: stretch;
+
+  .controls {
+    width: 50%;
+  }
+
+  .attachment {
+    width: 50%;
+  }
+}

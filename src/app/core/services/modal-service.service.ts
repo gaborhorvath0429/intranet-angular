@@ -9,6 +9,9 @@ export class ModalService {
   public message: string
   public messageTitle: string
 
+  public confirmationMessage: string
+  public confirmationCallback: () => void
+
   add(modal: ModalComponent) {
     this.modals.push(modal)
   }
@@ -41,5 +44,11 @@ export class ModalService {
     this.messageTitle = 'Info'
     this.message = message
     this.open('message')
+  }
+
+  confirm(message: string, callback: () => void = () => {}) {
+    this.confirmationMessage = message
+    this.confirmationCallback = callback
+    this.open('confirm')
   }
 }

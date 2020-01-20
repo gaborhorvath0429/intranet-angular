@@ -1,0 +1,7 @@
+<app-modal id="confirm" [title]="'Megerősítés'">
+  <div [innerHTML]="modalService.confirmationMessage"></div>
+  <div class="modal-footer">
+    <app-button (click)="modalService.close('confirm')">Cancel</app-button>
+    <app-button (click)="modalService.close('confirm'); modalService.confirmationCallback()">OK</app-button>
+  </div>
+</app-modal>

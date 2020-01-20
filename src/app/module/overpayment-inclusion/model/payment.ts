@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http'
 export class PaymentModel extends Model {
   constructor(http: HttpClient) {
     super(http)
-    if (this.autoLoad && !this.data.length) this.load()
+    super.init()
   }
 
   autoLoad = true

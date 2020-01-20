@@ -5,6 +5,7 @@
       [model]="incomingModel"
       [height]="800"
       [rowWidth]="150"
+      (rowDoubleClick)="onIncomingRowDoubleClick($event)"
       showFilters
       showPaginator
       showSavedViews
@@ -18,10 +19,12 @@
         <app-combo-box formControlName="user" [model]="usersModel" listPosition="top" [control]="assignToUserForm.controls.user" [form]="assignToUserForm" formInput></app-combo-box>
         Ü. száma: <input formControlName="count" class="case-number" type="number" [form]="assignToUserForm" formInput>
         <app-toolbar-button type="submit" (click)="onAssignToUserFormSubmit()" #toolbarButton>Felelős</app-toolbar-button>
+        {{ grid.selection.length }} kijelölt rekord
       </form>
-      <app-toolbar-button float="right" #toolbarButton>Excel export</app-toolbar-button>
+      <app-toolbar-button (click)="exportIncoming()" float="right">Excel export</app-toolbar-button>
     </span>
     </app-grid>
+    <app-viekr-attachment [attachmentData]="attachmentData"></app-viekr-attachment>
   </app-tab>
   <app-tab [title]="'Kimenő'"></app-tab>
   <app-tab [title]="'Elküldött'"></app-tab>

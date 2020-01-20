@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild, ElementRef, QueryList, ChangeDetectorRef,
-  AfterViewChecked, AfterViewInit, ContentChild, OnInit, ContentChildren } from '@angular/core'
+  AfterViewChecked, AfterViewInit, ContentChild, OnInit, ContentChildren, Output, EventEmitter } from '@angular/core'
 import { GridViewService } from '../../services/socket.service'
 import Model, { Field } from '../../model/model.class'
 import * as moment from 'moment'
@@ -40,6 +40,7 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
   @Input() savedViews = false
   @Input() paginator = false
   @Input() selectionModel: 'single' | 'checkbox' = 'single'
+  @Output() rowDoubleClick = new EventEmitter<any>()
 
   public selection: any[] = []
   public hasToolbar = false
@@ -92,6 +93,7 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
   ngAfterViewInit(): void {
     $(this.table.nativeElement).resizableColumns()
     if (this.showFilters) this.initDragAndDrop()
+    this.model.data$.subscribe(() => this.selection = [])
   }
 
   formatCellValue(value: any, column: Field): string | number {
