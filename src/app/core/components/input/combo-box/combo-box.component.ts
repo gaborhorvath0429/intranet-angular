@@ -1,6 +1,7 @@
-import { Component, Input, forwardRef, AfterViewInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core'
+import { Component, Input, forwardRef, AfterViewInit, ViewChild, ElementRef, ViewEncapsulation, EventEmitter, Output } from '@angular/core'
 import Model from 'src/app/core/model/model.class'
 import { NG_VALUE_ACCESSOR, FormControl, ControlValueAccessor, NG_VALIDATORS } from '@angular/forms'
+import * as _ from 'lodash'
 
 @Component({
   selector: 'app-combo-box',
@@ -20,24 +21,35 @@ import { NG_VALUE_ACCESSOR, FormControl, ControlValueAccessor, NG_VALIDATORS } f
 export class ComboBoxComponent implements AfterViewInit, ControlValueAccessor {
 
   @Input() placeholder = 'Kérem válasszon...'
-  @Input() model: Model
+  @Input('model') set model(value: Model) {
+    this.data = _.clone(value.data)
+  }
   @Input() labelAttribute = 'name'
   @Input() idAttribute = 'id'
   @Input() submitAttribute = 'id'
   @Input() listPosition: 'top' | 'bottom' = 'bottom'
+  @Input() width: number
+  @Input() disabled = false
 
   @Input() control: FormControl = new FormControl()
   @Input() formControlName?: string
 
   @ViewChild('input') inputRef: ElementRef
 
+  @Output() selectionChange = new EventEmitter()
+
+  data: any[]
   inputText = ''
   listHidden = true
   selected: any
 
-  onTouched: Function
+  onTouched: () => void
 
   constructor() { }
+
+  setData(data: any[]) {
+    this.data = data
+  }
 
   ngAfterViewInit() {
     this.control.valueChanges.subscribe(
@@ -50,16 +62,19 @@ export class ComboBoxComponent implements AfterViewInit, ControlValueAccessor {
     )
   }
 
-  get list(): string[] {
-    return this.model.data
-  }
-
   selectItem(item: any): void {
+    if (!this.data.includes(item)) {
+      console.error('Combobox model does not contain the item you want to select')
+      this.inputText = ''
+      this.listHidden = true
+      return
+    }
     this.selected = item
     this.inputText = item[this.labelAttribute]
     this.listHidden = true
     // propagate value into form control using control value accessor interface
     this.propagateChange(this.submitValue)
+    this.selectionChange.emit(item)
   }
 
   toggleListDisplay(show: boolean): void {
@@ -73,7 +88,7 @@ export class ComboBoxComponent implements AfterViewInit, ControlValueAccessor {
 
   // event fired when input value is changed . later propagated up to the form control using the custom value accessor interface
   onChange() {
-    let match = this.list.find(e => e[this.labelAttribute] === this.inputText)
+    let match = this.data.find(e => e[this.labelAttribute] === this.inputText)
     if (match) {
       this.selectItem(match)
     } else {

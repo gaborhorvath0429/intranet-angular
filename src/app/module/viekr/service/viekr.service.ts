@@ -5,20 +5,36 @@ import { Observable } from 'rxjs'
 import { ApiResponse } from 'src/app/app.module'
 import { IncomingModel } from '../model/incoming'
 
+export interface SubscriberDetails {
+  ceid: number
+  clientName: string
+  closingCode: string
+  mainDebtor: number
+  subscriberId: number
+  subscriberIsDead: number
+  subscriberName: string
+  subscriberType: string
+  unifiedCases: number
+  zone: string
+}
+
+export interface Subscriber {
+  ceid: number
+  doctypeId: number
+  subscriber: string
+  subscriberId: number
+}
+
 export interface AttachmentData {
   assignee: string
   due_date: Date
   file_name: string
   locked: boolean
-  rows: {
-    ceid: number
-    doctypeId: number
-    subscriber: string
-    subscriberId: number
-  }[]
+  lock_userId?: number
   status: number
   tartalom: string
   vh_level_type: number
+  rows: Subscriber[]
 }
 
 @Injectable({

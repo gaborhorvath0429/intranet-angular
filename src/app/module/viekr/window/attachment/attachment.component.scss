@@ -4,6 +4,34 @@
 
   .controls {
     width: 50%;
+
+    .document-types {
+      margin-bottom: 20px;
+    }
+
+    .debtor {
+      margin-bottom: 5px;
+      .ceid {
+        width: 75px;
+        margin-right: 10px;
+      }
+      .subscribers {
+        margin-left: 5px;
+        margin-right: 10px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 10px;
+      }
+    }
+
+    .message-field {
+      width: 99%;
+      height: 70px;
+      resize: none;
+      color: black;
+      margin-bottom: 10px;
+    }
   }
 
   .attachment {

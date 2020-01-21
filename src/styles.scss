@@ -36,3 +36,12 @@ input[type=number], input[type=text] {
     outline-width: 0;
   }
 }
+
+textarea {
+  padding: 4px 6px 3px 6px;
+  background: white repeat-x 0 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: silver #d9d9d9 #d9d9d9;
+  font: normal 13px helvetica,arial,verdana,sans-serif;
+}

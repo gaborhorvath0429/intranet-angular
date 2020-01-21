@@ -1,15 +1,24 @@
-<app-modal id="viekrAttachment" fullScreen="true" [title]="modalService.messageTitle">
+<app-modal id="viekrAttachment" fullScreen="true" [title]="lockedBy ? 'Lockolva általa: ' + lockedBy : ''">
   <div *ngIf="attachmentData" class="container">
     <div class="controls">
-      <div class="debtor">
-        <app-combo-box [model]="subscribersModel" #debtorCombobox></app-combo-box>
+      <div class="document-types">
+        Dokumentum típusa:
+        <app-checkbox-group [disabled]="isDisabled" [model]="documentTypesModel" labelAttribute="label" #documentTypes></app-checkbox-group>
       </div>
+      <div class="debtor" *ngFor="let subscriber of subscribers; let i = index" [style.color]="isDisabled ? 'grey' : ''">
+        CEID: <input [disabled]="isDisabled" (keyup)="onCeidChange($event.target.value, i)" [style.color]="isDisabled ? 'grey' : ''" type="number" class="ceid" ceidInput #debtorCeidInput>
+        Adós: <app-combo-box [disabled]="isDisabled" width="250" class="subscribers" (selectionChange)="debtorComboboxChange($event, i)" #debtorCombobox></app-combo-box>
+        <span #subscriberDescription></span>
+      </div>
+      Üzenet:<br>
+      <textarea class="message-field" [(ngModel)]="attachmentData.tartalom" disabled></textarea>
+      <app-grid [model]="commentsModel" [border]="false" [height]="400"></app-grid>
     </div>
     <div class="attachment">
       <ngx-extended-pdf-viewer [src]="'https://intranet.eosksihu.net/viekr_docs/' + attachmentData.file_name" height="90vh" useBrowserLocale="true"></ngx-extended-pdf-viewer>
     </div>
   </div>
   <div class="modal-footer">
-    <app-button (click)="modalService.close('viekrAttachment')">OK</app-button>
+    <app-button (click)="save(); modalService.close('viekrAttachment')">Mentés</app-button>
   </div>
 </app-modal>

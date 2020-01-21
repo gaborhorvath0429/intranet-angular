@@ -1,0 +1,6 @@
+<div class="container" [style.color]="disabled ? 'grey' : ''">
+  <div class="item" *ngFor="let item of items">
+    <input type="checkbox" value="item[idAttribute]" [disabled]="disabled" (change)="toggleItemChecked(item[idAttribute])" [checked]="selectedIds.includes(item[idAttribute])">
+    {{ item[labelAttribute] }}
+  </div>
+</div>

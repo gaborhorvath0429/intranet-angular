@@ -15,6 +15,7 @@ import { ViekrService, AttachmentData } from './service/viekr.service'
 export class ViekrComponent implements AfterContentInit {
 
   attachmentData: AttachmentData
+  attachmentId: number
 
   constructor(
     public incomingModel: IncomingModel,
@@ -64,9 +65,9 @@ export class ViekrComponent implements AfterContentInit {
   }
 
   onIncomingRowDoubleClick(row: any): void {
-    console.log(row)
     this.service.getAttachmentData(row).subscribe((res: AttachmentData) => {
       this.attachmentData = res
+      this.attachmentId = row.id
       this.modalService.open('viekrAttachment')
     }, () => {
       this.modalService.showError(null, 'Nincs adós az adott ügyhöz!')

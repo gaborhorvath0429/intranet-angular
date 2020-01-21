@@ -39,7 +39,7 @@ export class PaymentModel extends Model {
     name: 'INCLUSION_DATE',
     displayName: 'Beszámítás dátuma',
     type: 'date',
-    dateFormat: 'YYYY-MM-DD'
+    dateFormat: 'YYYY.MM.DD'
   }, {
     name: 'INCLUSION_AMOUNT',
     displayName: 'Beszámítás összege',

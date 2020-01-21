@@ -38,7 +38,7 @@
   <form class="new-item-form" [formGroup]="newOverPaymentForm">
     <div class="input">
       <span>Túlfizetéses CEID:</span>
-      <input type="text" formControlName="overPaymentCeid" [form]="newOverPaymentForm" ceidInput formInput>
+      <input type="number" formControlName="overPaymentCeid" [form]="newOverPaymentForm" ceidInput formInput>
     </div>
     <div class="input">
       <span>Payment Doc ID:</span>
@@ -46,7 +46,7 @@
     </div>
     <div class="input">
       <span>Beszámításos CEID:</span>
-      <input type="text" formControlName="inclusionCeid" [form]="newOverPaymentForm" ceidInput formInput>
+      <input type="number" formControlName="inclusionCeid" [form]="newOverPaymentForm" ceidInput formInput>
     </div>
     <div class="input">
       <span>Beszámítás dátuma:</span>

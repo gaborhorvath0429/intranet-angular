@@ -40,6 +40,7 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
   @Input() savedViews = false
   @Input() paginator = false
   @Input() selectionModel: 'single' | 'checkbox' = 'single'
+  @Input() border = true
   @Output() rowDoubleClick = new EventEmitter<any>()
 
   public selection: any[] = []

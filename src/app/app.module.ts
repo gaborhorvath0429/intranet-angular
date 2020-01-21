@@ -34,6 +34,7 @@ import { SearchPipe } from './core/components/input/combo-box/combo-search.pipe'
 import { ConfirmComponent } from './core/components/modal/confirm/confirm.component';
 import { AttachmentComponent } from './module/viekr/window/attachment/attachment.component'
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { CheckboxGroupComponent } from './core/components/input/checkbox-group/checkbox-group.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     ComboBoxComponent,
     SearchPipe,
     ConfirmComponent,
-    AttachmentComponent
+    AttachmentComponent,
+    CheckboxGroupComponent
   ],
   imports: [
     BrowserModule,

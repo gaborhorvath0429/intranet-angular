@@ -1,0 +1,13 @@
+.container {
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  .item {
+    input[type=checkbox] {
+      margin-right: 5px;
+    }
+    margin: 5px 0;
+  }
+}

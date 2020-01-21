@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http'
 @Injectable({
   providedIn: 'root'
 })
-export class SubscribersModel extends Model {
+export class ViekrAttachmentSubscribersModel extends Model {
   constructor(http: HttpClient) {
     super(http)
     super.init()
