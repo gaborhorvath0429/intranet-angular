@@ -12,6 +12,7 @@ export class ModalComponent implements OnInit, OnDestroy {
   @Input() width?: number
   @Input() height?: number
   @Input() fullScreen = false
+  @Input() alignFooter = 'end'
   private element: any
   public zIndex: number
 

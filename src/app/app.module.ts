@@ -20,7 +20,7 @@ import { PaginatorComponent } from './core/components/grid/paginator/paginator.c
 import { PaginatorDirective } from './core/components/grid/directive/paginator.directive'
 import { FiltersDirective } from './core/components/grid/directive/filters.directive'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { AngularMyDatePickerModule } from 'angular-mydatepicker'
+import { AngularMyDatePickerModule, IAngularMyDpOptions } from 'angular-mydatepicker'
 import { DatePickerComponent } from './core/components/input/date-picker/date-picker.component'
 import { CeidInputDirective } from './core/components/input/directives/ceid-input.directive'
 import { FormInputDirective } from './core/components/input/directives/form-input.directive'
@@ -35,6 +35,11 @@ import { ConfirmComponent } from './core/components/modal/confirm/confirm.compon
 import { AttachmentComponent } from './module/viekr/window/attachment/attachment.component'
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { CheckboxGroupComponent } from './core/components/input/checkbox-group/checkbox-group.component';
+
+export const dpOptions: IAngularMyDpOptions = {
+  dateRange: false,
+  dateFormat: 'yyyy-mm-dd'
+}
 
 @NgModule({
   declarations: [

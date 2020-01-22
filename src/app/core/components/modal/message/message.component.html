@@ -1,4 +1,4 @@
-<app-modal id="message" [title]="modalService.messageTitle">
+<app-modal id="message" alignFooter="center" [title]="modalService.messageTitle">
     <div [innerHTML]="modalService.message"></div>
     <div class="modal-footer">
       <app-button (click)="modalService.close('message')">OK</app-button>

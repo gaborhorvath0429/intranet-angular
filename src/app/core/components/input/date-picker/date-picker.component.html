@@ -1,4 +1,4 @@
-<div class="input">
+<div class="input" [style.width]="width + 'px'">
   <input class="date-picker-input" [style.border-color]="getBorderColor()" type="text" [placeholder]="placeholder"
   angular-mydatepicker name="mydate" (click)="dp.toggleCalendar()"
   [(ngModel)]="model" [options]="options"

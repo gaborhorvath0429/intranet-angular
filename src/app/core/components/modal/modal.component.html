@@ -5,7 +5,7 @@
     </div>
     <div class="modal-body" [style.height]="height ? height + 'px' : fullScreen ? '96.5vh' : ''">
       <ng-content></ng-content>
-      <div class="modal-footer">
+      <div class="modal-footer" [style.justify-content]="alignFooter === 'center' ? alignFooter : 'flex-' + alignFooter">
         <ng-content select=".modal-footer"></ng-content>
       </div>
     </div>

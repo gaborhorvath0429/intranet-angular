@@ -20,12 +20,13 @@ export interface SubscriberDetails {
 
 export interface Subscriber {
   ceid: number
-  doctypeId: number
-  subscriber: string
+  doctypeId?: number
+  subscriber?: string
   subscriberId: number
 }
 
 export interface AttachmentData {
+  attachmentId?: number
   assignee: string
   due_date: Date
   file_name: string
@@ -34,6 +35,7 @@ export interface AttachmentData {
   status: number
   tartalom: string
   vh_level_type: number
+  ceidData?: { ceid: number, subscriberId: number }[]
   rows: Subscriber[]
 }
 
@@ -69,4 +71,7 @@ export class ViekrService {
     return this.http.get<AttachmentData>(environment.apiUrl + '/viekr/getDetails', { params })
   }
 
+  saveAttachment(data: AttachmentData): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(environment.apiUrl + '/viekr/setStatus', data)
+  }
 }

@@ -1,4 +1,4 @@
-<app-modal id="viekrAttachment" fullScreen="true" [title]="lockedBy ? 'Lockolva általa: ' + lockedBy : ''">
+<app-modal id="viekrAttachment" fullScreen="true" alignFooter="start" [title]="lockedBy ? 'Lockolva általa: ' + lockedBy : ''">
   <div *ngIf="attachmentData" class="container">
     <div class="controls">
       <div class="document-types">
@@ -10,15 +10,23 @@
         Adós: <app-combo-box [disabled]="isDisabled" width="250" class="subscribers" (selectionChange)="debtorComboboxChange($event, i)" #debtorCombobox></app-combo-box>
         <span #subscriberDescription></span>
       </div>
+      <app-button *ngIf="!isDisabled" class="new-debtor-button" (click)="newDebtor()">Új hozzáadása</app-button>
       Üzenet:<br>
       <textarea class="message-field" [(ngModel)]="attachmentData.tartalom" disabled></textarea>
-      <app-grid [model]="commentsModel" [border]="false" [height]="400"></app-grid>
+      <app-grid [model]="commentsModel" [height]="300" [border]="false"></app-grid>
     </div>
     <div class="attachment">
       <ngx-extended-pdf-viewer [src]="'https://intranet.eosksihu.net/viekr_docs/' + attachmentData.file_name" height="90vh" useBrowserLocale="true"></ngx-extended-pdf-viewer>
     </div>
   </div>
   <div class="modal-footer">
-    <app-button (click)="save(); modalService.close('viekrAttachment')">Mentés</app-button>
+    <form [formGroup]="saveAttachmentForm">
+      Státusz: <app-combo-box formControlName="status" [model]="statusesModel" listPosition="top" [control]="saveAttachmentForm.controls.status" [form]="saveAttachmentForm" formInput></app-combo-box>
+      Levél VH-nak: <app-combo-box formControlName="letterType" [model]="letterTypesModel" listPosition="top" [control]="saveAttachmentForm.controls.letterType" [form]="saveAttachmentForm" formInput></app-combo-box>
+      Megjegyzés: <input type="text" formControlName="comment" [form]="saveAttachmentForm" formInput>
+      Felelős: <app-combo-box formControlName="assignee" [model]="usersModel" listPosition="top" [control]="saveAttachmentForm.controls.assignee" [form]="saveAttachmentForm" formInput></app-combo-box>
+      Határidő: <app-date-picker [width]="150" formControlName="dueDate" [control]="saveAttachmentForm.controls.dueDate" [form]="saveAttachmentForm" [options]="dpOptions" formInput></app-date-picker>
+    </form>
+    <app-button class="save-button" (click)="save(); modalService.close('viekrAttachment')">Mentés</app-button>
   </div>
 </app-modal>

@@ -25,6 +25,12 @@
       }
     }
 
+    .new-debtor-button {
+      display: block;
+      margin-left: auto;
+      width: 110px;
+    }
+
     .message-field {
       width: 99%;
       height: 70px;
@@ -36,5 +42,17 @@
 
   .attachment {
     width: 50%;
+  }
+}
+
+.modal-footer {
+  width: 100%;
+  display: flex;
+
+  form {
+    display: inline;
+  }
+  .save-button {
+    margin-left: auto;
   }
 }

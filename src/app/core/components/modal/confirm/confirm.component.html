@@ -1,4 +1,4 @@
-<app-modal id="confirm" [title]="'Megerősítés'">
+<app-modal id="confirm" alignFooter="center" [title]="'Megerősítés'">
   <div [innerHTML]="modalService.confirmationMessage"></div>
   <div class="modal-footer">
     <app-button (click)="modalService.close('confirm')">Cancel</app-button>

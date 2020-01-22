@@ -21,9 +21,7 @@ import * as _ from 'lodash'
 export class ComboBoxComponent implements AfterViewInit, ControlValueAccessor {
 
   @Input() placeholder = 'Kérem válasszon...'
-  @Input('model') set model(value: Model) {
-    this.data = _.clone(value.data)
-  }
+  @Input() model: Model
   @Input() labelAttribute = 'name'
   @Input() idAttribute = 'id'
   @Input() submitAttribute = 'id'
@@ -38,7 +36,11 @@ export class ComboBoxComponent implements AfterViewInit, ControlValueAccessor {
 
   @Output() selectionChange = new EventEmitter()
 
-  data: any[]
+  get data(): any[] {
+    return this.model ? this.model.data : this.list
+  }
+
+  list: any[] = []
   inputText = ''
   listHidden = true
   selected: any
@@ -48,7 +50,7 @@ export class ComboBoxComponent implements AfterViewInit, ControlValueAccessor {
   constructor() { }
 
   setData(data: any[]) {
-    this.data = data
+    this.list = data
   }
 
   ngAfterViewInit() {
@@ -62,13 +64,12 @@ export class ComboBoxComponent implements AfterViewInit, ControlValueAccessor {
     )
   }
 
+  selectById(id: string) {
+    let item = this.data.find(item => item[this.idAttribute] === id)
+    if (item) this.selectItem(item)
+  }
+
   selectItem(item: any): void {
-    if (!this.data.includes(item)) {
-      console.error('Combobox model does not contain the item you want to select')
-      this.inputText = ''
-      this.listHidden = true
-      return
-    }
     this.selected = item
     this.inputText = item[this.labelAttribute]
     this.listHidden = true
@@ -115,7 +116,7 @@ export class ComboBoxComponent implements AfterViewInit, ControlValueAccessor {
 
   // From ControlValueAccessor interface
   writeValue(value: any) {
-    this.inputText = value
+    this.selectById(value)
   }
 
   // From ControlValueAccessor interface
@@ -127,7 +128,7 @@ export class ComboBoxComponent implements AfterViewInit, ControlValueAccessor {
   registerOnTouched(fn: any) { this.onTouched = fn }
 
   validate({ value }: FormControl) {
-    if (!this.selected) {
+    if (!this.selected && this.inputText) {
       return {
         mustSelect: true
       }

@@ -3,6 +3,7 @@ import { GridComponent } from '../grid.component'
 import { fromEvent } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { Field } from 'src/app/core/model/model.class'
+import * as moment from 'moment'
 
 @Directive({
   selector: '[showFilters]'
@@ -97,11 +98,15 @@ export class FiltersDirective {
         if (filter.data.comparison === 'gt') this.filterGtValue = filter.data.value
         if (filter.data.type === 'string') this.filterTextValue = filter.data.value
         if (filter.data.type === 'date') {
-          let date = new Date(filter.data.value)
-          let dateObject = { year: date.getFullYear(), month: Number(date.getMonth()) + 1, day: date.getDay() }
+          let date = moment(new Date(filter.data.value))
+          let dateObject = { year: date.year(), month: date.month() + 1, day: date.date() }
+          let month = dateObject.month.toString()
+          if (month.length === 1) month = '0' + month
+          let day = dateObject.day.toString()
+          if (day.length === 1) day = '0' + day
           let dateValue = {
             isRange: false,
-            singleDate: { date: dateObject, formatted: filter.data.value }
+            singleDate: { date: dateObject, formatted: dateObject.year + '-' + month + '-' + day }
           }
           if (filter.data.comparison === 'eq') this.filterDateValue = dateValue
           if (filter.data.comparison === 'lt') this.filterDateLtValue = dateValue

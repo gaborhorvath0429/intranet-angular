@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, forwardRef,
   ViewEncapsulation, ElementRef, ViewChild, AfterViewInit } from '@angular/core'
 import { IMyDateModel, IAngularMyDpOptions } from 'angular-mydatepicker'
 import { NG_VALUE_ACCESSOR, FormControl, ControlValueAccessor } from '@angular/forms'
+import * as moment from 'moment'
 
 @Component({
   selector: 'app-date-picker',
@@ -20,10 +21,12 @@ export class DatePickerComponent implements AfterViewInit, ControlValueAccessor 
   @Output() modelChange = new EventEmitter<IMyDateModel>()
 
   @Input() options: IAngularMyDpOptions
-  @Input() placeholder: string
+  @Input() placeholder = 'éééé.hh.nn'
 
   @Input() control: FormControl = new FormControl()
   @Input() formControlName?: string
+
+  @Input() width?: number
 
   @ViewChild('input') inputRef: ElementRef
 
@@ -58,14 +61,8 @@ export class DatePickerComponent implements AfterViewInit, ControlValueAccessor 
 
   // get accessor
   get value(): any {
+    console.log(this.innerValue)
     return this.innerValue
-  }
-
-  // set accessor including call the onchange callback
-  set value(v: any) {
-    if (v !== this.innerValue) {
-      this.innerValue = v
-    }
   }
 
   // propagate changes into the custom form control
@@ -73,7 +70,18 @@ export class DatePickerComponent implements AfterViewInit, ControlValueAccessor 
 
   // From ControlValueAccessor interface
   writeValue(value: any) {
-    this.innerValue = value
+    let date = moment(new Date(value))
+    let dateObject = { year: date.year(), month: date.month() + 1, day: date.date() }
+    let month = dateObject.month.toString()
+    if (month.length === 1) month = '0' + month
+    let day = dateObject.day.toString()
+    if (day.length === 1) day = '0' + day
+    let formatted = dateObject.year + '-' + month + '-' + day
+    this.model = {
+      isRange: false,
+      singleDate: { date: dateObject, formatted }
+    }
+    this.onChange(this.model)
   }
 
   // From ControlValueAccessor interface
