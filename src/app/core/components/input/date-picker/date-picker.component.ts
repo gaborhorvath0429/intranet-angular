@@ -61,7 +61,6 @@ export class DatePickerComponent implements AfterViewInit, ControlValueAccessor 
 
   // get accessor
   get value(): any {
-    console.log(this.innerValue)
     return this.innerValue
   }
 
@@ -70,18 +69,20 @@ export class DatePickerComponent implements AfterViewInit, ControlValueAccessor 
 
   // From ControlValueAccessor interface
   writeValue(value: any) {
-    let date = moment(new Date(value))
-    let dateObject = { year: date.year(), month: date.month() + 1, day: date.date() }
-    let month = dateObject.month.toString()
-    if (month.length === 1) month = '0' + month
-    let day = dateObject.day.toString()
-    if (day.length === 1) day = '0' + day
-    let formatted = dateObject.year + '-' + month + '-' + day
-    this.model = {
-      isRange: false,
-      singleDate: { date: dateObject, formatted }
+    if (value) {
+      let date = moment(new Date(value))
+      let dateObject = { year: date.year(), month: date.month() + 1, day: date.date() }
+      let month = dateObject.month.toString()
+      if (month.length === 1) month = '0' + month
+      let day = dateObject.day.toString()
+      if (day.length === 1) day = '0' + day
+      let formatted = dateObject.year + '-' + month + '-' + day
+      this.model = {
+        isRange: false,
+        singleDate: { date: dateObject, formatted }
+      }
+      this.onChange(this.model)
     }
-    this.onChange(this.model)
   }
 
   // From ControlValueAccessor interface

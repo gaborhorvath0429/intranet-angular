@@ -51,6 +51,10 @@
 
   form {
     display: inline;
+    margin-left: 15px;
+    span {
+      margin-right: 10px;
+    }
   }
   .save-button {
     margin-left: auto;

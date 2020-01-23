@@ -14,6 +14,7 @@ import { StatusModel } from '../../model/statuses'
 import { FormGroup, FormControl } from '@angular/forms'
 import { UsersModel } from '../../model/users'
 import { FormSubmit } from 'src/app/core/decorators/form-submit'
+import { IAngularMyDpOptions } from 'angular-mydatepicker'
 
 @Component({
   selector: 'app-viekr-attachment',
@@ -21,7 +22,13 @@ import { FormSubmit } from 'src/app/core/decorators/form-submit'
   styleUrls: ['./attachment.component.scss']
 })
 export class AttachmentComponent implements OnChanges {
-  dpOptions = dpOptions
+  dpOptions: IAngularMyDpOptions = {
+    dateRange: false,
+    dateFormat: 'yyyy-mm-dd',
+    openSelectorTopOfInput: true // datepicker is on the bottom of the screen so we need the selector to be on the top
+  }
+
+  public attachmentUrl = 'https://intranet.eosksihu.net/viekr_docs/'
 
   @Input() attachmentData: AttachmentData
   @Input() attachmentId: number
@@ -60,9 +67,10 @@ export class AttachmentComponent implements OnChanges {
     let doctypes = this.documentTypesGroup.selectedIds
     let ceidData = []
     this.ceidInputs.forEach((ceidInput, index) => {
-      ceidData.push({
+      let subscriberId = this.debtorComboboxes.toArray()[index].submitValue
+      if (subscriberId) ceidData.push({
         ceid: ceidInput.nativeElement.value,
-        subscriberId: this.debtorComboboxes.toArray()[index].submitValue
+        subscriberId
       })
     })
     let data = Object.assign(this.saveAttachmentForm.value, {
@@ -83,6 +91,7 @@ export class AttachmentComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    let formControls = this.saveAttachmentForm.controls
     this.commentsModel.loadData([])
     this.subscribers = []
     let data = changes.attachmentData.currentValue as AttachmentData
@@ -97,10 +106,10 @@ export class AttachmentComponent implements OnChanges {
         if (e.doctypeId) this.documentTypesGroup.selectedIds.push(e.doctypeId)
       })
       this.commentsModel.load(1, { attachment_id: this.attachmentId })
-      this.saveAttachmentForm.controls.status.setValue(data.status)
-      this.saveAttachmentForm.controls.letterType.setValue(data.vh_level_type)
-      this.saveAttachmentForm.controls.assignee.setValue(data.assignee)
-      this.saveAttachmentForm.controls.dueDate.setValue(data.due_date)
+      formControls.status.setValue(data.status)
+      formControls.letterType.setValue(data.vh_level_type)
+      formControls.assignee.setValue(data.assignee)
+      formControls.dueDate.setValue(data.due_date)
     }
   }
 
@@ -116,17 +125,22 @@ export class AttachmentComponent implements OnChanges {
 
   setDebtorData(ceid: number, index: number) {
     this.subscribersModel.load(1, { ceid }).then((data: SubscriberDetails[]) => {
-      let combobox = this.debtorComboboxes.toArray()[index]
-      let ceidInput = this.ceidInputs.toArray()[index]
-      combobox.setData(data)
-      combobox.selectItem(data[0])
-      ceidInput.nativeElement.value = ceid.toString()
+      if (data.length) {
+        let combobox = this.debtorComboboxes.toArray()[index]
+        let ceidInput = this.ceidInputs.toArray()[index]
+        ceidInput.nativeElement.value = ceid.toString()
+        combobox.setData(data)
+        combobox.selectItem(data[0])
+      }
     })
   }
 
   onCeidChange(value: string, index: number) {
     if (value.length === 8) {
       this.setDebtorData(Number(value), index)
+    } else {
+      this.debtorComboboxes.toArray()[index].setData([])
+      this.debtorComboboxes.toArray()[index].value = ''
     }
   }
 
