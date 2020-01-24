@@ -74,4 +74,8 @@ export class ViekrService {
   saveAttachment(data: AttachmentData): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(environment.apiUrl + '/viekr/setStatus', data)
   }
+
+  getVhNumber(ceid: number, subscriberId: number): Observable<{executorCaseId: string}> {
+    return this.http.post<{executorCaseId: string}>(environment.apiUrl + '/viekr/getVHNumber', { ceid, subscriberId })
+  }
 }

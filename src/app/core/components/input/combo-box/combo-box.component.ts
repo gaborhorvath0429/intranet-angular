@@ -26,7 +26,7 @@ export class ComboBoxComponent implements AfterViewInit, ControlValueAccessor {
   @Input() idAttribute = 'id'
   @Input() submitAttribute = 'id'
   @Input() listPosition: 'top' | 'bottom' = 'bottom'
-  @Input() width: number
+  @Input() width: any
   @Input() disabled = false
 
   @Input() control: FormControl = new FormControl()
@@ -49,11 +49,11 @@ export class ComboBoxComponent implements AfterViewInit, ControlValueAccessor {
 
   constructor() { }
 
-  setData(data: any[]) {
+  setData(data: any[]): void {
     this.list = data
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.control.valueChanges.subscribe(
       () => { // reset the input when the form is reset.
         if (this.control.value === '' || this.control.value == null || this.control.value === undefined) {
@@ -64,9 +64,13 @@ export class ComboBoxComponent implements AfterViewInit, ControlValueAccessor {
     )
   }
 
-  selectById(id: string) {
+  selectById(id: string): void {
     let item = this.data.find(item => item[this.idAttribute] === id)
     if (item) this.selectItem(item)
+  }
+
+  setValue(val: any): void {
+    this.value = val
   }
 
   selectItem(item: any): void {
@@ -108,6 +112,7 @@ export class ComboBoxComponent implements AfterViewInit, ControlValueAccessor {
   set value(v: any) {
     if (v !== this.inputText) {
       this.inputText = v
+      this.propagateChange(v)
     }
   }
 

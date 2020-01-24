@@ -74,4 +74,8 @@ export class ViekrComponent implements AfterContentInit {
     })
   }
 
+  showNewMessageWindow(): void {
+    this.modalService.open('viekrMessage')
+  }
+
 }

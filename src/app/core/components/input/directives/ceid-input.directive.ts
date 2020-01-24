@@ -12,7 +12,6 @@ export class CeidInputDirective {
     if (this.el.nativeElement.value.length > 7 && e.which !== 8 && e.ctrlKey === false) {
       e.preventDefault()
     }
-    this.el.nativeElement.dispatchEvent(new Event('input')) // needed for ngModel to update
   }
 
 }

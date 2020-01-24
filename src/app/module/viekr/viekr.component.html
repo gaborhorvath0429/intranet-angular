@@ -12,7 +12,7 @@
     >
     <span class="bottom-left-toolbar">
       <app-toolbar-button #toolbarButton>Válasz</app-toolbar-button>
-      <app-toolbar-button #toolbarButton>Új üzenet</app-toolbar-button>
+      <app-toolbar-button (click)="showNewMessageWindow()" #toolbarButton>Új üzenet</app-toolbar-button>
     </span>
     <span class="bottom-toolbar">
       <form [formGroup]="assignToUserForm">
@@ -25,6 +25,7 @@
     </span>
     </app-grid>
     <app-viekr-attachment [attachmentData]="attachmentData" [attachmentId]="attachmentId"></app-viekr-attachment>
+    <app-viekr-message></app-viekr-message>
   </app-tab>
   <app-tab [title]="'Kimenő'"></app-tab>
   <app-tab [title]="'Elküldött'"></app-tab>

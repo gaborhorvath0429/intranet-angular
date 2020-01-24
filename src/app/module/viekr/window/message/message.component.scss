@@ -1,0 +1,35 @@
+form {
+  .input-row {
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    .title {
+      width: 15%;
+    }
+    .input {
+      width: 85%;
+      input[type=text] {
+        width: 100%;
+      }
+    }
+    .file-input {
+      display: flex;
+      width: 85%;
+      input[type=text] {
+        width: 100%;
+      }
+      label {
+        margin: 0;
+        margin-left: 4px;
+        padding: 4px;
+      }
+      input[type=file] {
+        display: none;
+      }
+    }
+  }
+  .additional-attachment-button {
+    float: right;
+    margin-top: 5px;
+  }
+}

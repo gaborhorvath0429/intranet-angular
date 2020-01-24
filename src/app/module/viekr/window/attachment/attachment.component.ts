@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges,
   ViewChildren, QueryList, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core'
-import { dpOptions } from 'src/app/app.module'
 import { ModalService } from 'src/app/core/services/modal-service.service'
 import { LetterTypesModel } from '../../model/letterTypes'
 import { DocumentTypesModel } from '../../model/documentTypes'
@@ -21,11 +20,11 @@ import { IAngularMyDpOptions } from 'angular-mydatepicker'
   templateUrl: './attachment.component.html',
   styleUrls: ['./attachment.component.scss']
 })
-export class AttachmentComponent implements OnChanges {
+export class ViekrAttachmentComponent implements OnChanges {
   dpOptions: IAngularMyDpOptions = {
     dateRange: false,
     dateFormat: 'yyyy-mm-dd',
-    openSelectorTopOfInput: true // datepicker is on the bottom of the screen so we need the selector to be on the top
+    openSelectorTopOfInput: true // datepicker is on the bottom of the screen so we need the selector to be on the top of it
   }
 
   public attachmentUrl = 'https://intranet.eosksihu.net/viekr_docs/'

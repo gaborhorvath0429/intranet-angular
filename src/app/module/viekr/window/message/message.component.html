@@ -1,0 +1,37 @@
+<app-modal id="viekrMessage" fullScreen="true" [title]="'Message - Viekr'">
+  <form [formGroup]="form">
+    <div class="input-row">
+      <span class="title">Címzett:</span>
+      <span class="input"><app-combo-box [model]="organizationsModel" width="full" formControlName="organizationId" [control]="form.controls.organizationId" [form]="form" formInput></app-combo-box></span>
+    </div>
+    <div class="input-row">
+      <span class="title">Tárgy:</span>
+      <span class="input"><input type="text" formControlName="subject" [form]="form" formInput></span>
+    </div>
+    <div class="input-row">
+      <span class="title">CEID:</span>
+      <span class="input"><input type="text" formControlName="ceids" [form]="form" ceidInput formInput></span>
+    </div>
+    <div class="input-row">
+      <span class="title">Adós:</span>
+      <span class="input"><app-combo-box width="full" formControlName="subscriberId" [control]="form.controls.subscriberId" [form]="form" formInput #debtorCombobox [disabled]="true" placeholder=""></app-combo-box></span>
+    </div>
+    <div class="input-row">
+      <span class="title">VH ügyiratszám:</span>
+      <span class="input"><input type="text" formControlName="vhNumber" [form]="form" disabled formInput></span>
+    </div>
+    <div class="input-row">
+      <span class="title">Csatolandó:</span>
+      <span class="input"><app-combo-box [model]="actionTypesModel" width="full" formControlName="actionType" [control]="form.controls.actionType" [form]="form" formInput></app-combo-box></span>
+    </div>
+    <div class="input-row" *ngFor="let item of additionalAttachments; let i = index">
+      <span class="title">{{ i === 0 ? 'További csatolmányok:' : '' }}</span>
+      <span class="file-input"><input [id]="'attachment_' + i" type="file" (change)="onFileInputChange($event.target.files, i)"><input type="text" [value]="item ? item.name : ''" disabled><label class="default-button" [for]="'attachment_' + i">Tallóz...</label></span>
+    </div>
+    <app-button class="additional-attachment-button" (click)="newAttachment()">További fájl csatolása</app-button>
+  </form>
+  <div class="modal-footer">
+    <app-button (click)="onFormSubmit()">Elküld</app-button>
+    <app-button (click)="modalService.close('viekrMessage')">Mégse</app-button>
+  </div>
+</app-modal>
