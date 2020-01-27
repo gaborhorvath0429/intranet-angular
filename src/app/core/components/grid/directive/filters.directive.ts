@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core'
 import { GridComponent } from '../grid.component'
-import { fromEvent } from 'rxjs'
-import { filter, map } from 'rxjs/operators'
+import { fromEvent, animationFrameScheduler } from 'rxjs'
+import { map, switchMap, takeUntil, tap, subscribeOn } from 'rxjs/operators'
 import { Field } from 'src/app/core/model/model.class'
 import * as moment from 'moment'
 
@@ -26,45 +26,44 @@ export class FiltersDirective {
   }
 
   initDragAndDrop = function(): void {
-    let headers = document.getElementsByClassName('table-header')
-    let label = document.getElementById('drag-label')
-    let mouseisdown = false
-    let draggingField = null
-    let startPos: { x: number, y: number}
+    let headers = document.getElementsByClassName('table-header-' + this.module)
+    let label = document.getElementById('drag-label-' + this.module)
 
-    Array.from(headers).forEach(header => {
-      fromEvent(header, 'mousedown').subscribe((e: MouseEvent) => {
-          mouseisdown = true
-          draggingField = label.innerHTML = header.textContent
-          startPos = { x: e.offsetX, y: e.offsetY}
-          label.style.display = 'block'
-      })
+    let mousedown$ = fromEvent<MouseEvent>(headers, 'mousedown')
+    let mousemove$ = fromEvent<MouseEvent>(document, 'mousemove')
+    let mouseup$ = fromEvent<MouseEvent>(document, 'mouseup')
 
-      fromEvent(document, 'mouseup').pipe(
-        filter(e => mouseisdown)
-      ).subscribe((e: any) => {
-        mouseisdown = false
-        label.style.display = 'none'
-        if (e.toElement.classList.contains('filters')) {
-          this.filterFields.add(this.model.fields.find(field => field.displayName === draggingField))
-        } else if (e.toElement.classList.contains('sorters')) {
-          this.sorterFields.add(this.model.fields.find(field => field.displayName === draggingField))
-        }
-      })
-
-      fromEvent(document, 'mousemove').pipe(
-        filter(e => mouseisdown),
-        map((e: MouseEvent) => {
+    let drag$ = mousedown$.pipe(
+      tap((e: any) => {
+        label.style.display = 'block'
+        label.innerHTML = e.target.textContent
+      }),
+      switchMap(
+        (start) => mousemove$.pipe(map(move => {
+          move.preventDefault()
           return {
-            left: e.clientX - startPos.x,
-            top: e.clientY - startPos.y
+            left: move.clientX - start.offsetX,
+            top: move.clientY - start.offsetY
           }
-        })
+        }),
+        takeUntil(mouseup$.pipe(
+          tap((e: any) => {
+            label.style.display = 'none'
+            if (e.toElement.classList.contains('filters')) {
+              this.filterFields.add(this.model.fields.find((field: Field) => field.displayName === label.innerHTML))
+            } else if (e.toElement.classList.contains('sorters')) {
+              this.sorterFields.add(this.model.fields.find((field: Field) => field.displayName === label.innerHTML))
+            }
+          })
+        )))
       )
-      .subscribe(p => {
-        label.style.top = p.top + 30 + 'px'
-        label.style.left = p.left + 50 + 'px'
-      })
+    )
+
+    let position$ = drag$.pipe(subscribeOn(animationFrameScheduler))
+
+    position$.subscribe(pos => {
+      label.style.top = `${pos.top + 30}px`
+      label.style.left = `${pos.left + 30}px`
     })
   }
 
@@ -129,7 +128,7 @@ export class FiltersDirective {
       this.filterNumberValue = ''
     }
     this.selectedFilterField = field
-    this.modalService.open('gridFilterModal')
+    this.modalService.open('gridFilterModal-' + this.module)
   }
 
   deleteSort = function(field: Field): void {

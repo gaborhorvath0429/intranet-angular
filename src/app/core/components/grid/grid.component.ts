@@ -98,6 +98,7 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
   }
 
   formatCellValue(value: any, column: Field): string | number {
+    if (!value) return ''
     switch (column.type) {
       case 'string':
         return value

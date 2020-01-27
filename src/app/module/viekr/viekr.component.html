@@ -1,7 +1,7 @@
 <app-tab-panel>
   <app-tab [title]="'Bejövő'">
     <app-grid
-      module="viekr"
+      module="viekr-incoming"
       [model]="incomingModel"
       [height]="800"
       [rowWidth]="150"
@@ -9,9 +9,10 @@
       showFilters
       showPaginator
       showSavedViews
+      #incomingGrid
     >
     <span class="bottom-left-toolbar">
-      <app-toolbar-button #toolbarButton>Válasz</app-toolbar-button>
+      <app-toolbar-button (click)="replyMessage()" #toolbarButton>Válasz</app-toolbar-button>
       <app-toolbar-button (click)="showNewMessageWindow()" #toolbarButton>Új üzenet</app-toolbar-button>
     </span>
     <span class="bottom-toolbar">
@@ -19,7 +20,7 @@
         <app-combo-box formControlName="user" [model]="usersModel" listPosition="top" [control]="assignToUserForm.controls.user" [form]="assignToUserForm" formInput></app-combo-box>
         Ü. száma: <input formControlName="count" class="case-number" type="number" [form]="assignToUserForm" formInput>
         <app-toolbar-button type="submit" (click)="onAssignToUserFormSubmit()" #toolbarButton>Felelős</app-toolbar-button>
-        {{ grid.selection.length }} kijelölt rekord
+        {{ incomingGrid.selection.length }} kijelölt rekord
       </form>
       <app-toolbar-button (click)="exportIncoming()" float="right">Excel export</app-toolbar-button>
     </span>
@@ -27,6 +28,22 @@
     <app-viekr-attachment [attachmentData]="attachmentData" [attachmentId]="attachmentId"></app-viekr-attachment>
     <app-viekr-message></app-viekr-message>
   </app-tab>
-  <app-tab [title]="'Kimenő'"></app-tab>
+  <app-tab [title]="'Kimenő'">
+    <app-grid
+      module="viekr-outgoing"
+      [model]="outgoingModel"
+      [height]="800"
+      [rowWidth]="150"
+      showFilters
+      showPaginator
+      showSavedViews
+      #outgoingGrid
+    >
+    <span class="bottom-toolbar">
+      <app-toolbar-button (click)="blockOutgoing()">Blokkolás</app-toolbar-button>
+      <app-toolbar-button (click)="exportOutgoing()" float="right">Excel export</app-toolbar-button>
+    </span>
+    </app-grid>
+  </app-tab>
   <app-tab [title]="'Elküldött'"></app-tab>
 </app-tab-panel>

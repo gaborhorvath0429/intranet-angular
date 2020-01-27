@@ -68,6 +68,7 @@ export class RequestInterceptor implements HttpInterceptor {
         // auto logout if 401 response returned from api
         this.authenticationService.logout()
         location.reload(true)
+        return
       }
       this.modalService.showError(err)
 

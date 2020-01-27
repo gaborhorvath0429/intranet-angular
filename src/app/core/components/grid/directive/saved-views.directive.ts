@@ -4,7 +4,8 @@ import { Field } from 'src/app/core/model/model.class'
 import { GridViewService } from 'src/app/core/services/socket.service'
 
 @Directive({
-  selector: '[showSavedViews]'
+  selector: '[showSavedViews]',
+  providers: [GridViewService]
 })
 export class SavedViewsDirective {
 
@@ -62,7 +63,7 @@ export class SavedViewsDirective {
   onSaveNewViewButtonClick = function(): void {
     this.createSavedView()
     this.savedViewName = ''
-    this.modalService.close('viewSaveModal')
+    this.modalService.close('viewSaveModal-' + this.module)
   }
 
   selectColumn = function(column: Field): void {

@@ -16,10 +16,12 @@ import { ViekrAttachmentSubscribersModel } from '../../model/subscribers'
 export class ViekrMessageComponent implements OnInit {
 
   public additionalAttachments: File[] = [null]
+  public message = ''
 
   @ViewChild('debtorCombobox') debtorCombobox: ComboBoxComponent
 
   form = new FormGroup({
+    elozmenyAzonosito: new FormControl(''),
     organizationId: new FormControl('', Validators.required),
     subscriberId: new FormControl('', Validators.required),
     vhNumber: new FormControl('', Validators.required),
@@ -38,7 +40,8 @@ export class ViekrMessageComponent implements OnInit {
 
   ngOnInit(): void {
     this.form.get('ceids').valueChanges.subscribe(ceid => {
-      if (ceid.length === 8) {
+      if (ceid && ceid.length >= 8) {
+        ceid = ceid.split(',').map((val: string) => val.match(/\d+/))[0]
         this.subscribersModel.load(1, { ceid }).then((data: SubscriberDetails[]) => {
           if (data.length) {
             this.debtorCombobox.disabled = false
@@ -54,7 +57,9 @@ export class ViekrMessageComponent implements OnInit {
       }
     })
     this.form.get('subscriberId').valueChanges.subscribe(subscriberId => {
-      if (subscriberId) this.service.getVhNumber(this.form.get('ceids').value, subscriberId).subscribe(({ executorCaseId }) => {
+      if (!this.form.get('ceids').value) return
+      let ceid = this.form.get('ceids').value.split(',').map((val: string) => val.match(/\d+/))[0]
+      if (subscriberId) this.service.getVhNumber(ceid, subscriberId).subscribe(({ executorCaseId }) => {
         this.form.get('vhNumber').setValue(executorCaseId)
       }, () => this.modalService.showError(null, 'Nincs VH ügyiratszám az ügyben.'))
     })
@@ -70,7 +75,14 @@ export class ViekrMessageComponent implements OnInit {
 
   @FormSubmit('form')
   onFormSubmit(): void {
-    console.log(this.form.value)
+    if (!this.message && this.additionalAttachments.every(file => file === null) && !this.form.get('actionType').value) {
+      this.modalService.showError(null, 'Az üzenet nem küldhető el üresen.')
+    } else {
+      this.service.sendMessage({...this.form.value, message: this.message, files: this.additionalAttachments}).subscribe(() => {
+        this.modalService.showMessage('Üzenet sikeresen elküldve!')
+        this.modalService.close('viekrMessage')
+      })
+    }
   }
 
 }

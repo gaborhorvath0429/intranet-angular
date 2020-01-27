@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Socket } from 'ngx-socket-io'
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable() // WE DONT WANT THIS TO BE SINGLETON SO WE DONT PROVIDE IN ROOT
 export class GridViewService extends Socket {
     constructor() {
         super({ url: 'http://localhost:8888/grid-view', options: {} })

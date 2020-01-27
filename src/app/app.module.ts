@@ -36,6 +36,7 @@ import { ViekrAttachmentComponent } from './module/viekr/window/attachment/attac
 import { ViekrMessageComponent } from './module/viekr/window/message/message.component'
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer'
 import { CheckboxGroupComponent } from './core/components/input/checkbox-group/checkbox-group.component'
+import { EditorModule } from '@tinymce/tinymce-angular'
 
 export const dpOptions: IAngularMyDpOptions = {
   dateRange: false,
@@ -81,6 +82,7 @@ export const dpOptions: IAngularMyDpOptions = {
     FontAwesomeModule,
     AngularMyDatePickerModule,
     NgxExtendedPdfViewerModule,
+    EditorModule,
   ],
   providers: [
     {
@@ -89,7 +91,6 @@ export const dpOptions: IAngularMyDpOptions = {
       multi: true
     },
     NotificationService,
-    GridViewService,
     MostVisitedMenusService
   ],
   bootstrap: [AppComponent],

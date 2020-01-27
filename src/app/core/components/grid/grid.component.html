@@ -35,7 +35,7 @@
         <thead>
           <tr>
             <th class="checkbox-column" *ngIf="selectionModel === 'checkbox'"><input type="checkbox" (click)="selectAll()" [checked]="isAllSelected"></th>
-            <th class="table-header"
+            <th class="table-header table-header-{{module}}"
               *ngFor="let column of model.displayFields"
               [style.width]="hiddenColumns.length ? '' : column.width ? column.width + 'px' : rowWidth + 'px'"
               [hidden]="hiddenColumns.includes(column)"
@@ -82,7 +82,7 @@
       </div>
       <div class="columns-toolbar" [style.height]="'40px'">
         <app-toolbar-button [disabled]="!selectedColumns.length" (click)="filterColumns()">Előnézet</app-toolbar-button>
-        <app-toolbar-button [disabled]="!selectedColumns.length" (click)="selectedView ? createSavedView() : modalService.open('viewSaveModal')">Mentés</app-toolbar-button>
+        <app-toolbar-button [disabled]="!selectedColumns.length" (click)="selectedView ? createSavedView() : modalService.open('viewSaveModal-' + module)">Mentés</app-toolbar-button>
       </div>
     </div>
     <div class="saved-views" [style.height]="'250px'">
@@ -104,11 +104,11 @@
         <app-toolbar-button (click)="selectedColumns = []; selectedView = null; filterColumns()">Alaphelyzetbe</app-toolbar-button>
       </div>
     </div>
-    <app-modal id="viewSaveModal" [title]="'The name of the view'">
+    <app-modal id="viewSaveModal-{{module}}" [title]="'The name of the view'">
       Please enter the name:<br>
       <input type="text" [(ngModel)]="savedViewName"/>
       <div class="modal-footer">
-        <app-button (click)="modalService.close('viewSaveModal')">Cancel</app-button>
+        <app-button (click)="modalService.close('viewSaveModal-' + module)">Cancel</app-button>
         <app-button (click)="onSaveNewViewButtonClick()" [disabled]="!savedViewName">Save</app-button>
       </div>
     </app-modal>
@@ -116,7 +116,7 @@
 </div>
 
 <!-- FILTER WINDOW -->
-<app-modal id="gridFilterModal" [title]="'Filter'">
+<app-modal id="gridFilterModal-{{module}}" [title]="'Filter'">
   <div *ngIf="selectedFilterField">
     <input type="radio" name="filter-type" [(ngModel)]="selectedFilterType" value="value">Value
     <input style="margin-left: 20px;" type="radio" [(ngModel)]="selectedFilterType" name="filter-type" value="empty">Empty
@@ -155,8 +155,8 @@
     </ng-template>
   </div>
   <div class="modal-footer">
-    <app-button (click)="modalService.close('gridFilterModal'); onFilterButtonClick()">Filter</app-button>
-    <app-button (click)="modalService.close('gridFilterModal'); onRemoveFilterButtonClick()">Remove</app-button>
+    <app-button (click)="modalService.close('gridFilterModal-' + module); onFilterButtonClick()">Filter</app-button>
+    <app-button (click)="modalService.close('gridFilterModal-' + module); onRemoveFilterButtonClick()">Remove</app-button>
   </div>
 </app-modal>
-<div id="drag-label"></div>
+<div class="drag-label" id="drag-label-{{module}}"></div>

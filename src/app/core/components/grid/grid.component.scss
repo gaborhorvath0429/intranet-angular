@@ -49,6 +49,7 @@ table {
   }
 
   td, th {
+    height: 22px;
     text-align: left;
     overflow: hidden;
     white-space: nowrap;
@@ -151,7 +152,7 @@ table {
   z-index: 8;
 }
 
-#drag-label {
+.drag-label {
   display: none;
   position: absolute;
   padding: 3px;

@@ -5,7 +5,9 @@ import { UsersModel } from './model/users'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { FormSubmit } from 'src/app/core/decorators/form-submit'
 import { ModalService } from 'src/app/core/services/modal-service.service'
-import { ViekrService, AttachmentData } from './service/viekr.service'
+import { ViekrService, AttachmentData, ReplyDetails } from './service/viekr.service'
+import { ViekrMessageComponent } from './window/message/message.component'
+import { OutgoingModel } from './model/outgoing'
 
 @Component({
   selector: 'app-viekr',
@@ -19,12 +21,15 @@ export class ViekrComponent implements AfterContentInit {
 
   constructor(
     public incomingModel: IncomingModel,
+    public outgoingModel: OutgoingModel,
     public usersModel: UsersModel,
     public service: ViekrService,
     public modalService: ModalService,
   ) { }
 
-  @ViewChild(GridComponent) grid: GridComponent
+  @ViewChild('incomingGrid') incomingGrid: GridComponent
+  @ViewChild('outgoingGrid') outgoingGrid: GridComponent
+  @ViewChild(ViekrMessageComponent) messageWindow: ViekrMessageComponent
 
   assignToUserForm = new FormGroup({
     user: new FormControl('', [Validators.required]),
@@ -33,20 +38,20 @@ export class ViekrComponent implements AfterContentInit {
 
   ngAfterContentInit(): void {
     this.assignToUserForm.get('count').valueChanges.subscribe(val => {
-      if (val !== 0) this.grid.selection = []
+      if (val !== 0) this.incomingGrid.selection = []
     })
   }
 
   @FormSubmit('assignToUserForm')
   onAssignToUserFormSubmit(): void {
-    if (!this.grid.selection.length && !this.assignToUserForm.controls.count.value) {
+    if (!this.incomingGrid.selection.length && !this.assignToUserForm.controls.count.value) {
       this.modalService.showMessage('Válassz ki legalább egy elemet, vagy add meg az üzenetek számát!')
     } else {
       let { user, count } = this.assignToUserForm.value
       let userName = this.usersModel.data.find(e => e.id === user).name
-      let selected = this.grid.selection
+      let selected = this.incomingGrid.selection
       this.modalService.confirm(
-        `Biztosan hozzárendelsz <strong>${selected.length || count} db</strong> csatolmányt ${userName} felhasználóhoz?`,
+        `Biztosan hozzárendelsz <strong>${selected.length || count} db</strong> csatolmányt <strong>${userName}</strong> felhasználóhoz?`,
         () => {
           this.incomingModel.loading = true
           this.service.assignToUser(user, selected, count).subscribe(() => {
@@ -64,6 +69,23 @@ export class ViekrComponent implements AfterContentInit {
     })
   }
 
+  exportOutgoing(): void {
+    this.service.exportOutgoing().subscribe(() => {
+      this.modalService.showMessage('Az exportált adatokat tartalamazó fájlt elküldtük e-mailben.')
+    })
+  }
+
+  blockOutgoing(): void {
+    if (!this.outgoingGrid.selection.length) {
+      this.modalService.showError(null, 'Kérlek válassz ki egy element a listából!')
+    } else {
+      this.service.blockOutgoing(this.outgoingGrid.selection[0].id).subscribe(() => {
+        this.modalService.showMessage('Üzenet sikeresen blokkolva!')
+        this.outgoingModel.load()
+      })
+    }
+  }
+
   onIncomingRowDoubleClick(row: any): void {
     this.service.getAttachmentData(row).subscribe((res: AttachmentData) => {
       this.attachmentData = res
@@ -74,8 +96,28 @@ export class ViekrComponent implements AfterContentInit {
     })
   }
 
-  showNewMessageWindow(): void {
+  showNewMessageWindow(replyDetails: ReplyDetails = null): void {
+    this.messageWindow.form.reset()
+    this.messageWindow.additionalAttachments = [null]
+    this.messageWindow.message = ''
+    if (replyDetails) {
+      let form = this.messageWindow.form
+      form.get('elozmenyAzonosito').setValue(replyDetails['ELOZMENYAZONOSITO'])
+      form.get('organizationId').setValue(replyDetails['SZERVEZET_ID'])
+      form.get('ceids').setValue(replyDetails['CEID'])
+      form.get('subscriberId').setValue(replyDetails['SUBSCRIBER_ID'])
+    }
     this.modalService.open('viekrMessage')
+  }
+
+  replyMessage(): void {
+    if (!this.incomingGrid.selection.length) {
+      this.modalService.showError(null, 'Kérlek válassz ki egy element a listából!')
+    } else {
+      this.service.fetchMessage(this.incomingGrid.selection[0].id).subscribe((data: ReplyDetails) => {
+        this.showNewMessageWindow(data)
+      })
+    }
   }
 
 }
