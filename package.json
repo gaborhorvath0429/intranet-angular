@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "node ./postinstall.js"
   },
   "private": true,
   "dependencies": {
@@ -19,9 +20,11 @@
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
+    "@fjnr/ngx-translate-po-http-loader": "^3.1.2",
     "@fortawesome/angular-fontawesome": "^0.3.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
+    "@ngx-translate/core": "^11.0.1",
     "@tinymce/tinymce-angular": "^3.3.1",
     "@types/lodash": "^4.14.149",
     "@types/moment-timezone": "^0.5.12",
@@ -33,6 +36,7 @@
     "moment-timezone": "^0.5.27",
     "ngx-extended-pdf-viewer": "^2.0.0-alpha.0",
     "ngx-socket-io": "^3.0.1",
+    "process": "^0.11.10",
     "rxjs": "~6.3.3",
     "tinymce": "^5.1.5",
     "tslib": "^1.9.0",
@@ -46,7 +50,7 @@
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/jquery": "^3.3.31",
-    "@types/node": "~8.9.4",
+    "@types/node": "^8.9.5",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",

@@ -3,25 +3,25 @@ import { Socket } from 'ngx-socket-io'
 
 @Injectable() // WE DONT WANT THIS TO BE SINGLETON SO WE DONT PROVIDE IN ROOT
 export class GridViewService extends Socket {
-    constructor() {
-        super({ url: 'http://localhost:8888/grid-view', options: {} })
-    }
+  constructor() {
+    super({ url: 'http://localhost:8888/grid-view', options: {} })
+  }
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService extends Socket {
-    constructor() {
-        super({ url: 'http://localhost:8888/notification', options: {} })
-    }
+  constructor() {
+    super({ url: 'http://localhost:8888/notification', options: {} })
+  }
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class MostVisitedMenusService extends Socket {
-    constructor() {
-        super({ url: 'http://localhost:8888/most-visited-menus', options: {} })
-    }
+  constructor() {
+    super({ url: 'http://localhost:8888/most-visited-menus', options: {} })
+  }
 }

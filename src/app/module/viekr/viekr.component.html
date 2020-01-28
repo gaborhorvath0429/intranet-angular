@@ -12,7 +12,7 @@
       #incomingGrid
     >
     <span class="bottom-left-toolbar">
-      <app-toolbar-button (click)="replyMessage()" #toolbarButton>Válasz</app-toolbar-button>
+      <app-toolbar-button (click)="replyMessage()" #toolbarButton>{{ 'common.reply' | translate }}</app-toolbar-button>
       <app-toolbar-button (click)="showNewMessageWindow()" #toolbarButton>Új üzenet</app-toolbar-button>
     </span>
     <span class="bottom-toolbar">

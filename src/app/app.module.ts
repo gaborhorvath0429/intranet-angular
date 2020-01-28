@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HttpClient } from '@angular/common/http'
 import { SocketIoModule } from 'ngx-socket-io'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { AppRoutingModule } from './app-routing.module'
@@ -11,7 +11,7 @@ import { RequestInterceptor } from './core/services/authentication.service'
 import { LoginComponent } from './core/components/login/login.component'
 import { GridComponent } from './core/components/grid/grid.component'
 import { OverpaymentInclusionComponent } from './module/overpayment-inclusion/overpayment-inclusion.component'
-import { NotificationService, GridViewService, MostVisitedMenusService } from './core/services/socket.service'
+import { NotificationService, MostVisitedMenusService } from './core/services/socket.service'
 import { SavedViewsDirective } from './core/components/grid/directive/saved-views.directive'
 import { ToolbarButtonComponent } from './core/components/grid/toolbar-button/toolbar-button.component'
 import { ModalComponent } from './core/components/modal/modal.component'
@@ -37,6 +37,12 @@ import { ViekrMessageComponent } from './module/viekr/window/message/message.com
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer'
 import { CheckboxGroupComponent } from './core/components/input/checkbox-group/checkbox-group.component'
 import { EditorModule } from '@tinymce/tinymce-angular'
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { TranslatePoHttpLoader } from '@fjnr/ngx-translate-po-http-loader'
+
+export function createTranslateLoader(http: HttpClient) {
+	return new TranslatePoHttpLoader(http, 'assets/locales', '.po')
+}
 
 export const dpOptions: IAngularMyDpOptions = {
   dateRange: false,
@@ -74,6 +80,13 @@ export const dpOptions: IAngularMyDpOptions = {
   imports: [
     BrowserModule,
     HttpClientModule,
+    TranslateModule.forRoot({
+			loader: {
+				provide: TranslateLoader,
+				useFactory: createTranslateLoader,
+				deps: [HttpClient]
+			}
+		}),
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
