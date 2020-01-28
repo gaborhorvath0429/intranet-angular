@@ -45,5 +45,20 @@
     </span>
     </app-grid>
   </app-tab>
-  <app-tab [title]="'Elküldött'"></app-tab>
+  <app-tab [title]="'Elküldött'">
+    <app-grid
+      module="viekr-sent"
+      [model]="sentModel"
+      [height]="800"
+      [rowWidth]="150"
+      showFilters
+      showPaginator
+      showSavedViews
+      #sentGrid
+    >
+    <span class="bottom-toolbar">
+      <app-toolbar-button (click)="exportSent()" float="right">Excel export</app-toolbar-button>
+    </span>
+    </app-grid>
+  </app-tab>
 </app-tab-panel>

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs'
 import { ApiResponse } from 'src/app/app.module'
 import { IncomingModel } from '../model/incoming'
 import { OutgoingModel } from '../model/outgoing'
+import { SentModel } from '../model/sent'
 
 export interface SubscriberDetails {
   ceid: number
@@ -32,7 +33,8 @@ export interface AttachmentData {
   due_date: Date
   file_name: string
   locked: boolean
-  lock_userId?: number
+  lock_userId?: string
+  lock_user?: string
   status: number
   tartalom: string
   vh_level_type: number
@@ -71,7 +73,8 @@ export class ViekrService {
   constructor(
     private http: HttpClient,
     private incomingModel: IncomingModel,
-    private outgoingModel: OutgoingModel
+    private outgoingModel: OutgoingModel,
+    private sentModel: SentModel
   ) { }
 
   assignToUser(user: any, selected: any, count: number = 0): Observable<ApiResponse> {
@@ -97,6 +100,15 @@ export class ViekrService {
       filter: JSON.parse(this.outgoingModel.filterString),
       sort: JSON.parse(this.outgoingModel.sorterString),
       tab: 'KIMENO'
+    })
+  }
+
+  exportSent(): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(environment.apiUrl + '/viekr/export', {
+      columns: this.sentModel.displayFields.map(e => e.name),
+      filter: JSON.parse(this.sentModel.filterString),
+      sort: JSON.parse(this.sentModel.sorterString),
+      tab: 'ELKULDOTT'
     })
   }
 
@@ -135,5 +147,9 @@ export class ViekrService {
     message.files.forEach(file => file ? formData.append('files', file, file.name) : null)
 
     return this.http.post<ApiResponse>(environment.apiUrl + '/viekr/sendMessage', formData)
+  }
+
+  unlockAttachment(attachmentId: number): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(environment.apiUrl + '/viekr/unlock', { attachment_id: attachmentId })
   }
 }

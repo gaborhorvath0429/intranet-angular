@@ -1,4 +1,4 @@
-<app-modal id="viekrAttachment" fullScreen="true" alignFooter="start" [title]="lockedBy ? 'Lockolva általa: ' + lockedBy : ''">
+<app-modal (onClose)="unlockAttachment()" id="viekrAttachment" fullScreen="true" alignFooter="start" [title]="attachmentData && attachmentData.locked ? 'Lockolva általa: ' + attachmentData.lock_user : ''">
   <div *ngIf="attachmentData" class="container">
     <div class="controls">
       <div class="document-types">
@@ -19,7 +19,7 @@
       <ngx-extended-pdf-viewer [src]="attachmentUrl + attachmentData.file_name" height="90vh" useBrowserLocale="true"></ngx-extended-pdf-viewer>
     </div>
   </div>
-  <div class="modal-footer">
+  <div class="modal-footer" [hidden]="attachmentData && attachmentData.locked">
     <form [formGroup]="saveAttachmentForm">
       <span>Státusz: <app-combo-box formControlName="status" [model]="statusesModel" listPosition="top" [control]="saveAttachmentForm.controls.status" [form]="saveAttachmentForm" formInput></app-combo-box></span>
       <span>Levél VH-nak: <app-combo-box formControlName="letterType" [model]="letterTypesModel" listPosition="top" [control]="saveAttachmentForm.controls.letterType" [form]="saveAttachmentForm" formInput></app-combo-box></span>

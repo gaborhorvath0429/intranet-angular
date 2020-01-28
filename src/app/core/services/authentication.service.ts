@@ -25,7 +25,7 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')))
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')))
   }
 
   public get currentUser(): User {
@@ -36,7 +36,7 @@ export class AuthenticationService {
     return this.http.post<any>(`${environment.apiUrl}/user/login`, { username, password })
       .pipe(map(user => {
         if (user) {
-          localStorage.setItem('currentUser', JSON.stringify(user.user))
+          localStorage.setItem('user', JSON.stringify(user.user))
           this.currentUserSubject.next(user)
         }
 
@@ -45,7 +45,7 @@ export class AuthenticationService {
   }
 
   public logout() {
-    localStorage.removeItem('currentUser')
+    localStorage.removeItem('user')
     this.currentUserSubject.next(null)
   }
 }

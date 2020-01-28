@@ -8,6 +8,7 @@ import { ModalService } from 'src/app/core/services/modal-service.service'
 import { ViekrService, AttachmentData, ReplyDetails } from './service/viekr.service'
 import { ViekrMessageComponent } from './window/message/message.component'
 import { OutgoingModel } from './model/outgoing'
+import { SentModel } from './model/sent'
 
 @Component({
   selector: 'app-viekr',
@@ -25,6 +26,7 @@ export class ViekrComponent implements AfterContentInit {
     public usersModel: UsersModel,
     public service: ViekrService,
     public modalService: ModalService,
+    public sentModel: SentModel
   ) { }
 
   @ViewChild('incomingGrid') incomingGrid: GridComponent
@@ -71,6 +73,12 @@ export class ViekrComponent implements AfterContentInit {
 
   exportOutgoing(): void {
     this.service.exportOutgoing().subscribe(() => {
+      this.modalService.showMessage('Az exportált adatokat tartalamazó fájlt elküldtük e-mailben.')
+    })
+  }
+
+  exportSent(): void {
+    this.service.exportSent().subscribe(() => {
       this.modalService.showMessage('Az exportált adatokat tartalamazó fájlt elküldtük e-mailben.')
     })
   }

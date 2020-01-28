@@ -7,6 +7,7 @@ import { FormSubmit } from 'src/app/core/decorators/form-submit'
 import { ViekrService, SubscriberDetails } from '../../service/viekr.service'
 import { ComboBoxComponent } from 'src/app/core/components/input/combo-box/combo-box.component'
 import { ViekrAttachmentSubscribersModel } from '../../model/subscribers'
+import { OutgoingModel } from '../../model/outgoing'
 
 @Component({
   selector: 'app-viekr-message',
@@ -35,7 +36,8 @@ export class ViekrMessageComponent implements OnInit {
     public modalService: ModalService,
     public organizationsModel: ViekrOrganizationsModel,
     public actionTypesModel: ViekrActionTypesModel,
-    public subscribersModel: ViekrAttachmentSubscribersModel
+    public subscribersModel: ViekrAttachmentSubscribersModel,
+    private outgoingModel: OutgoingModel
   ) { }
 
   ngOnInit(): void {
@@ -81,6 +83,7 @@ export class ViekrMessageComponent implements OnInit {
       this.service.sendMessage({...this.form.value, message: this.message, files: this.additionalAttachments}).subscribe(() => {
         this.modalService.showMessage('Üzenet sikeresen elküldve!')
         this.modalService.close('viekrMessage')
+        this.outgoingModel.load()
       })
     }
   }

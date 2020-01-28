@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, ElementRef } from '@angular/core'
+import { Component, OnInit, Input, OnDestroy, ElementRef, Output, EventEmitter } from '@angular/core'
 import { ModalService } from '../../services/modal-service.service'
 
 @Component({
@@ -13,6 +13,8 @@ export class ModalComponent implements OnInit, OnDestroy {
   @Input() height?: number
   @Input() fullScreen = false
   @Input() alignFooter = 'end'
+  @Output() onClose = new EventEmitter()
+
   private element: any
   public zIndex: number
 
@@ -47,5 +49,6 @@ export class ModalComponent implements OnInit, OnDestroy {
     this.element.style.display = 'none'
     document.body.classList.remove('modal-open')
     this.modalService.openModals = this.modalService.openModals.filter(e => e !== this)
+    this.onClose.emit()
   }
 }

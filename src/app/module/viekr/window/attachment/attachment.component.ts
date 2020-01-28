@@ -144,6 +144,12 @@ export class ViekrAttachmentComponent implements OnChanges {
     }
   }
 
+  unlockAttachment(): void {
+    if (!this.attachmentData.lock_userId || this.attachmentData.lock_userId === JSON.parse(window.localStorage.getItem('user')).userId) {
+      this.service.unlockAttachment(this.attachmentId).subscribe()
+    }
+  }
+
   get isDisabled(): boolean {
     return ![0, 4, 5].includes(this.attachmentData.status)
   }
