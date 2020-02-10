@@ -1,9 +1,11 @@
+<div class="window-header">
+  Viekr
+</div>
 <app-tab-panel>
   <app-tab [title]="'common.incoming'">
     <app-grid
       module="viekr-incoming"
       [model]="incomingModel"
-      [height]="800"
       [rowWidth]="150"
       (rowDoubleClick)="onIncomingRowDoubleClick($event)"
       showFilters
@@ -32,7 +34,6 @@
     <app-grid
       module="viekr-outgoing"
       [model]="outgoingModel"
-      [height]="800"
       [rowWidth]="150"
       showFilters
       showPaginator
@@ -49,7 +50,6 @@
     <app-grid
       module="viekr-sent"
       [model]="sentModel"
-      [height]="800"
       [rowWidth]="150"
       showFilters
       showPaginator

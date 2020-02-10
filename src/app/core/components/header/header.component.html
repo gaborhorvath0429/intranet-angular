@@ -1,0 +1,16 @@
+<div class="header">
+  <div class="left">
+  <div class="menu-trigger" (click)="menuWindow.toggle()">
+    <fa-icon [icon]="faBars"></fa-icon>
+  </div>
+  <div class="notifications">
+    <fa-icon [icon]="faBell"></fa-icon>
+  </div>
+  </div>
+  <div class="right">
+    <div class="logout">
+      <fa-icon [icon]="faSignOutAlt"></fa-icon>
+    </div>
+  </div>
+</div>
+<app-menu #menuWindow></app-menu>

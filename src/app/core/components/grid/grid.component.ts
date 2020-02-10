@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild, ElementRef, QueryList, ChangeDetectorRef,
-  AfterViewChecked, AfterViewInit, ContentChild, OnInit, ContentChildren, Output, EventEmitter } from '@angular/core'
+  AfterViewChecked, AfterViewInit, ContentChild, OnInit, ContentChildren, Output, EventEmitter, Optional } from '@angular/core'
 import { GridViewService } from '../../services/socket.service'
 import Model, { Field } from '../../model/model.class'
 import * as moment from 'moment'
@@ -8,6 +8,7 @@ import { ToolbarButtonComponent } from './toolbar-button/toolbar-button.componen
 import { faSortAmountDown, faSortAmountDownAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker'
 import * as _ from 'lodash'
+import { TabComponent } from '../tab-panel/tab/tab.component'
 declare var $: any
 
 export interface GridView {
@@ -81,8 +82,9 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
 
   constructor(
     public modalService: ModalService,
-    private cdRef: ChangeDetectorRef
-  ) {}
+    private cdRef: ChangeDetectorRef,
+    @Optional() private tabComponent: TabComponent // whether the grid is in a tabcomponent or not
+  ) { }
 
   ngOnInit(): void {}
 
@@ -92,6 +94,7 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    if (!this.height) this.height = window.innerHeight - (this.tabComponent ? 140 : 105)
     $(this.table.nativeElement).resizableColumns()
     if (this.showFilters) this.initDragAndDrop()
     this.model.data$.subscribe(() => this.selection = [])

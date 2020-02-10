@@ -1,0 +1,12 @@
+<div class="menu" [style.display]="hidden ? 'none' : 'block'" #menu>
+  <input type="text" placeholder="Search..." class="search" [(ngModel)]="search">
+  <div class="most-visited">
+
+  </div>
+  <div class="menu-items">
+    <div class="menu-item" *ngFor="let menu of menuModel.data | menuSearch:search" [routerLink]="menu.path" (click)="toggle()">
+      <fa-icon [icon]="icons[menu.icon]"></fa-icon>
+      <div class="title">{{ menu.title }}</div>
+    </div>
+  </div>
+</div>

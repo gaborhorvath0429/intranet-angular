@@ -83,3 +83,18 @@ textarea {
     cursor: default;
   }
 }
+
+.window-header {
+  display: flex;
+  background-color: #626c77;
+  height: 40px;
+  color: white;
+  white-space: nowrap;
+  font-weight: bold;
+  line-height: 15px;
+  font-family: arial,helvetica,verdana,sans-serif;
+  font-size: 16px;
+  text-transform: none;
+  align-items: center;
+  padding-left: 12px;
+}

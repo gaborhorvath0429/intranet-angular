@@ -1,8 +1,10 @@
+<div class="window-header">
+  {{ 'overpaymentInclusion.overpaymentInclusion' | translate }}
+</div>
 <app-grid
   module="overpayment-inclusion"
   [model]="paymentModel"
   [searchParams]="searchParams"
-  [height]="800"
   showPaginator
 >
 <div class="top-toolbar" #topToolbar>

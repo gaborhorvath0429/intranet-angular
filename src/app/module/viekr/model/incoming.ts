@@ -74,7 +74,7 @@ export class IncomingModel extends Model {
   }, {
     name: 'subscriber',
     type: 'string',
-    displayName: 'viekr.subscriber'
+    displayName: 'common.subscriber'
   }, {
     name: 'subscriber_id',
     type: 'string'
@@ -97,7 +97,7 @@ export class IncomingModel extends Model {
   }, {
     name: 'hatarido',
     type: 'date',
-    displayName: 'viekr.dueDate',
+    displayName: 'common.dueDate',
     dateFormat: 'YYYY-MM-DD'
   }, {
     name: 'jogi_felelos',

@@ -39,6 +39,9 @@ import { CheckboxGroupComponent } from './core/components/input/checkbox-group/c
 import { EditorModule } from '@tinymce/tinymce-angular'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import {TranslateHttpLoader} from '@ngx-translate/http-loader'
+import { MenuComponent } from './core/components/menu/menu.component'
+import { HeaderComponent } from './core/components/header/header.component'
+import { MenuSearchPipe } from './core/components/menu/pipe/search.pipe'
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, 'assets/locales/', '.js')
@@ -68,6 +71,7 @@ export const dpOptions: IAngularMyDpOptions = {
     MessageComponent,
     ViekrComponent,
     FilterItemsSearchPipe,
+    MenuSearchPipe,
     TabPanelComponent,
     TabComponent,
     ComboBoxComponent,
@@ -75,7 +79,9 @@ export const dpOptions: IAngularMyDpOptions = {
     ConfirmComponent,
     ViekrAttachmentComponent,
     CheckboxGroupComponent,
-    ViekrMessageComponent
+    ViekrMessageComponent,
+    MenuComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
