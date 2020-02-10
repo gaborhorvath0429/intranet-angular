@@ -1,6 +1,6 @@
 <ul>
   <li *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="activeTab === tab">
-    {{ tab.title }}
+    {{ tab.title | translate }}
   </li>
 </ul>
 <ng-content></ng-content>

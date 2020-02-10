@@ -36,22 +36,22 @@ export class IncomingModel extends Model {
   }, {
     name: 'sorszam',
     type: 'int',
-    displayName: 'Ü#',
+    displayName: 'viekr.serialNumber',
     width: 50
   }, {
     name: 'csatolmany_id',
     type: 'int',
-    displayName: 'D#',
+    displayName: 'viekr.attachmentId',
     width: 50
   }, {
     name: 'beerkezes_datuma',
     type: 'date',
-    displayName: 'Érkezett',
+    displayName: 'viekr.received',
     dateFormat: 'YYYY-MM-DD'
   }, {
     name: 'statusz',
     type: 'string',
-    displayName: 'Státusz',
+    displayName: 'common.status',
     filterModel: {
       model: this.statusModel,
       filterAttribute: 'id',
@@ -63,18 +63,18 @@ export class IncomingModel extends Model {
   }, {
     name: 'felado',
     type: 'string',
-    displayName: 'Feladó'
+    displayName: 'viekr.sender'
   }, {
     name: 'beazonositas_id',
     type: 'int'
   }, {
     name: 'ceid',
     type: 'string',
-    displayName: 'CEID'
+    displayName: 'common.ceid'
   }, {
     name: 'subscriber',
     type: 'string',
-    displayName: 'Adós'
+    displayName: 'viekr.subscriber'
   }, {
     name: 'subscriber_id',
     type: 'string'
@@ -84,11 +84,11 @@ export class IncomingModel extends Model {
   }, {
     name: 'felelos',
     type: 'string',
-    displayName: 'Felelős'
+    displayName: 'viekr.responsible'
   }, {
     name: 'dokumentum_tipus',
     type: 'string',
-    displayName: 'Dokumentum típusa',
+    displayName: 'viekr.documentType',
     filterModel: {
       model: this.documentTypesModel,
       filterAttribute: 'name',
@@ -97,25 +97,25 @@ export class IncomingModel extends Model {
   }, {
     name: 'hatarido',
     type: 'date',
-    displayName: 'Határidő',
+    displayName: 'viekr.dueDate',
     dateFormat: 'YYYY-MM-DD'
   }, {
     name: 'jogi_felelos',
     type: 'string',
-    displayName: 'Jogi felelős'
+    displayName: 'viekr.legalResponsible'
   }, {
     name: 'csatolmany_db',
     type: 'int'
   }, {
     name: 'vh_level_type',
     type: 'string',
-    displayName: 'Levél VH-nak'
+    displayName: 'viekr.executorLetterType'
   }, {
     name: 'ownCase',
     type: 'string'
   }, {
     name: 'atadaskor_jogis',
     type: 'string',
-    displayName: 'Átadáskor jogi'
+    displayName: 'viekr.legalAtTransfer'
   } ]
 }

@@ -1,5 +1,5 @@
 <app-tab-panel>
-  <app-tab [title]="'Bejövő'">
+  <app-tab [title]="'common.incoming'">
     <app-grid
       module="viekr-incoming"
       [model]="incomingModel"
@@ -13,22 +13,22 @@
     >
     <span class="bottom-left-toolbar">
       <app-toolbar-button (click)="replyMessage()" #toolbarButton>{{ 'common.reply' | translate }}</app-toolbar-button>
-      <app-toolbar-button (click)="showNewMessageWindow()" #toolbarButton>Új üzenet</app-toolbar-button>
+      <app-toolbar-button (click)="showNewMessageWindow()" #toolbarButton>{{ 'common.newMessage' | translate }}</app-toolbar-button>
     </span>
     <span class="bottom-toolbar">
       <form [formGroup]="assignToUserForm">
         <app-combo-box formControlName="user" [model]="usersModel" listPosition="top" [control]="assignToUserForm.controls.user" [form]="assignToUserForm" formInput></app-combo-box>
-        Ü. száma: <input formControlName="count" class="case-number" type="number" [form]="assignToUserForm" formInput>
-        <app-toolbar-button type="submit" (click)="onAssignToUserFormSubmit()" #toolbarButton>Felelős</app-toolbar-button>
-        {{ incomingGrid.selection.length }} kijelölt rekord
+        {{ 'viekr.numberOfMessages' | translate }} <input formControlName="count" class="case-number" type="number" [form]="assignToUserForm" formInput>
+        <app-toolbar-button type="submit" (click)="onAssignToUserFormSubmit()" #toolbarButton>{{ 'viekr.responsible' | translate }}</app-toolbar-button>
+        {{ incomingGrid.selection.length }} {{ 'common.selectedRecord' | translate }}
       </form>
-      <app-toolbar-button (click)="exportIncoming()" float="right">Excel export</app-toolbar-button>
+      <app-toolbar-button (click)="exportIncoming()" float="right">{{ 'common.excelExport' | translate }}</app-toolbar-button>
     </span>
     </app-grid>
     <app-viekr-attachment [attachmentData]="attachmentData" [attachmentId]="attachmentId"></app-viekr-attachment>
     <app-viekr-message></app-viekr-message>
   </app-tab>
-  <app-tab [title]="'Kimenő'">
+  <app-tab [title]="'common.outgoing'">
     <app-grid
       module="viekr-outgoing"
       [model]="outgoingModel"
@@ -40,12 +40,12 @@
       #outgoingGrid
     >
     <span class="bottom-toolbar">
-      <app-toolbar-button (click)="blockOutgoing()">Blokkolás</app-toolbar-button>
-      <app-toolbar-button (click)="exportOutgoing()" float="right">Excel export</app-toolbar-button>
+      <app-toolbar-button (click)="blockOutgoing()">{{ 'viekr.blocking' | translate }}</app-toolbar-button>
+      <app-toolbar-button (click)="exportOutgoing()" float="right">{{ 'common.excelExport' | translate }}</app-toolbar-button>
     </span>
     </app-grid>
   </app-tab>
-  <app-tab [title]="'Elküldött'">
+  <app-tab [title]="'common.sent'">
     <app-grid
       module="viekr-sent"
       [model]="sentModel"
@@ -57,7 +57,7 @@
       #sentGrid
     >
     <span class="bottom-toolbar">
-      <app-toolbar-button (click)="exportSent()" float="right">Excel export</app-toolbar-button>
+      <app-toolbar-button (click)="exportSent()" float="right">{{ 'common.excelExport' | translate }}</app-toolbar-button>
     </span>
     </app-grid>
   </app-tab>

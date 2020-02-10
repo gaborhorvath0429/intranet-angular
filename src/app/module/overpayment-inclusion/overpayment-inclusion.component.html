@@ -7,15 +7,15 @@
 >
 <div class="top-toolbar" #topToolbar>
   <div class="search-input">
-    <div class="label">Túlfizetéses CEID:</div>
+    <div class="label">{{ 'overpaymentInclusion.overpaymentCeid' | translate }}</div>
     <div class="input"><input type="number" [(ngModel)]="opCeid" ceidInput></div>
   </div>
   <div class="search-input">
-    <div class="label">Beszámításos CEID:</div>
+    <div class="label">{{ 'overpaymentInclusion.inclusionCeid' | translate }}</div>
     <div class="input"><input type="number" [(ngModel)]="inclCeid" ceidInput></div>
   </div>
   <div class="search-input">
-    <div class="label">Beszámítás dátuma:</div>
+    <div class="label">{{ 'overpaymentInclusion.inclusionDate' | translate }}</div>
     <div class="input">
       <app-date-picker placeholder="éééé.hh.nn" [(model)]="inclusionDateFrom" [options]="dpOptions"></app-date-picker>
     </div>
@@ -27,42 +27,42 @@
       <app-date-picker placeholder="éééé.hh.nn" [(model)]="inclusionDateTo" [options]="dpOptions"></app-date-picker>
     </div>
   </div>
-  <app-button class="search-button" (click)="search()">Keresés</app-button>
+  <app-button class="search-button" (click)="search()">{{ 'common.search' | translate }}</app-button>
 </div>
 <span class="bottom-toolbar">
-  <app-toolbar-button (click)="modalService.open('newOverPayment')" float="right" #toolbarButton>Új tétel felvétele</app-toolbar-button>
-  <app-toolbar-button (click)="exportCsv()" float="right" #toolbarButton>Lista exportálása</app-toolbar-button>
+  <app-toolbar-button (click)="modalService.open('newOverPayment')" float="right" #toolbarButton>{{ 'overpaymentInclusion.addNewItem' | translate }}</app-toolbar-button>
+  <app-toolbar-button (click)="exportCsv()" float="right" #toolbarButton>{{ 'overpaymentInclusion.export' | translate }}</app-toolbar-button>
 </span>
 </app-grid>
-<app-modal width="350" id="newOverPayment" [title]="'Új tétel felvétele'">
+<app-modal width="350" id="newOverPayment" [title]="'overpaymentInclusion.addNewItem'">
   <form class="new-item-form" [formGroup]="newOverPaymentForm">
     <div class="input">
-      <span>Túlfizetéses CEID:</span>
+      <span>{{ 'overpaymentInclusion.overpaymentCeid' | translate }}</span>
       <input type="number" formControlName="overPaymentCeid" [form]="newOverPaymentForm" ceidInput formInput>
     </div>
     <div class="input">
-      <span>Payment Doc ID:</span>
+      <span>{{ 'overpaymentInclusion.paymentsDocId' | translate }}</span>
       <input disabled type="text" formControlName="paymentDocId" [form]="newOverPaymentForm" formInput>
     </div>
     <div class="input">
-      <span>Beszámításos CEID:</span>
+      <span>{{ 'overpaymentInclusion.inclusionCeid' | translate }}</span>
       <input type="number" formControlName="inclusionCeid" [form]="newOverPaymentForm" ceidInput formInput>
     </div>
     <div class="input">
-      <span>Beszámítás dátuma:</span>
+      <span>{{ 'overpaymentInclusion.inclusionDate' | translate }}</span>
       <app-date-picker placeholder="éééé.hh.nn" formControlName="inclusionDate" [control]="newOverPaymentForm.controls.inclusionDate" [form]="newOverPaymentForm" [options]="dpOptions" formInput></app-date-picker>
     </div>
     <div class="input">
-      <span>Beszámítás összege:</span>
+      <span>{{ 'overpaymentInclusion.inclusionAmount' | translate }}</span>
       <input type="number" formControlName="inclusionAmount" [form]="newOverPaymentForm" formInput>
     </div>
     <div class="input">
-      <span>Jelenlegi egyenleg:</span>
+      <span>{{ 'overpaymentInclusion.currentBalance' | translate }}</span>
       <input type="number" formControlName="balance" [form]="newOverPaymentForm" formInput>
     </div>
   </form>
     <div class="modal-footer">
-      <app-button (click)="modalService.close('newOverPayment')">Cancel</app-button>
-      <app-button type="submit" (click)="onNewOverPaymentSubmit()">Save</app-button>
+      <app-button (click)="modalService.close('newOverPayment')">{{ 'common.cancel' | translate }}</app-button>
+      <app-button type="submit" (click)="onNewOverPaymentSubmit()">{{ 'common.save' | translate }}</app-button>
     </div>
 </app-modal>

@@ -25,28 +25,28 @@ export class PaymentModel extends Model {
 
   fields = [{
     name: 'OP_INCLUSION_ID',
-    displayName: 'Beszámítás azonosító',
+    displayName: 'overpaymentInclusion.inclusionId',
     type: 'int'
   }, {
     name: 'OP_CEID',
-    displayName: 'Túlfizetéses CEID',
+    displayName: 'overpaymentInclusion.overpaymentCeid',
     type: 'int'
   }, {
     name: 'INCL_CEID',
-    displayName: 'Beszámításos CEID',
+    displayName: 'overpaymentInclusion.inclusionCeid',
     type: 'int'
   }, {
     name: 'INCLUSION_DATE',
-    displayName: 'Beszámítás dátuma',
+    displayName: 'overpaymentInclusion.inclusionDate',
     type: 'date',
     dateFormat: 'YYYY.MM.DD'
   }, {
     name: 'INCLUSION_AMOUNT',
-    displayName: 'Beszámítás összege',
+    displayName: 'overpaymentInclusion.inclusionAmount',
     type: 'float'
   }, {
     name: 'AFTER_INCLUSION_BALANCE',
-    displayName: 'Beszámítás utáni egyenleg',
+    displayName: 'overpaymentInclusion.balanceAfterInclusion',
     type: 'float'
   }]
 }

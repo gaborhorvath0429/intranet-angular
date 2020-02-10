@@ -8,6 +8,7 @@ export class ModalService {
 
   public message: string
   public messageTitle: string
+  public parameters: any = {}
 
   public confirmationMessage: string
   public confirmationCallback: () => void
@@ -30,8 +31,9 @@ export class ModalService {
     modal.close()
   }
 
-  showError(err: any = null, message: string = '') {
-    this.messageTitle = 'Hiba'
+  showError(err: any = null, message: string = '', parameters: any = {}) {
+    this.messageTitle = 'common.error'
+    this.parameters = parameters
     if (err) {
       this.message = err.error.error
     } else if (message) {
@@ -41,14 +43,15 @@ export class ModalService {
   }
 
   showMessage(message: string) {
-    this.messageTitle = 'Info'
+    this.messageTitle = 'common.info'
     this.message = message
     this.open('message')
   }
 
-  confirm(message: string, callback: () => void = () => {}) {
+  confirm(message: string, callback: () => void = () => {}, parameters: any = {}) {
     this.confirmationMessage = message
     this.confirmationCallback = callback
+    this.parameters = parameters
     this.open('confirm')
   }
 }

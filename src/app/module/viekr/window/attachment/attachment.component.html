@@ -2,16 +2,16 @@
   <div *ngIf="attachmentData" class="container">
     <div class="controls">
       <div class="document-types">
-        Dokumentum típusa:
+        {{ 'viekr.documentType' | translate }}
         <app-checkbox-group [disabled]="isDisabled" [model]="documentTypesModel" labelAttribute="label" #documentTypes></app-checkbox-group>
       </div>
       <div class="debtor" *ngFor="let subscriber of subscribers; let i = index" [style.color]="isDisabled ? 'grey' : ''">
-        CEID: <input [disabled]="isDisabled" (keyup)="onCeidChange($event.target.value, i)" [style.color]="isDisabled ? 'grey' : ''" type="number" class="ceid" ceidInput #debtorCeidInput>
-        Adós: <app-combo-box [disabled]="isDisabled" width="250" class="subscribers" (selectionChange)="debtorComboboxChange($event, i)" #debtorCombobox></app-combo-box>
+        {{ 'common.ceid' | translate }}: <input [disabled]="isDisabled" (keyup)="onCeidChange($event.target.value, i)" [style.color]="isDisabled ? 'grey' : ''" type="number" class="ceid" ceidInput #debtorCeidInput>
+        {{ 'common.subscriber' | translate }}: <app-combo-box [disabled]="isDisabled" width="250" class="subscribers" (selectionChange)="debtorComboboxChange($event, i)" #debtorCombobox></app-combo-box>
         <span #subscriberDescription></span>
       </div>
-      <app-button *ngIf="!isDisabled" class="new-debtor-button" (click)="newDebtor()">Új hozzáadása</app-button>
-      Üzenet:<br>
+      <app-button *ngIf="!isDisabled" class="new-debtor-button" (click)="newDebtor()">{{ 'common.newItem' | translate }}</app-button>
+      {{ 'common.message' | translate }}:<br>
       <textarea class="message-field" [(ngModel)]="attachmentData.tartalom" disabled></textarea>
       <app-grid [model]="commentsModel" [height]="300" [border]="false"></app-grid>
     </div>
@@ -21,12 +21,12 @@
   </div>
   <div class="modal-footer" [hidden]="attachmentData && attachmentData.locked">
     <form [formGroup]="saveAttachmentForm">
-      <span>Státusz: <app-combo-box formControlName="status" [model]="statusesModel" listPosition="top" [control]="saveAttachmentForm.controls.status" [form]="saveAttachmentForm" formInput></app-combo-box></span>
-      <span>Levél VH-nak: <app-combo-box formControlName="letterType" [model]="letterTypesModel" listPosition="top" [control]="saveAttachmentForm.controls.letterType" [form]="saveAttachmentForm" formInput></app-combo-box></span>
-      <span>Megjegyzés: <input type="text" formControlName="comment" [form]="saveAttachmentForm" formInput></span>
-      <span>Felelős: <app-combo-box formControlName="assignee" [model]="usersModel" listPosition="top" [control]="saveAttachmentForm.controls.assignee" [form]="saveAttachmentForm" formInput></app-combo-box></span>
-      <span>Határidő: <app-date-picker [width]="150" formControlName="dueDate" [control]="saveAttachmentForm.controls.dueDate" [form]="saveAttachmentForm" [options]="dpOptions" formInput></app-date-picker></span>
+      <span>{{ 'common.status' | translate }}: <app-combo-box formControlName="status" [model]="statusesModel" listPosition="top" [control]="saveAttachmentForm.controls.status" [form]="saveAttachmentForm" formInput></app-combo-box></span>
+      <span>{{ 'viekr.executorLetterType' | translate }}: <app-combo-box formControlName="letterType" [model]="letterTypesModel" listPosition="top" [control]="saveAttachmentForm.controls.letterType" [form]="saveAttachmentForm" formInput></app-combo-box></span>
+      <span>{{ 'common.comment' | translate }}: <input type="text" formControlName="comment" [form]="saveAttachmentForm" formInput></span>
+      <span>{{ 'viekr.responsible' | translate }}: <app-combo-box formControlName="assignee" [model]="usersModel" listPosition="top" [control]="saveAttachmentForm.controls.assignee" [form]="saveAttachmentForm" formInput></app-combo-box></span>
+      <span>{{ 'common.dueDate' | translate }}: <app-date-picker [width]="150" formControlName="dueDate" [control]="saveAttachmentForm.controls.dueDate" [form]="saveAttachmentForm" [options]="dpOptions" formInput></app-date-picker></span>
     </form>
-    <app-button class="save-button" (click)="save(); modalService.close('viekrAttachment')">Mentés</app-button>
+    <app-button class="save-button" (click)="save(); modalService.close('viekrAttachment')">{{ 'common.save' | translate }}</app-button>
   </div>
 </app-modal>

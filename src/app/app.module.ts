@@ -38,10 +38,10 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer'
 import { CheckboxGroupComponent } from './core/components/input/checkbox-group/checkbox-group.component'
 import { EditorModule } from '@tinymce/tinymce-angular'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
-import { TranslatePoHttpLoader } from '@fjnr/ngx-translate-po-http-loader'
+import {TranslateHttpLoader} from '@ngx-translate/http-loader'
 
 export function createTranslateLoader(http: HttpClient) {
-	return new TranslatePoHttpLoader(http, 'assets/locales', '.po')
+	return new TranslateHttpLoader(http, 'assets/locales/', '.js')
 }
 
 export const dpOptions: IAngularMyDpOptions = {

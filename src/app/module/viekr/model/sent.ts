@@ -31,47 +31,47 @@ export class SentModel extends Model {
     mapping: 'kuldemenyId'
   }, {
     name: 'kuldemenyId',
-    displayName: 'K#',
+    displayName: 'viekr.packageId',
     type: 'int'
   }, {
     name: 'szervezet',
-    displayName: 'VH neve',
+    displayName: 'viekr.executor',
     type: 'string'
   }, {
     name: 'azonosito',
-    displayName: 'Üzenetazonosító',
+    displayName: 'viekr.messageId',
     type: 'string'
   }, {
     name: 'viekrAzonosito',
-    displayName: 'VIEKR azonosító',
+    displayName: 'viekr.viekrId',
     type: 'string'
   }, {
     name: 'creationDate',
-    displayName: 'Létrehozva',
+    displayName: 'viekr.created',
     type: 'date'
   }, {
     name: 'createdBy',
-    displayName: 'Létrehozó',
+    displayName: 'viekr.createdBy',
     type: 'string'
   }, {
     name: 'ceid',
-    displayName: 'CEID',
+    displayName: 'common.ceid',
     type: 'int'
   }, {
     name: 'name',
-    displayName: 'Adós',
+    displayName: 'common.subscriber',
     type: 'string'
   }, {
     name: 'feldolgozasistatusz',
-    displayName: 'Státusz',
+    displayName: 'common.status',
     type: 'string'
   }, {
     name: 'postDate',
-    displayName: 'Elküldve',
+    displayName: 'viekr.sent',
     type: 'date'
   }, {
     name: 'deliveryDate',
-    displayName: 'Kézbesítve',
+    displayName: 'viekr.delivered',
     type: 'date'
   } ]
 }

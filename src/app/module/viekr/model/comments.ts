@@ -28,7 +28,7 @@ export class ViekrAttachmentCommentsModel extends Model {
   }, {
     name: 'createdBy',
     type: 'string',
-    displayName: 'OPID',
+    displayName: 'common.opid',
     width: 100
   }, {
     name: 'createdAt',
@@ -39,6 +39,6 @@ export class ViekrAttachmentCommentsModel extends Model {
   }, {
     name: 'text',
     type: 'string',
-    displayName: 'Megjegyzés'
+    displayName: 'common.comment'
   } ]
 }

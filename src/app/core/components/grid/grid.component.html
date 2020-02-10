@@ -13,7 +13,7 @@
         <button (click)="sortBy(field)" *ngFor="let field of sorterFields">
           <fa-icon *ngIf="model.hasSorter(field) === 'DESC'" [icon]="faSortAmountDown"></fa-icon>
           <fa-icon *ngIf="model.hasSorter(field) === 'ASC'" [icon]="faSortAmountDownAlt"></fa-icon>
-          {{ field.displayName }}
+          {{ field.displayName | translate }}
           <fa-icon [icon]="faTimesCircle" class="close" (click)="deleteSort(field)"></fa-icon>
         </button>
       </div>
@@ -22,7 +22,7 @@
         <button
           (click)="showFilterWindow(field)"
           *ngFor="let field of filterFields"
-        >{{ field.displayName }}
+        >{{ field.displayName | translate}}
           <fa-icon [icon]="faTimesCircle" class="close" (click)="deleteFilter(field)"></fa-icon>
         </button>
       </div>
@@ -39,7 +39,7 @@
               *ngFor="let column of model.displayFields"
               [style.width]="hiddenColumns.length ? '' : column.width ? column.width + 'px' : rowWidth + 'px'"
               [hidden]="hiddenColumns.includes(column)"
-            >{{ column.displayName }}</th>
+            >{{ column.displayName | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -68,28 +68,28 @@
       <div class="columns-table-wrapper" [style.height]="height - 290 + 'px'">
         <table>
           <thead>
-            <tr><th>Columns</th></tr>
+            <tr><th>{{ 'common.columns' | translate }}</th></tr>
           </thead>
           <tbody>
             <tr (click)="selectColumn(column)" [ngClass]="{'selected-row': isColumnSelected(column)}" *ngFor="let column of model.displayFields">
               <td>
                 <input [checked]="isColumnSelected(column)" type="checkbox" class="column-checkbox">
-                {{ column.displayName }}
+                {{ column.displayName | translate }}
               </td>
             </tr>
           <tbody>
         </table>
       </div>
       <div class="columns-toolbar" [style.height]="'40px'">
-        <app-toolbar-button [disabled]="!selectedColumns.length" (click)="filterColumns()">Előnézet</app-toolbar-button>
-        <app-toolbar-button [disabled]="!selectedColumns.length" (click)="selectedView ? createSavedView() : modalService.open('viewSaveModal-' + module)">Mentés</app-toolbar-button>
+        <app-toolbar-button [disabled]="!selectedColumns.length" (click)="filterColumns()">{{ 'common.preview' | translate }}</app-toolbar-button>
+        <app-toolbar-button [disabled]="!selectedColumns.length" (click)="selectedView ? createSavedView() : modalService.open('viewSaveModal-' + module)">{{ 'common.save' | translate }}</app-toolbar-button>
       </div>
     </div>
     <div class="saved-views" [style.height]="'250px'">
       <div class="saved-views-table-wrapper" [style.height]="'210px'">
         <table>
           <thead>
-            <tr><th>Saved views</th></tr>
+            <tr><th>{{ 'common.savedViews' | translate }}</th></tr>
           </thead>
           <tbody>
             <tr (click)="selectView(view)" [ngClass]="{'selected-row': selectedView === view}" *ngFor="let view of savedViewCollection">
@@ -99,17 +99,17 @@
         </table>
       </div>
       <div class="columns-toolbar" [style.height]="'40px'">
-        <app-toolbar-button [disabled]="!selectedView" (click)="filterColumns()">Alkalmaz</app-toolbar-button>
-        <app-toolbar-button [disabled]="!selectedView" (click)="deleteSavedView()">Törlés</app-toolbar-button>
-        <app-toolbar-button (click)="selectedColumns = []; selectedView = null; filterColumns()">Alaphelyzetbe</app-toolbar-button>
+        <app-toolbar-button [disabled]="!selectedView" (click)="filterColumns()">{{ 'common.apply' | translate }}</app-toolbar-button>
+        <app-toolbar-button [disabled]="!selectedView" (click)="deleteSavedView()">{{ 'common.delete' | translate }}</app-toolbar-button>
+        <app-toolbar-button (click)="selectedColumns = []; selectedView = null; filterColumns()">{{ 'common.reset' | translate }}</app-toolbar-button>
       </div>
     </div>
     <app-modal id="viewSaveModal-{{module}}" [title]="'The name of the view'">
-      Please enter the name:<br>
+      {{ 'common.pleaseEnterTheName' | translate }}<br>
       <input type="text" [(ngModel)]="savedViewName"/>
       <div class="modal-footer">
-        <app-button (click)="modalService.close('viewSaveModal-' + module)">Cancel</app-button>
-        <app-button (click)="onSaveNewViewButtonClick()" [disabled]="!savedViewName">Save</app-button>
+        <app-button (click)="modalService.close('viewSaveModal-' + module)">{{ 'common.cancel' | translate }}</app-button>
+        <app-button (click)="onSaveNewViewButtonClick()" [disabled]="!savedViewName">{{ 'common.save' | translate }}</app-button>
       </div>
     </app-modal>
   </ng-container>
@@ -118,9 +118,9 @@
 <!-- FILTER WINDOW -->
 <app-modal id="gridFilterModal-{{module}}" [title]="'Filter'">
   <div *ngIf="selectedFilterField">
-    <input type="radio" name="filter-type" [(ngModel)]="selectedFilterType" value="value">Value
-    <input style="margin-left: 20px;" type="radio" [(ngModel)]="selectedFilterType" name="filter-type" value="empty">Empty
-    <input style="margin-left: 20px;" type="radio" [(ngModel)]="selectedFilterType" name="filter-type" value="not-empty">Not empty
+    <input type="radio" name="filter-type" [(ngModel)]="selectedFilterType" value="value">{{ 'common.value' | translate }}
+    <input style="margin-left: 20px;" type="radio" [(ngModel)]="selectedFilterType" name="filter-type" value="empty">{{ 'common.empty' | translate }}
+    <input style="margin-left: 20px;" type="radio" [(ngModel)]="selectedFilterType" name="filter-type" value="not-empty">{{ 'common.notEmpty' | translate }}
     <div [ngSwitch]="selectedFilterField.type" *ngIf="!selectedFilterField.filterModel && selectedFilterType === 'value'; else listFilter">
       <div *ngSwitchCase="'string'">
         <div>
@@ -155,8 +155,8 @@
     </ng-template>
   </div>
   <div class="modal-footer">
-    <app-button (click)="modalService.close('gridFilterModal-' + module); onFilterButtonClick()">Filter</app-button>
-    <app-button (click)="modalService.close('gridFilterModal-' + module); onRemoveFilterButtonClick()">Remove</app-button>
+    <app-button (click)="modalService.close('gridFilterModal-' + module); onFilterButtonClick()">{{ 'common.filter' | translate }}</app-button>
+    <app-button (click)="modalService.close('gridFilterModal-' + module); onRemoveFilterButtonClick()">{{ 'common.remove' | translate }}</app-button>
   </div>
 </app-modal>
 <div class="drag-label" id="drag-label-{{module}}"></div>

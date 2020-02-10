@@ -1,7 +1,7 @@
-<app-modal id="confirm" alignFooter="center" [title]="'Megerősítés'">
-  <div [innerHTML]="modalService.confirmationMessage"></div>
+<app-modal id="confirm" alignFooter="center" [title]="'common.confirm' | translate">
+  <div [innerHTML]="modalService.confirmationMessage | translate:modalService.parameters"></div>
   <div class="modal-footer">
-    <app-button (click)="modalService.close('confirm')">Cancel</app-button>
+    <app-button (click)="modalService.close('confirm')">{{ 'common.cancel' | translate }}</app-button>
     <app-button (click)="modalService.close('confirm'); modalService.confirmationCallback()">OK</app-button>
   </div>
 </app-modal>

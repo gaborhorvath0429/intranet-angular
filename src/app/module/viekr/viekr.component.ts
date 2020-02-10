@@ -47,48 +47,49 @@ export class ViekrComponent implements AfterContentInit {
   @FormSubmit('assignToUserForm')
   onAssignToUserFormSubmit(): void {
     if (!this.incomingGrid.selection.length && !this.assignToUserForm.controls.count.value) {
-      this.modalService.showMessage('Válassz ki legalább egy elemet, vagy add meg az üzenetek számát!')
+      this.modalService.showMessage('viekr.pleaseSelectAtLeastOneItemOrEnterMessage')
     } else {
       let { user, count } = this.assignToUserForm.value
       let userName = this.usersModel.data.find(e => e.id === user).name
       let selected = this.incomingGrid.selection
       this.modalService.confirm(
-        `Biztosan hozzárendelsz <strong>${selected.length || count} db</strong> csatolmányt <strong>${userName}</strong> felhasználóhoz?`,
+        'viekr.assignConfirmation',
         () => {
           this.incomingModel.loading = true
           this.service.assignToUser(user, selected, count).subscribe(() => {
-            this.modalService.showMessage('Sikeres hozzárendelés!')
+            this.modalService.showMessage('viekr.assigningSuccess')
             this.incomingModel.load()
           })
-        }
+        },
+        { count: selected.length || count, user: userName }
       )
     }
   }
 
   exportIncoming(): void {
     this.service.exportIncoming().subscribe(() => {
-      this.modalService.showMessage('Az exportált adatokat tartalamazó fájlt elküldtük e-mailben.')
+      this.modalService.showMessage('viekr.exportedFileSent')
     })
   }
 
   exportOutgoing(): void {
     this.service.exportOutgoing().subscribe(() => {
-      this.modalService.showMessage('Az exportált adatokat tartalamazó fájlt elküldtük e-mailben.')
+      this.modalService.showMessage('viekr.exportedFileSent')
     })
   }
 
   exportSent(): void {
     this.service.exportSent().subscribe(() => {
-      this.modalService.showMessage('Az exportált adatokat tartalamazó fájlt elküldtük e-mailben.')
+      this.modalService.showMessage('viekr.exportedFileSent')
     })
   }
 
   blockOutgoing(): void {
     if (!this.outgoingGrid.selection.length) {
-      this.modalService.showError(null, 'Kérlek válassz ki egy element a listából!')
+      this.modalService.showError(null, 'viekr.pleaseSelectAtLeastOneItem')
     } else {
       this.service.blockOutgoing(this.outgoingGrid.selection[0].id).subscribe(() => {
-        this.modalService.showMessage('Üzenet sikeresen blokkolva!')
+        this.modalService.showMessage('viekr.blockingSuccess')
         this.outgoingModel.load()
       })
     }
@@ -99,8 +100,6 @@ export class ViekrComponent implements AfterContentInit {
       this.attachmentData = res
       this.attachmentId = row.id
       this.modalService.open('viekrAttachment')
-    }, () => {
-      this.modalService.showError(null, 'Nincs adós az adott ügyhöz!')
     })
   }
 
@@ -120,7 +119,7 @@ export class ViekrComponent implements AfterContentInit {
 
   replyMessage(): void {
     if (!this.incomingGrid.selection.length) {
-      this.modalService.showError(null, 'Kérlek válassz ki egy element a listából!')
+      this.modalService.showError(null, 'viekr.pleaseSelectAnItem')
     } else {
       this.service.fetchMessage(this.incomingGrid.selection[0].id).subscribe((data: ReplyDetails) => {
         this.showNewMessageWindow(data)

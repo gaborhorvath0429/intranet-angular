@@ -1,7 +1,7 @@
 <div class="modal" [style.z-index]="zIndex">
   <div class="modal-window" [style.width]="width ? width + 'px' : fullScreen ? '100vw' : ''">
     <div class="modal-header">
-      <div>{{ title }}</div><div class="close" (click)="close()"></div>
+      <div>{{ title | translate }}</div><div class="close" (click)="close()"></div>
     </div>
     <div class="modal-body" [style.height]="height ? height + 'px' : fullScreen ? '96.5vh' : ''">
       <ng-content></ng-content>

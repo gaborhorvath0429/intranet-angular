@@ -1,5 +1,5 @@
-<app-modal id="message" alignFooter="center" [title]="modalService.messageTitle">
-    <div [innerHTML]="modalService.message"></div>
+<app-modal id="message" alignFooter="center" [title]="modalService.messageTitle | translate">
+    <div [innerHTML]="modalService.message | translate:modalService.parameters"></div>
     <div class="modal-footer">
       <app-button (click)="modalService.close('message')">OK</app-button>
     </div>

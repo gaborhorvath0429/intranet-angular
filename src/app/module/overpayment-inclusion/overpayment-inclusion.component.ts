@@ -45,16 +45,16 @@ export class OverpaymentInclusionComponent implements OnInit {
   ngOnInit() {
     // when overpayment ceid is 8 char long, we get and fill the payments doc id and amount.
     this.newOverPaymentForm.get('overPaymentCeid').valueChanges.subscribe(val => {
-      if (val.length === 8) this.service.getDocId(val).subscribe(response => {
+      if (val.toString().length === 8) this.service.getDocId(val).subscribe(response => {
         this.newOverPaymentForm.get('paymentDocId').setValue(response.paymentsDocId)
         this.newOverPaymentForm.get('inclusionAmount').setValue(response.amount)
-      }, () => this.modalService.showError(null, 'Az adott ügyben nincs tartozás!'))
+      }, () => this.modalService.showError(null, 'overpaymentInclusion.noDebtInCase'))
     })
 
     this.newOverPaymentForm.get('inclusionCeid').valueChanges.subscribe(val => {
-      if (val.length === 8) this.service.getBalance(val).subscribe(response => {
+      if (val.toString().length === 8) this.service.getBalance(val).subscribe(response => {
         this.newOverPaymentForm.get('balance').setValue(response.afterBalance)
-      }, () => this.modalService.showError(null, 'Érvénytelen beszámításos CEID!'))
+      }, () => this.modalService.showError(null, 'overpaymentInclusion.invalidInclusionCeid'))
     })
   }
 
@@ -78,7 +78,7 @@ export class OverpaymentInclusionComponent implements OnInit {
   @FormSubmit('newOverPaymentForm')
   onNewOverPaymentSubmit(): void {
     this.service.savePayment(this.newOverPaymentForm.value).subscribe(() => {
-      this.modalService.showMessage('Tétel sikeresen létrehozva!')
+      this.modalService.showMessage('overpaymentInclusion.itemCreated')
       this.newOverPaymentForm.reset()
       this.modalService.close('newOverPayment')
       this.paymentModel.load()
