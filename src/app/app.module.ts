@@ -11,7 +11,6 @@ import { RequestInterceptor } from './core/services/authentication.service'
 import { LoginComponent } from './core/components/login/login.component'
 import { GridComponent } from './core/components/grid/grid.component'
 import { OverpaymentInclusionComponent } from './module/overpayment-inclusion/overpayment-inclusion.component'
-import { NotificationService, MostVisitedMenusService } from './core/services/socket.service'
 import { SavedViewsDirective } from './core/components/grid/directive/saved-views.directive'
 import { ToolbarButtonComponent } from './core/components/grid/toolbar-button/toolbar-button.component'
 import { ModalComponent } from './core/components/modal/modal.component'
@@ -38,10 +37,11 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer'
 import { CheckboxGroupComponent } from './core/components/input/checkbox-group/checkbox-group.component'
 import { EditorModule } from '@tinymce/tinymce-angular'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
-import {TranslateHttpLoader} from '@ngx-translate/http-loader'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { MenuComponent } from './core/components/menu/menu.component'
 import { HeaderComponent } from './core/components/header/header.component'
 import { MenuSearchPipe } from './core/components/menu/pipe/search.pipe'
+import { CookieService } from 'ngx-cookie-service'
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, 'assets/locales/', '.js')
@@ -51,6 +51,14 @@ export const dpOptions: IAngularMyDpOptions = {
   dateRange: false,
   dateFormat: 'yyyy-mm-dd'
 }
+
+export const translateModuleLoader = TranslateModule.forRoot({
+  loader: {
+    provide: TranslateLoader,
+    useFactory: createTranslateLoader,
+    deps: [HttpClient]
+  }
+})
 
 @NgModule({
   declarations: [
@@ -86,15 +94,9 @@ export const dpOptions: IAngularMyDpOptions = {
   imports: [
     BrowserModule,
     HttpClientModule,
-    TranslateModule.forRoot({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: createTranslateLoader,
-				deps: [HttpClient]
-			}
-		}),
     AppRoutingModule,
     BrowserAnimationsModule,
+    translateModuleLoader,
     FormsModule,
     ReactiveFormsModule,
     SocketIoModule,
@@ -104,16 +106,14 @@ export const dpOptions: IAngularMyDpOptions = {
     EditorModule,
   ],
   providers: [
+    CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestInterceptor,
       multi: true
-    },
-    NotificationService,
-    MostVisitedMenusService
+    }
   ],
-  bootstrap: [AppComponent],
-  entryComponents: []
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
 

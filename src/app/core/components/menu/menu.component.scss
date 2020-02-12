@@ -4,7 +4,7 @@
   left: 40px;
   top: 44px;
   height: 90vh;
-  width: 90vw;
+  width: 95vw;
   padding: 15px;
   background-color: white;
   box-shadow: rgb(136, 136, 136) 0px 0px 6px;
@@ -21,41 +21,49 @@
 
   .most-visited {
     height: 150px;
+    display: flex;
   }
 
   .menu-items {
-    height: calc(100% - 150px);
+    height: calc(100% - 180px);
     border-top: 3px solid #575757;
     display: flex;
+    align-content: flex-start;
     flex-wrap: wrap;
     overflow-y: scroll;
     -ms-overflow-style: none;
     &::-webkit-scrollbar {
       display: none;
     }
+  }
 
-    .menu-item {
-      margin: 5px;
-      height: 130px;
-      width: 130px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      fa-icon {
-        font-size: 60px;
-        color: #575757;
-      }
-      .title {
-        margin-top: 15px;
-      }
+  .menu-item {
+    margin: 5px;
+    height: 130px;
+    width: 130px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    fa-icon {
+      font-size: 60px;
+      color: #575757;
+    }
+    .title {
+      margin-top: 15px;
+      font-size: 12px;
+      overflow-wrap: break-word;
+    }
 
-      &:hover {
-        background-color: #eae8e8;
-        border-radius: 20px;
-      }
+    &:hover {
+      background-color: #eae8e8;
+      border-radius: 20px;
+    }
+
+    &:active, &:focus {
+      outline: 0;
     }
   }
 }

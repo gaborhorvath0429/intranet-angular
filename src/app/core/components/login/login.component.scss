@@ -1,0 +1,11 @@
+.row {
+  display: flex;
+  justify-content: space-between;
+
+  input {
+    height: 23px;
+    margin-bottom: 5px;
+    width: 180px;
+    margin-left: 40px;
+  }
+}

@@ -1,16 +1,13 @@
-<form (ngSubmit)="signIn()" #loginForm="ngForm">
-  <div class="username">
-    <input type="text" required name="name" [(ngModel)]="username" #nameInput="ngModel">
+<app-modal id="login" [title]="'Please enter your credentials'" [closeable]="false" #modal>
+  <form [formGroup]="loginForm">
+    <div class="row">
+      <div class="label">Username:</div><input class="username" type="text" formControlName="username" [form]="loginForm" formInput>
+    </div>
+    <div class="row">
+      <div class="label">Password:</div><input type="password" formControlName="password" [form]="loginForm" formInput>
+    </div>
+  </form>
+  <div class="modal-footer">
+    <app-button (click)="signIn()">Login</app-button>
   </div>
-  <div [hidden]="nameInput.valid || nameInput.pristine">
-    Username is required
-  </div>
-  <div class="password">
-    <input type="password" required name="password" [(ngModel)]="password" #passwordInput="ngModel">
-  </div>
-  <div [hidden]="passwordInput.valid || passwordInput.pristine">
-    Password is required
-  </div>
-  <button type="submit" [disabled]="!loginForm.form.valid">Login</button>
-  <div>{{ error }}</div>
-</form>
+</app-modal>

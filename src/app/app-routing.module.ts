@@ -6,6 +6,7 @@ import { OverpaymentInclusionComponent } from './module/overpayment-inclusion/ov
 import { ViekrComponent } from './module/viekr/viekr.component'
 
 const routes: Routes = [
+  { path: '', redirectTo: window.localStorage.getItem('uriToken') || 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'overpayment-inclusion', component: OverpaymentInclusionComponent, canActivate: [AuthGuard] },
   { path: 'viekr', component: ViekrComponent, canActivate: [AuthGuard] }
