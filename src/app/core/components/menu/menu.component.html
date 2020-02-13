@@ -1,7 +1,7 @@
 <div class="menu" [style.display]="hidden ? 'none' : 'block'" #menu>
   <input type="text" [placeholder]="('common.search' | translate) + '...'" class="search" [(ngModel)]="search">
   <div class="most-visited">
-    <div class="menu-item" *ngFor="let menu of mostVisitedMenus" [routerLink]="menu.path" (click)="toggle(); addToMostVisited(menu)">
+    <div class="menu-item most-visited-menu-item" *ngFor="let menu of mostVisitedMenus" [routerLink]="menu.path" (click)="toggle(); addToMostVisited(menu)">
       <fa-icon [icon]="icons[menu.icon]"></fa-icon>
       <div class="title">{{ menu.title }}</div>
     </div>

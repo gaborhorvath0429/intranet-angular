@@ -33,7 +33,6 @@
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
-    "ngx-cookie-service": "^2.2.0",
     "ngx-extended-pdf-viewer": "^2.0.0-alpha.0",
     "ngx-socket-io": "^3.0.1",
     "process": "^0.11.10",

@@ -5,7 +5,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { ModalService } from '../../services/modal-service.service'
 import { FormSubmit } from '../../decorators/form-submit'
 import { ModalComponent } from '../modal/modal.component'
-import { CookieService } from 'ngx-cookie-service'
 
 @Component({ templateUrl: 'login.component.html', styleUrls: ['./login.component.scss'] })
 export class LoginComponent implements OnInit {
@@ -23,7 +22,6 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private modalService: ModalService,
-    private cookieService: CookieService
   ) { }
 
   ngOnInit(): void {

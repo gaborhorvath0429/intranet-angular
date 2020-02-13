@@ -37,6 +37,7 @@ export class FiltersDirective {
       tap((e: any) => {
         label.style.display = 'block'
         label.innerHTML = e.target.textContent
+        label.setAttribute('data-field', e.target.getAttribute('data-field'))
       }),
       switchMap(
         (start) => mousemove$.pipe(map(move => {
@@ -50,9 +51,9 @@ export class FiltersDirective {
           tap((e: any) => {
             label.style.display = 'none'
             if (e.toElement.classList.contains('filters')) {
-              this.filterFields.add(this.model.fields.find((field: Field) => field.displayName === label.innerHTML))
+              this.filterFields.add(this.model.fields.find((field: Field) => field.name === label.getAttribute('data-field')))
             } else if (e.toElement.classList.contains('sorters')) {
-              this.sorterFields.add(this.model.fields.find((field: Field) => field.displayName === label.innerHTML))
+              this.sorterFields.add(this.model.fields.find((field: Field) => field.name === label.getAttribute('data-field')))
             }
           })
         )))

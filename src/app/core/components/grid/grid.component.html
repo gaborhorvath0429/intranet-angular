@@ -22,7 +22,7 @@
         <button
           (click)="showFilterWindow(field)"
           *ngFor="let field of filterFields"
-        >{{ field.displayName | translate}}
+        >{{ field.displayName | translate }}
           <fa-icon [icon]="faTimesCircle" class="close" (click)="deleteFilter(field)"></fa-icon>
         </button>
       </div>
@@ -37,6 +37,7 @@
             <th class="checkbox-column" *ngIf="selectionModel === 'checkbox'"><input type="checkbox" (click)="selectAll()" [checked]="isAllSelected"></th>
             <th class="table-header table-header-{{module}}"
               *ngFor="let column of model.displayFields"
+              [attr.data-field]="column.name"
               [style.width]="hiddenColumns.length ? '' : column.width ? column.width + 'px' : rowWidth + 'px'"
               [hidden]="hiddenColumns.includes(column)"
             >{{ column.displayName | translate }}</th>
