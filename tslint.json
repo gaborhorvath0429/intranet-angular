@@ -65,6 +65,7 @@
       true,
       "single"
     ],
+    "object-literal-key-quotes": false,
     "trailing-comma": false,
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,

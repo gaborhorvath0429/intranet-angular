@@ -41,7 +41,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { MenuComponent } from './core/components/menu/menu.component'
 import { HeaderComponent } from './core/components/header/header.component'
 import { MenuSearchPipe } from './core/components/menu/pipe/search.pipe'
-import { CookieService } from 'ngx-cookie-service'
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, 'assets/locales/', '.js')
@@ -106,7 +105,6 @@ export const translateModuleLoader = TranslateModule.forRoot({
     EditorModule,
   ],
   providers: [
-    CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestInterceptor,

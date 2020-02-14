@@ -44,8 +44,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let row of model.data" (click)="selectRow(row)" (dblclick)="rowDoubleClick.emit(row)" [ngClass]="{'selected-row': isRowSelected(row)}">
-            <td *ngIf="selectionModel === 'checkbox'"><input type="checkbox" [checked]="isRowSelected(row)"></td>
+          <tr class="data-row" *ngFor="let row of model.data" (click)="selectRow(row)" (dblclick)="rowDoubleClick.emit(row)" [ngClass]="{'selected-row': isRowSelected(row)}">
+            <td *ngIf="selectionModel === 'checkbox'"><input type="checkbox" class="selection-checkbox" [checked]="isRowSelected(row)"></td>
             <td
               *ngFor="let column of model.displayFields"
               [hidden]="hiddenColumns.includes(column)"
@@ -57,7 +57,7 @@
     </div>
     <div class="loading" *ngIf="model.loading"></div>
   </div>
-  <div class="toolbar" [style.height]="'40px'" [hidden]="!hasToolbar">
+  <div class="toolbar" [style.height]="'40px'" [style.display]="hasToolbar ? 'block' : 'none'">
     <ng-content select=".bottom-left-toolbar"></ng-content>
     <app-paginator *ngIf="paginator" [model]="model" [searchParams]="searchParams"></app-paginator>
     <ng-content select=".bottom-toolbar"></ng-content>

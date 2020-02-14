@@ -9,7 +9,7 @@ import { MenuSearchPipe } from './pipe/search.pipe'
 import { HttpClientModule } from '@angular/common/http'
 import { MenuModel } from './model/menu'
 import { MostVisitedMenusService } from '../../services/socket.service'
-import { ElementRef, Component } from '@angular/core'
+import { ElementRef, Component, DebugElement } from '@angular/core'
 import { Location } from '@angular/common'
 
 let mostVisitedMenusServiceStub = jasmine.createSpyObj('mostVisitedMenusService', ['emit'])
@@ -28,7 +28,7 @@ class DummyComponent {}
 describe('MenuComponent', () => {
   let component: MenuComponent
   let fixture: ComponentFixture<MenuComponent>
-  let compiled: any
+  let compiled: DebugElement
   let menuModel: any
 
   beforeEach(() => {

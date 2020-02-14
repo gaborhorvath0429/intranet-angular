@@ -20,9 +20,9 @@
 import * as process from 'process'
 declare var global: any
 declare var require: any
-(window as any).global = window;
+(window as any).global = window
 global.Buffer = global.Buffer || require('buffer').Buffer;
-(window as any).process = process;
+(window as any).process = process
 /** IE10 and IE11 requires the following for NgClass support on SVG elements */
 // import 'classlist.js';  // Run `npm install --save classlist.js`.
 
