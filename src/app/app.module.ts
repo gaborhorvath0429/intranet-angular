@@ -41,6 +41,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { MenuComponent } from './core/components/menu/menu.component'
 import { HeaderComponent } from './core/components/header/header.component'
 import { MenuSearchPipe } from './core/components/menu/pipe/search.pipe'
+import { NotificationsComponent } from './core/components/notifications/notifications.component'
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, 'assets/locales/', '.js')
@@ -89,6 +90,7 @@ export const translateModuleLoader = TranslateModule.forRoot({
     ViekrMessageComponent,
     MenuComponent,
     HeaderComponent,
+    NotificationsComponent,
   ],
   imports: [
     BrowserModule,

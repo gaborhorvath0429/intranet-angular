@@ -3,8 +3,11 @@
     <div class="menu-trigger" (click)="menuWindow.toggle()">
       <fa-icon [icon]="faBars"></fa-icon>
     </div>
-    <div class="notifications">
+    <div class="notifications-trigger" (click)="notificationsWindow.toggle()">
       <fa-icon [icon]="faBell"></fa-icon>
+      <div class="notifications-badge" *ngIf="notificationsWindow.numberOfUnread">
+        {{ notificationsWindow.numberOfUnread }}
+      </div>
     </div>
   </div>
   <div class="right">
@@ -14,3 +17,4 @@
   </div>
 </div>
 <app-menu #menuWindow></app-menu>
+<app-notifications #notificationsWindow></app-notifications>

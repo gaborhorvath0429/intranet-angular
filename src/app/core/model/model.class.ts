@@ -83,14 +83,13 @@ export default abstract class Model {
         filter: this.filterString,
         ...extraParams
       }
-      this.http.get(environment.apiUrl + this.proxy.url, {params}).pipe(
+      this.http.get(environment.apiUrl + this.proxy.url, { params }).pipe(
         tap(response => {
           this.page$.next(Number(page))
           this.totalCount$.next(response[this.proxy.reader.totalProperty])
         }),
         map(response => {
-          let data = response[this.proxy.reader.root]
-          return data.map((item: any) => {
+          return response[this.proxy.reader.root].map((item: any) => {
             for (let field of this.fields) {
               if (field.mapping) item[field.name] = item[field.mapping]
               if (field.defaultValue) item[field.name] = field.defaultValue

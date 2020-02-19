@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     })
 
     this.router.events.subscribe((e) => {
-      if (e instanceof NavigationEnd && e.url !== '/' && e.url !== '/login') {
+      if (e instanceof NavigationEnd && e.url !== '/' && !e.url.includes('/login')) {
         window.localStorage.setItem('uriToken', e.url)
       }
     })

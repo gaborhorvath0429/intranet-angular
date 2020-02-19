@@ -25,11 +25,16 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.modal.open()
+    let uriToken = window.localStorage.getItem('uriToken')
 
-    this.authenticationService.logout()
+    if (uriToken && this.authenticationService.currentUser) {
+      this.router.navigateByUrl(uriToken)
+    } else {
+      this.modal.open()
+      this.authenticationService.logout()
+      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || null
+    }
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || null
   }
 
   @FormSubmit('loginForm')
@@ -38,7 +43,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           this.modalService.close('login')
-          if (this.returnUrl) this.router.navigate([this.returnUrl])
+          if (this.returnUrl) this.router.navigateByUrl(this.returnUrl)
         },
         error => {
           this.modalService.showError(null, 'Username or password invalid')

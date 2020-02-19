@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { faBars, faBell, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { Router } from '@angular/router'
+import { AuthenticationService } from '../../services/authentication.service'
 
 @Component({
   selector: 'app-header',
@@ -15,11 +16,13 @@ export class HeaderComponent {
   faSignOutAlt = faSignOutAlt
 
   constructor(
-    private router: Router
+    private router: Router,
+    private authenticationService: AuthenticationService
   ) { }
 
   logout(): void {
-    this.router.navigateByUrl('/login') // login constructor logs us out so we dont have to
+    this.authenticationService.logout()
+    this.router.navigateByUrl('/login')
   }
 
 }

@@ -1,0 +1,16 @@
+<div class="notifications" [style.display]="hidden ? 'none' : 'block'" #notificationsWindow>
+  <div class="notification" *ngFor="let notification of notifications" [class.unread]="notification.unread" (click)="markAsRead(notification)">
+    <div class="title">{{ notification.title }}</div>
+    <div class="message">{{ notification.message }}</div>
+    <div class="title">{{ notification.arrivedAt }}</div>
+    <div class="close" (click)="delete(notification)">x</div>
+  </div>
+  <div class="delete-all" *ngIf="notifications.length; else noNotifications" (click)="deleteAll()">
+    Értesítések eltávolítása
+  </div>
+  <ng-template #noNotifications>
+    <div class="no-notifications">
+      Nincs új értesítés
+    </div>
+  </ng-template>
+</div>
