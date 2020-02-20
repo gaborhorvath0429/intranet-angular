@@ -24,7 +24,7 @@ export class NotificationsComponent implements OnInit {
     public notificationService: NotificationService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.notificationService.fromEvent('getAll').subscribe((notifications: string) => {
       this.notifications = []
       JSON.parse(notifications).forEach((item: string) => {

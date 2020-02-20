@@ -2,7 +2,7 @@
   <div class="notification" *ngFor="let notification of notifications" [class.unread]="notification.unread" (click)="markAsRead(notification)">
     <div class="title">{{ notification.title }}</div>
     <div class="message">{{ notification.message }}</div>
-    <div class="title">{{ notification.arrivedAt }}</div>
+    <div class="timestamp">{{ notification.arrivedAt }}</div>
     <div class="close" (click)="delete(notification)">x</div>
   </div>
   <div class="delete-all" *ngIf="notifications.length; else noNotifications" (click)="deleteAll()">

@@ -167,4 +167,6 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
   selectView(view: GridView) {}
   deleteSavedView() {}
   onSaveNewViewButtonClick() {}
+  applyView() {}
+  resetView() {}
 }

@@ -130,7 +130,7 @@ export default abstract class Model {
   }
 
   hasSorter(field: Field): string {
-    let sorter = this.sorters.find(e => e.field === field)
+    let sorter = this.sorters.find(e => e.field.name === field.name)
     if (sorter) return sorter.type
     return ''
   }

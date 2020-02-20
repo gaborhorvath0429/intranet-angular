@@ -2,7 +2,7 @@ import { Directive } from '@angular/core'
 import { GridComponent } from '../grid.component'
 import { fromEvent, animationFrameScheduler } from 'rxjs'
 import { map, switchMap, takeUntil, tap, subscribeOn } from 'rxjs/operators'
-import { Field } from 'src/app/core/model/model.class'
+import { Field, Filter, Sorter } from 'src/app/core/model/model.class'
 import * as moment from 'moment'
 
 @Directive({
@@ -69,7 +69,7 @@ export class FiltersDirective {
   }
 
   sortBy = function(field: Field): void {
-    let existingSorter = this.model.sorters.find(e => e.field === field)
+    let existingSorter = this.model.sorters.find((e: Sorter) => e.field.name === field.name)
     if (!existingSorter) {
       this.model.sorters.push({field, type: 'ASC'})
     } else if (existingSorter.type === 'ASC') {
@@ -87,7 +87,7 @@ export class FiltersDirective {
         this.listFilterItems[item[field.filterModel.filterAttribute]] = false
       }
     }
-    let existingFilters = this.model.filters.filter(e => e.field === field.name)
+    let existingFilters = this.model.filters.filter((e: Filter) => e.field === field.name)
     this.selectedFilterType = 'value'
     if (existingFilters.length) {
       for (let filter of existingFilters) {
@@ -231,7 +231,7 @@ export class FiltersDirective {
   }
 
   onRemoveFilterButtonClick = function(): void {
-    this.model.filters = this.model.filters.filter(e => e.field !== this.selectedFilterField.name)
+    this.model.filters = this.model.filters.filter((e: Filter) => e.field !== this.selectedFilterField.name)
     this.filterFields.delete(this.selectedFilterField)
     this.model.load(1, this.searchParams)
   }

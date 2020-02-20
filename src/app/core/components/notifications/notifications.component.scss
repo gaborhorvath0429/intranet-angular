@@ -3,7 +3,8 @@
   z-index: 100;
   left: 50px;
   top: 40px;
-  width: 160px;
+  min-width: 160px;
+  max-width: 250px;
   background-color: white;
   box-shadow: rgb(136, 136, 136) 0px 0px 6px;
 

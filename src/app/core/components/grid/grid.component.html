@@ -82,7 +82,7 @@
         </table>
       </div>
       <div class="columns-toolbar" [style.height]="'40px'">
-        <app-toolbar-button [disabled]="!selectedColumns.length" (click)="filterColumns()">{{ 'common.preview' | translate }}</app-toolbar-button>
+        <app-toolbar-button [disabled]="!selectedColumns.length" (click)="applyView()">{{ 'common.preview' | translate }}</app-toolbar-button>
         <app-toolbar-button [disabled]="!selectedColumns.length" (click)="selectedView ? createSavedView() : modalService.open('viewSaveModal-' + module)">{{ 'common.save' | translate }}</app-toolbar-button>
       </div>
     </div>
@@ -100,9 +100,9 @@
         </table>
       </div>
       <div class="columns-toolbar" [style.height]="'40px'">
-        <app-toolbar-button [disabled]="!selectedView" (click)="filterColumns()">{{ 'common.apply' | translate }}</app-toolbar-button>
+        <app-toolbar-button [disabled]="!selectedView" (click)="applyView()">{{ 'common.apply' | translate }}</app-toolbar-button>
         <app-toolbar-button [disabled]="!selectedView" (click)="deleteSavedView()">{{ 'common.delete' | translate }}</app-toolbar-button>
-        <app-toolbar-button (click)="selectedColumns = []; selectedView = null; filterColumns()">{{ 'common.reset' | translate }}</app-toolbar-button>
+        <app-toolbar-button (click)="resetView()">{{ 'common.reset' | translate }}</app-toolbar-button>
       </div>
     </div>
     <app-modal id="viewSaveModal-{{module}}" [title]="'The name of the view'">
