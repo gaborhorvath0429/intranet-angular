@@ -42,6 +42,8 @@ import { MenuComponent } from './core/components/menu/menu.component'
 import { HeaderComponent } from './core/components/header/header.component'
 import { MenuSearchPipe } from './core/components/menu/pipe/search.pipe'
 import { NotificationsComponent } from './core/components/notifications/notifications.component'
+import { CdkTreeModule } from '@angular/cdk/tree'
+import { RegulationComponent } from './module/regulation/regulation.component'
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, 'assets/locales/', '.js')
@@ -91,6 +93,7 @@ export const translateModuleLoader = TranslateModule.forRoot({
     MenuComponent,
     HeaderComponent,
     NotificationsComponent,
+    RegulationComponent,
   ],
   imports: [
     BrowserModule,
@@ -105,6 +108,7 @@ export const translateModuleLoader = TranslateModule.forRoot({
     AngularMyDatePickerModule,
     NgxExtendedPdfViewerModule,
     EditorModule,
+    CdkTreeModule
   ],
   providers: [
     {

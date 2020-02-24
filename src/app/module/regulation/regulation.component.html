@@ -1,0 +1,41 @@
+<div class="regulation">
+  <div class="window-header">
+    {{ 'regulation.window.main.title' | translate }}
+  </div>
+  <div class="window-body">
+    <div class="container">
+      <div class="regulations">
+        <div class="menu-trigger">
+          <fa-icon [icon]="faBars"></fa-icon>
+        </div>
+        <input type="text" class="search" [placeholder]="'common.search' | translate">
+        <div class="tree-title">
+          {{ 'regulation.grid.column.title' | translate }}
+        </div>
+        <div class="regulations-tree">
+          <cdk-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl">
+            <cdk-nested-tree-node *cdkTreeNodeDef="let node" [class.closed]="!nestedTreeControl.isExpanded(node)" class="regulation-tree-node">
+              {{node.TITLE}}
+            </cdk-nested-tree-node>
+            <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasNestedChild" [class.closed]="!nestedTreeControl.isExpanded(node)" class="regulation-tree-node">
+              <button class="node-toggle" cdkTreeNodeToggle>
+                <fa-icon [icon]="faChevronRight" *ngIf="!nestedTreeControl.isExpanded(node)"></fa-icon>
+                <fa-icon [icon]="faChevronDown" *ngIf="nestedTreeControl.isExpanded(node)"></fa-icon>
+              </button>
+              {{node.TITLE}}
+              <div [class.regulation-tree-invisible]="!nestedTreeControl.isExpanded(node)">
+                <ng-container cdkTreeNodeOutlet></ng-container>
+              </div>
+            </cdk-nested-tree-node>
+          </cdk-tree>
+        </div>
+      </div>
+      <div class="document">
+        <div class="no-selected">
+          {{ 'regulation.window.main.placeholder' | translate }}
+        </div>
+      </div>
+    </div>
+    <div class="additional-attachments"></div>
+  </div>
+</div>

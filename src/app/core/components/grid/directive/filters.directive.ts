@@ -39,8 +39,8 @@ export class FiltersDirective {
         label.innerHTML = e.target.textContent
         label.setAttribute('data-field', e.target.getAttribute('data-field'))
       }),
-      switchMap(
-        (start) => mousemove$.pipe(map(move => {
+      switchMap((start) => mousemove$.pipe(
+        map(move => {
           move.preventDefault()
           return {
             left: move.clientX - start.offsetX,

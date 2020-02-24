@@ -9,6 +9,7 @@ export class ButtonComponent {
 
   @Input() disabled?: boolean
   @Input() type?: string
+  @Input() width?: any
 
   constructor() { }
 
