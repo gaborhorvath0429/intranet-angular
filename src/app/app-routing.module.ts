@@ -11,7 +11,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'overpayment-inclusion', component: OverpaymentInclusionComponent, canActivate: [AuthGuard] },
   { path: 'viekr', component: ViekrComponent, canActivate: [AuthGuard] },
-  { path: 'regulation', component: RegulationComponent, canActivate: [AuthGuard] }
+  { path: 'regulation', component: RegulationComponent, canActivate: [AuthGuard] },
+  { path: 'regulation/:id', component: RegulationComponent, canActivate: [AuthGuard] }
 ]
 
 @NgModule({

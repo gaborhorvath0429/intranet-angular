@@ -77,16 +77,16 @@ export class ViekrService {
     private sentModel: SentModel
   ) { }
 
-  assignToUser(user: any, selected: any, count: number = 0): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(environment.apiUrl + '/viekr/assignToUser', {
+  assignToUser(user: any, selected: any, count: number = 0): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(environment.apiUrl + '/viekr/assignToUser', {
       attachmentId: JSON.stringify(selected.map(e => e.csatolmany_id)),
       messagesNum: count ? count : null,
       assignTo: user
     })
   }
 
-  exportIncoming(): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(environment.apiUrl + '/viekr/export', {
+  exportIncoming(): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(environment.apiUrl + '/viekr/export', {
       columns: this.incomingModel.displayFields.map(e => e.name),
       filter: JSON.parse(this.incomingModel.filterString),
       sort: JSON.parse(this.incomingModel.sorterString),
@@ -94,8 +94,8 @@ export class ViekrService {
     })
   }
 
-  exportOutgoing(): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(environment.apiUrl + '/viekr/export', {
+  exportOutgoing(): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(environment.apiUrl + '/viekr/export', {
       columns: this.outgoingModel.displayFields.map(e => e.name),
       filter: JSON.parse(this.outgoingModel.filterString),
       sort: JSON.parse(this.outgoingModel.sorterString),
@@ -103,8 +103,8 @@ export class ViekrService {
     })
   }
 
-  exportSent(): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(environment.apiUrl + '/viekr/export', {
+  exportSent(): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(environment.apiUrl + '/viekr/export', {
       columns: this.sentModel.displayFields.map(e => e.name),
       filter: JSON.parse(this.sentModel.filterString),
       sort: JSON.parse(this.sentModel.sorterString),
@@ -112,8 +112,8 @@ export class ViekrService {
     })
   }
 
-  blockOutgoing(id: number): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(environment.apiUrl + '/viekr/blockOutgoing', { attachmentId: id })
+  blockOutgoing(id: number): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(environment.apiUrl + '/viekr/blockOutgoing', { attachmentId: id })
   }
 
   getAttachmentData(row: any): Observable<AttachmentData> {
@@ -121,8 +121,8 @@ export class ViekrService {
     return this.http.get<AttachmentData>(environment.apiUrl + '/viekr/getDetails', { params })
   }
 
-  saveAttachment(data: AttachmentData): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(environment.apiUrl + '/viekr/setStatus', data)
+  saveAttachment(data: AttachmentData): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(environment.apiUrl + '/viekr/setStatus', data)
   }
 
   getVhNumber(ceid: number, subscriberId: number): Observable<{executorCaseId: string}> {
@@ -134,7 +134,7 @@ export class ViekrService {
     return this.http.get<ReplyDetails>(environment.apiUrl + '/viekr/getReplyDetails', { params })
   }
 
-  sendMessage(message: Message): Observable<ApiResponse> {
+  sendMessage(message: Message): Observable<ApiResponse<any>> {
     let formData: FormData = new FormData()
     formData.append('elozmenyAzonosito', message.elozmenyAzonosito)
     formData.append('organizationId', message.organizationId)
@@ -146,10 +146,10 @@ export class ViekrService {
     message.ceids.split(',').map((val: string) => val.trim()).forEach(ceid => formData.append('ceids', ceid))
     message.files.forEach(file => file ? formData.append('files', file, file.name) : null)
 
-    return this.http.post<ApiResponse>(environment.apiUrl + '/viekr/sendMessage', formData)
+    return this.http.post<ApiResponse<any>>(environment.apiUrl + '/viekr/sendMessage', formData)
   }
 
-  unlockAttachment(attachmentId: number): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(environment.apiUrl + '/viekr/unlock', { attachment_id: attachmentId })
+  unlockAttachment(attachmentId: number): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(environment.apiUrl + '/viekr/unlock', { attachment_id: attachmentId })
   }
 }

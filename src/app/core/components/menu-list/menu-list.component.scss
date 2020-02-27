@@ -1,0 +1,20 @@
+.menu-list {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  background-color: white;
+  border: 1px solid #e1e1e1;
+  box-shadow: rgb(136, 136, 136) 0px 0px 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 99;
+
+  .item {
+    white-space: nowrap;
+    padding: 5px 20px;
+    cursor: pointer;
+    &:hover {
+      background: rgb(228, 228, 228)
+    }
+  }
+}

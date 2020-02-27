@@ -1,0 +1,5 @@
+<div class="menu-list" [style.display]="hidden ? 'none' : 'block'" #menu>
+  <div class="item" *ngFor="let item of items" (click)="onItemClick(item)">
+    {{ item.text }}
+  </div>
+</div>

@@ -44,6 +44,7 @@ import { MenuSearchPipe } from './core/components/menu/pipe/search.pipe'
 import { NotificationsComponent } from './core/components/notifications/notifications.component'
 import { CdkTreeModule } from '@angular/cdk/tree'
 import { RegulationComponent } from './module/regulation/regulation.component'
+import { MenuListComponent } from './core/components/menu-list/menu-list.component'
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, 'assets/locales/', '.js')
@@ -94,6 +95,7 @@ export const translateModuleLoader = TranslateModule.forRoot({
     HeaderComponent,
     NotificationsComponent,
     RegulationComponent,
+    MenuListComponent,
   ],
   imports: [
     BrowserModule,
@@ -121,8 +123,9 @@ export const translateModuleLoader = TranslateModule.forRoot({
 })
 export class AppModule { }
 
-export interface ApiResponse {
+export interface ApiResponse<T> {
   success: boolean
   message?: string
-  root?: any
+  root?: T[]
+  record?: T
 }

@@ -2,6 +2,6 @@
   <div [innerHTML]="modalService.confirmationMessage | translate:modalService.parameters"></div>
   <div class="modal-footer">
     <app-button (click)="modalService.close('confirm')">{{ 'common.cancel' | translate }}</app-button>
-    <app-button (click)="modalService.close('confirm'); modalService.confirmationCallback()">OK</app-button>
+    <app-button (click)="modalService.close('confirm'); modalService.confirmationCallback()">{{ 'common.yes' | translate }}</app-button>
   </div>
 </app-modal>

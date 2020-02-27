@@ -5,24 +5,28 @@
   <div class="window-body">
     <div class="container">
       <div class="regulations">
-        <div class="menu-trigger">
-          <fa-icon [icon]="faBars"></fa-icon>
+        <div class="trigger" (click)="refreshData()">
+          <fa-icon [icon]="faRedo"></fa-icon>
         </div>
-        <input type="text" class="search" [placeholder]="'common.search' | translate">
+        <div class="trigger" (click)="menuList.toggle()">
+          <fa-icon [icon]="faBars"></fa-icon>
+          <app-menu-list [items]="menuItems" [host]="this" #menuList></app-menu-list>
+        </div>
+        <input type="text" class="search" [placeholder]="'common.search' | translate" (input)="search($event.target.value)">
         <div class="tree-title">
           {{ 'regulation.grid.column.title' | translate }}
         </div>
         <div class="regulations-tree">
           <cdk-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl">
-            <cdk-nested-tree-node *cdkTreeNodeDef="let node" [class.closed]="!nestedTreeControl.isExpanded(node)" class="regulation-tree-node">
-              {{node.TITLE}}
+            <cdk-nested-tree-node *cdkTreeNodeDef="let node" (click)="onRegulationClick(node)" [class.selected]="selected === node" [class.closed]="!nestedTreeControl.isExpanded(node)" class="regulation-tree-node">
+              <fa-icon class="type" [icon]="node.TYPE === 'NODE' ? faFolder : faFile"></fa-icon>{{node.TITLE}}
             </cdk-nested-tree-node>
-            <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasNestedChild" [class.closed]="!nestedTreeControl.isExpanded(node)" class="regulation-tree-node">
+            <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasNestedChild" [class.selected]="selected === node && !nestedTreeControl.isExpanded(node)" [class.closed]="!nestedTreeControl.isExpanded(node)" class="regulation-tree-node">
               <button class="node-toggle" cdkTreeNodeToggle>
                 <fa-icon [icon]="faChevronRight" *ngIf="!nestedTreeControl.isExpanded(node)"></fa-icon>
                 <fa-icon [icon]="faChevronDown" *ngIf="nestedTreeControl.isExpanded(node)"></fa-icon>
               </button>
-              {{node.TITLE}}
+              <fa-icon class="type" [icon]="faFolder"></fa-icon>{{node.TITLE}}
               <div [class.regulation-tree-invisible]="!nestedTreeControl.isExpanded(node)">
                 <ng-container cdkTreeNodeOutlet></ng-container>
               </div>
@@ -31,11 +35,37 @@
         </div>
       </div>
       <div class="document">
-        <div class="no-selected">
+        <div class="no-selected" *ngIf="!selected">
           {{ 'regulation.window.main.placeholder' | translate }}
+        </div>
+        <div class="attachment" *ngIf="selected">
+          <ngx-extended-pdf-viewer [src]="getDocumentUrl(selected)" height="calc(100vh - 200px)" useBrowserLocale="true"></ngx-extended-pdf-viewer>
         </div>
       </div>
     </div>
-    <div class="additional-attachments"></div>
+    <div class="additional-attachments">
+      <div class="attachment" *ngFor="let attachment of attachments" [class.selected]="attachment === selectedAttachment" (click)="onAttachmentClick(attachment)">
+        <fa-icon [icon]="faFilePdf"></fa-icon>
+        <div class="name">{{ attachment.name }}</div>
+      </div>
+    </div>
   </div>
 </div>
+
+<app-modal id="regulationFolder" #folderModal>
+  <form [formGroup]="folderForm">
+    <input type="hidden" formControlName="id">
+    <div class="row">
+      <div class="label">{{ 'common.name' | translate }}:</div><input type="text" formControlName="name" [form]="folderForm" formInput>
+    </div>
+    <div class="row">
+      <div class="label">{{ 'common.description' | translate }}:</div><textarea formControlName="description" [form]="folderForm" formInput></textarea>
+    </div>
+  </form>
+  <div class="modal-footer">
+    <app-button (click)="onFolderFormSubmit()">{{ 'common.save' | translate }}</app-button>
+    <app-button (click)="modalService.close('regulationFolder')">{{ 'common.cancel' | translate }}</app-button>
+    <app-button [hidden]="folderModal.title === 'common.folder.new'" (click)="deleteFolder()">{{ 'common.delete' | translate }}</app-button>
+  </div>
+</app-modal>
+

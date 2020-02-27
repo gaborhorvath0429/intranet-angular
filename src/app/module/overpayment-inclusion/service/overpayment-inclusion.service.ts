@@ -57,6 +57,6 @@ export class OverpaymentInclusionService {
       AFTER_INCLUSION_BALANCE: values.balance
     }
 
-    return this.http.post<ApiResponse>(environment.apiUrl + '/overpaymentInclusion/overpaymentSave', params)
+    return this.http.post<ApiResponse<any>>(environment.apiUrl + '/overpaymentInclusion/overpaymentSave', params)
   }
 }
