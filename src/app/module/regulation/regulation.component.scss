@@ -134,7 +134,7 @@
   }
 }
 
-app-modal {
+.regulationFolder {
   .row {
     display: flex;
     justify-content: space-between;
@@ -153,5 +153,54 @@ app-modal {
       margin-left: 80px;
       margin-bottom: 5px;
     }
+  }
+}
+
+.regulationEntry {
+  input[type=file] {
+    display: none;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+
+    input {
+      margin-left: 106px;
+      margin-bottom: 5px;
+    }
+
+    input:not([type=checkbox]) {
+      margin-left: 80px;
+      width: 700px;
+      height: 23px;
+    }
+
+    textarea {
+      resize: none;
+      width: 700px;
+      height: 70px;
+      margin-left: 80px;
+      margin-bottom: 5px;
+    }
+
+    input.file-path {
+      width: 636px;
+    }
+
+    label {
+      height: 24px;
+    }
+  }
+
+  .groups-title {
+    margin-top: 10px;
+  }
+
+  .groups {
+    margin-top: -15px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 700px;
+    margin-left: 166px;
   }
 }

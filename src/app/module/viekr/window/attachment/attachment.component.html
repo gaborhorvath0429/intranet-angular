@@ -3,7 +3,7 @@
     <div class="controls">
       <div class="document-types">
         {{ 'viekr.documentType' | translate }}
-        <app-checkbox-group [disabled]="isDisabled" [model]="documentTypesModel" labelAttribute="label" #documentTypes></app-checkbox-group>
+        <app-checkbox-group [disabled]="isDisabled" [wrap]="true" [model]="documentTypesModel" labelAttribute="label" #documentTypes></app-checkbox-group>
       </div>
       <div class="debtor" *ngFor="let subscriber of subscribers; let i = index" [style.color]="isDisabled ? 'grey' : ''">
         {{ 'common.ceid' | translate }}: <input [disabled]="isDisabled" (keyup)="onCeidChange($event.target.value, i)" [style.color]="isDisabled ? 'grey' : ''" type="number" class="ceid" ceidInput #debtorCeidInput>

@@ -50,7 +50,48 @@ export class RegulationService {
     })
   }
 
+  editFolder(id: number, title: string, description: string): Observable<ApiResponse<any>> {
+    return this.http.put<ApiResponse<any>>(environment.apiUrl + '/regulation/node/' + id.toString(), {
+      title,
+      description
+    })
+  }
+
   deleteFolder(id: number): Observable<ApiResponse<any>> {
     return this.http.delete<ApiResponse<any>>(environment.apiUrl + '/regulation/node/' + id.toString())
+  }
+
+  createRegulation(values: any, node: number, document: File, attachment: File, groups: string[]): Observable<ApiResponse<any>> {
+    let formData: FormData = new FormData()
+    formData.append('node', node.toString())
+    formData.append('title', values.name)
+    formData.append('description', values.description)
+    formData.append('public', values.public ? '1' : '0')
+    formData.append('document', document, document.name)
+    if (attachment) formData.append('attachment', attachment, attachment.name)
+    groups.map(groupId => formData.append('group', groupId))
+
+    return this.http.post<ApiResponse<any>>(environment.apiUrl + '/regulation/entry', formData)
+  }
+
+  updateRegulation(values: any, node: number, document: File, attachment: File, groups: string[]): Observable<ApiResponse<any>> {
+    let formData: FormData = new FormData()
+    formData.append('node', node.toString())
+    formData.append('title', values.name)
+    formData.append('description', values.description)
+    formData.append('public', values.public ? '1' : '0')
+    if (document) formData.append('document', document, document.name)
+    if (attachment) formData.append('attachment', attachment, attachment.name)
+    groups.map(groupId => formData.append('group', groupId))
+
+    return this.http.put<ApiResponse<any>>(environment.apiUrl + '/regulation/entry/' + values.id, formData)
+  }
+
+  deleteRegulation(id: string): Observable<ApiResponse<any>> {
+    return this.http.delete<ApiResponse<any>>(environment.apiUrl + '/regulation/entry/' + id)
+  }
+
+  deleteAttachment(id: string): Observable<ApiResponse<any>> {
+    return this.http.delete<ApiResponse<any>>(environment.apiUrl + '/regulation/attachment/' + id)
   }
 }

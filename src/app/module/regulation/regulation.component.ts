@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, ViewChildren, QueryList, ElementRef } from '@angular/core'
 import { faBars, faChevronRight, faChevronDown, faFilePdf, faRedo, faFolder, faFile } from '@fortawesome/free-solid-svg-icons'
 import { of as observableOf } from 'rxjs'
 import { NestedTreeControl } from '@angular/cdk/tree'
@@ -6,9 +6,11 @@ import { RegulationService, RegulationNode, RegulationAttachment } from './servi
 import * as _ from 'lodash'
 import { ModalService } from 'src/app/core/services/modal-service.service'
 import { Location } from '@angular/common'
-import { FormGroup, FormControl, Validators } from '@angular/forms'
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms'
 import { ModalComponent } from 'src/app/core/components/modal/modal.component'
 import { FormSubmit } from 'src/app/core/decorators/form-submit'
+import { GroupsModel } from './model/groups'
+import { CheckboxGroupComponent } from 'src/app/core/components/input/checkbox-group/checkbox-group.component'
 
 @Component({
   selector: 'app-regulation',
@@ -47,12 +49,28 @@ export class RegulationComponent implements OnInit {
     description: new FormControl('')
   })
 
+  regulationForm = new FormGroup({
+    id: new FormControl(''),
+    name: new FormControl('', Validators.required),
+    description: new FormControl(''),
+    document: new FormControl('', Validators.required),
+    attachment: new FormControl(''),
+    public: new FormControl(false)
+  })
+
+  document: File
+  attachment: File
+  newEntry: boolean
+
   @ViewChild('folderModal') folderModal: ModalComponent
+  @ViewChild('groups') groups: CheckboxGroupComponent
+  @ViewChildren('attachmentRef') attachmentsRef: QueryList<ElementRef<HTMLDivElement>>
 
   constructor(
     private service: RegulationService,
     public modalService: ModalService,
-    private location: Location
+    private location: Location,
+    public groupsModel: GroupsModel
   ) {
     this.nestedTreeControl = new NestedTreeControl<RegulationNode>(this.getChildren)
   }
@@ -61,12 +79,12 @@ export class RegulationComponent implements OnInit {
     this.getData()
   }
 
-  getData(): void {
+  getData(redirect = true): void {
     this.service.getRegulations().subscribe(regulations => {
       this.nestedDataSource = regulations
       this.clonedTree = regulations
       let id = this.location.normalize(this.location.path()).split('/').pop()
-      if (id !== 'regulation') this.selectById(id)
+      if (id !== 'regulation' && redirect) this.selectById(id)
     })
   }
 
@@ -148,7 +166,7 @@ export class RegulationComponent implements OnInit {
   }
 
   editFolder(): void {
-    if (!this.selected || this.selected.TYPE !== 'NODE') return this.modalService.showMessage('Kérlek válassz ki egy mappát!')
+    if (!this.selected || this.selected.TYPE !== 'NODE') return this.modalService.showMessage('regulation.folder.choose')
     this.folderForm.reset()
     this.folderForm.controls.id.setValue(this.selected.ID)
     this.folderForm.controls.name.setValue(this.selected.TITLE)
@@ -166,7 +184,7 @@ export class RegulationComponent implements OnInit {
   deleteFolder(): void {
     this.modalService.confirm('Biztos vagy benne?', () => {
       this.service.deleteFolder(this.folderForm.controls.id.value).subscribe(() => {
-        this.getData()
+        this.getData(false)
         this.modalService.close('regulationFolder')
       })
     })
@@ -175,15 +193,109 @@ export class RegulationComponent implements OnInit {
   @FormSubmit('folderForm')
   onFolderFormSubmit(): void {
     let values = this.folderForm.value
-    console.log(values)
-    let parentId = this.selected ? this.selected.PARENT_ID : null
+    let expanded = this.nestedDataSource.find(e => this.nestedTreeControl.isExpanded(e))
+    let parentId = expanded ? expanded.ID : this.selected ? this.selected.PARENT_ID : null
     if (values.id) { // edit
-
+      this.service.editFolder(values.id, values.name, values.description).subscribe(() => {
+        this.getData(false)
+        this.modalService.close('regulationFolder')
+      })
     } else { // new
       this.service.createFolder(parentId, values.name, values.description).subscribe(() => {
-        this.getData()
+        this.getData(false)
         this.modalService.close('regulationFolder')
       })
     }
+  }
+
+  newRegulation(): void {
+    let expanded = this.nestedDataSource.find(e => this.nestedTreeControl.isExpanded(e))
+    let parentId = expanded ? expanded.ID : this.selected ? this.selected.PARENT_ID : null
+    if (this.selected && this.selected.TYPE === 'NODE') parentId = this.selected.ID
+    if (!parentId) return this.modalService.showMessage('regulation.folder.choose')
+    this.newEntry = true
+    this.regulationForm.controls.document.setValidators([Validators.required])
+    this.regulationForm.reset()
+    this.document = null
+    this.attachment = null
+    this.modalService.open('regulationEntry')
+    this.groups.selectedIds = []
+  }
+
+  editRegulation(): void {
+    if (!this.selected || this.selected.TYPE !== 'ENTRY') return this.modalService.showMessage('regulation.regulation.choose')
+    this.newEntry = false
+    this.regulationForm.controls.document.setValidators([])
+    this.regulationForm.reset()
+    this.document = null
+    this.attachment = null
+    this.groups.selectedIds = []
+    let id = this.selected.ID.toString().replace('-', '')
+    this.regulationForm.controls.id.setValue(id)
+    this.regulationForm.controls.name.setValue(this.selected.TITLE)
+    this.regulationForm.controls.description.setValue(this.selected.DESCRIPTION)
+    this.regulationForm.controls.public.setValue(Boolean(this.selected.IS_PUBLIC))
+    this.groupsModel.proxy.url = '/regulation/group/' + id
+    this.groupsModel.load().then(data => {
+      data.filter(group => group.selected).map(group => {
+        this.groups.selectedIds.push(group.ID)
+      })
+      this.modalService.open('regulationEntry')
+    })
+  }
+
+  // regulation form control
+  onDocumentChange(files: FileList): void {
+    this.document = files.item(0)
+    this.regulationForm.controls.document.setValue(this.document.name)
+  }
+
+  // regulation form control
+  onAttachmentChange(files: FileList): void {
+    this.attachment = files.item(0)
+    this.regulationForm.controls.attachment.setValue(this.attachment.name)
+  }
+
+  @FormSubmit('regulationForm')
+  onRegulationFormSubmit(): void {
+    let values = this.regulationForm.value
+    let expanded = this.nestedDataSource.find(e => this.nestedTreeControl.isExpanded(e))
+    let parentId = expanded ? expanded.ID : this.selected ? this.selected.PARENT_ID : null
+    if (this.selected && this.selected.TYPE === 'NODE') parentId = this.selected.ID
+    let groups = this.groups.selectedIds
+    if (!parentId) return this.modalService.showMessage('regulation.folder.choose')
+    if (values.id) {
+      this.service.updateRegulation(values, parentId, this.document, this.attachment, groups).subscribe(() => {
+        this.getData(false)
+        this.modalService.close('regulationEntry')
+      })
+    } else {
+      this.service.createRegulation(values, parentId, this.document, this.attachment, groups).subscribe(() => {
+        this.getData(false)
+        this.modalService.close('regulationEntry')
+      })
+    }
+  }
+
+  deleteRegulation(): void {
+    this.modalService.confirm('Biztos vagy benne?', () => {
+      this.service.deleteRegulation(this.selected.ID.toString().replace('-', '')).subscribe(() => {
+        this.getData(false)
+        this.modalService.close('regulationEntry')
+      })
+    })
+  }
+
+  deleteAttachment(): void {
+    let selected: ElementRef<HTMLDivElement>
+    this.attachmentsRef.forEach(item => {
+      if (item.nativeElement.classList.contains('selected')) selected = item
+    })
+    if (!selected) return this.modalService.showMessage('regulation.attachment.choose')
+    this.modalService.confirm('Biztos vagy benne?', () => {
+      this.service.deleteAttachment(selected.nativeElement.getAttribute('id')).subscribe(() => {
+        this.getData()
+      })
+    })
   }
 }

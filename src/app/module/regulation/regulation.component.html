@@ -26,7 +26,7 @@
                 <fa-icon [icon]="faChevronRight" *ngIf="!nestedTreeControl.isExpanded(node)"></fa-icon>
                 <fa-icon [icon]="faChevronDown" *ngIf="nestedTreeControl.isExpanded(node)"></fa-icon>
               </button>
-              <fa-icon class="type" [icon]="faFolder"></fa-icon>{{node.TITLE}}
+              <fa-icon class="type" (click)="selected = node" [icon]="faFolder"></fa-icon><span (click)="selected = node">{{node.TITLE}}</span>
               <div [class.regulation-tree-invisible]="!nestedTreeControl.isExpanded(node)">
                 <ng-container cdkTreeNodeOutlet></ng-container>
               </div>
@@ -44,7 +44,7 @@
       </div>
     </div>
     <div class="additional-attachments">
-      <div class="attachment" *ngFor="let attachment of attachments" [class.selected]="attachment === selectedAttachment" (click)="onAttachmentClick(attachment)">
+      <div class="attachment" *ngFor="let attachment of attachments" [class.selected]="attachment === selectedAttachment" (click)="onAttachmentClick(attachment)" [attr.id]="attachment.id" #attachmentRef>
         <fa-icon [icon]="faFilePdf"></fa-icon>
         <div class="name">{{ attachment.name }}</div>
       </div>
@@ -52,7 +52,7 @@
   </div>
 </div>
 
-<app-modal id="regulationFolder" #folderModal>
+<app-modal id="regulationFolder" class="regulationFolder" #folderModal>
   <form [formGroup]="folderForm">
     <input type="hidden" formControlName="id">
     <div class="row">
@@ -69,3 +69,42 @@
   </div>
 </app-modal>
 
+<app-modal id="regulationEntry" [title]="'regulation.form.regulation.document'" class="regulationEntry" #regulationModal>
+  <form [formGroup]="regulationForm">
+    <input type="hidden" formControlName="id">
+    <div class="row">
+      <div class="label">{{ 'common.name' | translate }}:</div><input type="text" formControlName="name" [form]="regulationForm" formInput>
+    </div>
+    <div class="row">
+      <div class="label">{{ 'common.description' | translate }}:</div><textarea formControlName="description" [form]="regulationForm" formInput></textarea>
+    </div>
+    <div class="row">
+      <div class="label">{{ 'regulation.form.regulation.document' | translate }}:</div>
+      <div class="file-input">
+        <input type="text" class="file-path" formControlName="document" [form]="regulationForm" disabled formInput>
+        <input type="file" (change)="onDocumentChange($event.target.files)" id="document">
+        <label for="document" class="default-button">{{ 'common.browse' | translate }}</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="label">{{ 'common.attachments' | translate }}:</div>
+      <div class="file-input">
+        <input type="text" class="file-path" formControlName="attachment" [form]="regulationForm" disabled formInput>
+        <input type="file" (change)="onAttachmentChange($event.target.files)" id="attachment">
+        <label for="attachment" class="default-button">{{ 'common.browse' | translate }}</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="label">{{ 'common.public' | translate }}:<input type="checkbox" formControlName="public"></div>
+    </div>
+    <div class="groups-title">{{ 'regulation.form.regulation.groups' | translate }}:</div>
+    <div class="groups">
+      <app-checkbox-group [model]="groupsModel" [search]="true" labelAttribute="label" #groups></app-checkbox-group>
+    </div>
+  </form>
+  <div class="modal-footer">
+    <app-button (click)="onRegulationFormSubmit()">{{ 'common.save' | translate }}</app-button>
+    <app-button (click)="modalService.close('regulationEntry')">{{ 'common.cancel' | translate }}</app-button>
+    <app-button [hidden]="newEntry" (click)="deleteRegulation()">{{ 'common.delete' | translate }}</app-button>
+  </div>
+</app-modal>

@@ -1,5 +1,6 @@
-<div class="container" [style.color]="disabled ? 'grey' : ''">
-  <div class="item" *ngFor="let item of items">
+<div class="container" [style.color]="disabled ? 'grey' : ''" [style.height]="height ? height : '250px'" [style.flex-wrap]="wrap ? 'wrap' : 'no-wrap'">
+  <input type="text" class="search" [placeholder]="'common.search' | translate" [(ngModel)]="searchText">
+  <div class="item" *ngFor="let item of model.data | checkboxGroupSearch:searchText:labelAttribute">
     <input type="checkbox" value="item[idAttribute]" [disabled]="disabled" (change)="toggleItemChecked(item[idAttribute])" [checked]="selectedIds.includes(item[idAttribute])">
     {{ item[labelAttribute] }}
   </div>

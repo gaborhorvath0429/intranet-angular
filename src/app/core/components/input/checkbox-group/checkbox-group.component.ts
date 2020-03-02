@@ -9,16 +9,20 @@ import * as _ from 'lodash'
 })
 export class CheckboxGroupComponent {
 
-  @Input('model') set model(value: Model) {
-    this.items = _.clone(value.data)
-  }
+  @Input('model') model: Model
   @Input() labelAttribute = 'name'
   @Input() idAttribute = 'id'
   @Input() disabled = false
 
+  @Input() height: string
+  @Input() wrap: boolean
+
+  @Input() search = false
+
   @Output() selectionChange = new EventEmitter()
 
-  items: any[]
+  searchText = ''
+
   selectedIds: any[] = []
 
   constructor() { }
