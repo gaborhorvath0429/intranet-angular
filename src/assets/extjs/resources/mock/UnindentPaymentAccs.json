@@ -1,0 +1,40 @@
+{
+  "totalCount": 7,
+  "root": [
+    {
+      "PAYMENT_ACCOUNT": "14220108-28174017",
+      "PAYMENT_ACCOUNT_ID": "0",
+      "PAYMENT_ACCOUNT_COLOR": "red"
+    },
+    {
+      "PAYMENT_ACCOUNT": "14220108-28174031",
+      "PAYMENT_ACCOUNT_ID": "1",
+      "PAYMENT_ACCOUNT_COLOR": "blue"
+    },
+    {
+      "PAYMENT_ACCOUNT": "14220108-28174000",
+      "PAYMENT_ACCOUNT_ID": "2",
+      "PAYMENT_ACCOUNT_COLOR": "brown"
+    },
+    {
+      "PAYMENT_ACCOUNT": "11600006-00000000-41761056",
+      "PAYMENT_ACCOUNT_ID": "3",
+      "PAYMENT_ACCOUNT_COLOR": null
+    },
+    {
+      "PAYMENT_ACCOUNT": "Postai befizet\u00e9s",
+      "PAYMENT_ACCOUNT_ID": "4",
+      "PAYMENT_ACCOUNT_COLOR": null
+    },
+    {
+      "PAYMENT_ACCOUNT": "KP",
+      "PAYMENT_ACCOUNT_ID": "5",
+      "PAYMENT_ACCOUNT_COLOR": null
+    },
+    {
+      "PAYMENT_ACCOUNT": "Nem tudjuk",
+      "PAYMENT_ACCOUNT_ID": "6",
+      "PAYMENT_ACCOUNT_COLOR": null
+    }
+  ]
+}

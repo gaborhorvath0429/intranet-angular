@@ -44,9 +44,18 @@
               { "glob": "**/*", "input": "node_modules/tinymce/plugins", "output": "/tinymce/plugins/" }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/extjs/resources/Intranet-all.scss"
             ],
-            "scripts": ["node_modules/jquery/dist/jquery.js", "src/assets/js/resizableColumns.min.js", "node_modules/tinymce/tinymce.min.js"],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.js",
+              "src/assets/js/resizableColumns.min.js",
+              "node_modules/tinymce/tinymce.min.js",
+              "src/assets/extjs/resources/socket.io-client-2.1.1/dist/socket.io.js",
+              "src/assets/extjs/resources/i18next.js",
+              "src/assets/extjs/resources/locales/translations.js",
+              "src/assets/extjs/app.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {

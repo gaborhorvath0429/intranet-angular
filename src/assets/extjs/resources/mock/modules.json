@@ -1,0 +1,173 @@
+{
+  "success": true,
+  "result": [
+    {
+      "id": 1,
+      "path": "report",
+      "title": "Általános report",
+      "parent": null,
+      "icon": "fa fa-list-alt"
+    },
+    {
+      "id": 13,
+      "path": "autoreport",
+      "title": "Autoriport",
+      "parent": 1,
+      "icon": "fa fa-list-alt"
+    },
+    {
+      "id": 14,
+      "path": "bank-account-loader",
+      "title": "Bankszámla betöltő",
+      "parent": 1,
+      "icon": "fa fa-arrow-circle-o-right"
+    },
+    {
+      "id": 15,
+      "path": "unident-payment",
+      "title": "Beazonosítatlan befiz.",
+      "parent": null,
+      "icon": "fa fa-list-alt"
+    },
+    {
+      "id": 47,
+      "path": "commerzbank-transfer-accountant",
+      "title": "Commerzbank átutalás könyvelő",
+      "parent": null,
+      "icon": "fa fa-arrow-circle-o-up"
+    },
+    {
+      "id": 48,
+      "path": "commerzbank-uploader",
+      "title": "Commerzbank utalás feldolgozás",
+      "parent": null,
+      "icon": "fa fa-arrow-circle-o-right"
+    },
+    {
+      "id": 18,
+      "path": "cross-border-loader",
+      "title": "Crossborder betöltő",
+      "parent": 37,
+      "icon": "fa fa-arrow-circle-o-right"
+    },
+    {
+      "id": 17,
+      "path": "cross-border-uploader",
+      "title": "Crossborder feltöltő",
+      "parent": 37,
+      "icon": "fa fa-arrow-circle-o-up"
+    },
+    {
+      "id": 37,
+      "path": "group-management",
+      "title": "Csoportok",
+      "parent": null,
+      "icon": "fa fa-users"
+    },
+    {
+      "id": 2,
+      "path": "dialer",
+      "title": "Dialer",
+      "parent": null,
+      "icon": "fa fa-phone"
+    },
+    {
+      "id": 44,
+      "path": "file-uploader",
+      "title": "Fájlbetöltők",
+      "parent": null,
+      "icon": "fa fa-arrow-circle-o-right"
+    },
+    {
+      "id": 35,
+      "path": "faktor-group-modifier",
+      "title": "Faktor csoport módosító",
+      "parent": null,
+      "icon": "fa fa-anchor"
+    },
+    {
+      "id": 38,
+      "path": "user-management",
+      "title": "Felhasználók",
+      "parent": null,
+      "icon": "fa fa-user"
+    },
+    {
+      "id": 67,
+      "path": "field-visit-generator",
+      "title": "Felkeresések",
+      "parent": 0,
+      "icon": "fa fa-clipboard"
+    },
+    {
+      "id": 27,
+      "path": "human-resource-events",
+      "title": "HR rendezvények",
+      "parent": 0,
+      "icon": "fa fa-calendar"
+    },
+    {
+      "id": 4,
+      "path": "fee-loader",
+      "title": "Illeték betöltő",
+      "parent": null,
+      "icon": "fa fa-arrow-circle-o-right"
+    },
+    {
+      "id": 36,
+      "path": "khr-subscriber-identification",
+      "title": "KHR Subscriber azon.",
+      "parent": null,
+      "icon": "fa fa-check-square-o"
+    },
+    {
+      "id": 68,
+      "path": "advance-fee-uploader",
+      "title": "Költség betöltő",
+      "parent": 0,
+      "icon": "fa fa-balance-scale"
+    },
+    {
+      "id": 20,
+      "path": "ksi-letter-delete",
+      "title": "KSI levéltörlő eszköz",
+      "parent": null,
+      "icon": "fa fa-list-alt"
+    },
+    {
+      "id": 31,
+      "path": "module",
+      "title": "Modulok",
+      "parent": null,
+      "icon": "fa fa-cogs"
+    },
+    {
+      "id": 12,
+      "path": "complaint",
+      "title": "Panaszkezelés",
+      "parent": null,
+      "icon": "fa fa-volume-control-phone"
+    },
+    {
+      "id": 16,
+      "path": "overpayment-inclusion",
+      "title": "Túlfizetés beszámítás",
+      "parent": null,
+      "icon": "fa fa-list-alt"
+    },
+    {
+      "id": 3,
+      "path": "executor-costs-loader",
+      "title": "VH költség betöltő",
+      "parent": null,
+      "icon": "fa fa-arrow-circle-o-right"
+    },
+    {
+      "id": 45,
+      "path": "viekr",
+      "title": "VIEKR",
+      "parent": null,
+      "icon": "fa fa-archive"
+    }
+  ]
+}

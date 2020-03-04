@@ -1,0 +1,76 @@
+{
+  "success": true,
+  "totalCount": 4,
+  "root": [
+    {
+      "id": 1,
+      "formId": 11,
+      "element": "1",
+      "description": "{\"id\":1,\"title\":\"Felhasználónév\",\"name\":\"userName\",\"type\":\"textfield\",\"defaultValue\":\"Nagy Lajos\",\"readOnly\":true,\"required\":true}",
+      "dataSource": null,
+      "elementOrder": 1,
+      "createdBy": "jmeszaros",
+      "creationDate": "2017-05-29T12:53:32.000Z",
+      "lastUpdatedBy": "jmeszaros",
+      "lastUpdateDate": "2017-05-29T12:53:32.000Z",
+      "CREATION_DATE": "2017-05-29T12:53:32.000Z",
+      "LAST_UPDATE_DATE": "2017-05-29T12:53:32.000Z"
+    },
+    {
+      "id": 2,
+      "formId": 11,
+      "element": "1",
+      "description": "{\"id\":2,\"title\":\"Létrehozás dátuma\",\"name\":\"creationDate\",\"type\":\"datefield\",\"defaultValue\":\"2017-05-29\",\"readOnly\":true,\"required\":true}",
+      "dataSource": null,
+      "elementOrder": 2,
+      "createdBy": "jmeszaros",
+      "creationDate": "2017-05-29T12:53:32.000Z",
+      "lastUpdatedBy": "jmeszaros",
+      "lastUpdateDate": "2017-05-29T12:53:32.000Z",
+      "CREATION_DATE": "2017-05-29T12:53:32.000Z",
+      "LAST_UPDATE_DATE": "2017-05-29T12:53:32.000Z"
+    },
+    {
+      "id": 3,
+      "formId": 11,
+      "element": "1",
+      "description": "{\"id\":3,\"title\":\"Létrehozott érték\",\"name\":\"createdValue\",\"type\":\"numberfield\",\"defaultValue\":42,\"readOnly\":true,\"required\":true}",
+      "dataSource": null,
+      "elementOrder": 3,
+      "createdBy": "jmeszaros",
+      "creationDate": "2017-05-29T12:53:32.000Z",
+      "lastUpdatedBy": "jmeszaros",
+      "lastUpdateDate": "2017-05-29T12:53:32.000Z",
+      "CREATION_DATE": "2017-05-29T12:53:32.000Z",
+      "LAST_UPDATE_DATE": "2017-05-29T12:53:32.000Z"
+    },
+    {
+      "id": 4,
+      "formId": 11,
+      "element": "1",
+      "description": "{\"id\":4,\"title\":\"Kiválasztható érték\",\"name\":\"choosableValues\",\"type\":\"combo\",\"defaultValue\":null,\"readOnly\":true,\"required\":true}",
+      "dataSource": "SELECT st.subscriber_name || ' - ' ||st.description, st.subscriber_type_id\n FROM faktor_kollecto.subscriber_types st\n ORDER BY st.subscriber_name",
+      "elementOrder": 4,
+      "createdBy": "jmeszaros",
+      "creationDate": "2017-05-29T12:53:32.000Z",
+      "lastUpdatedBy": "jmeszaros",
+      "lastUpdateDate": "2017-05-29T12:53:32.000Z",
+      "CREATION_DATE": "2017-05-29T12:53:32.000Z",
+      "LAST_UPDATE_DATE": "2017-05-29T12:53:32.000Z"
+    },
+    {
+      "id": 5,
+      "formId": 11,
+      "element": "1",
+      "description": "{\"id\":5,\"title\":\"EZEGYTESZTELENDŐ érték\",\"name\":\"choosableValues\",\"type\":\"combo\",\"defaultValue\":null,\"readOnly\":true,\"required\":true}",
+      "dataSource": "SELECT st.subscriber_name || ' - ' ||st.description, st.subscriber_type_id\n FROM faktor_kollecto.subscriber_types st\n ORDER BY st.subscriber_name",
+      "elementOrder": 5,
+      "createdBy": "jmeszaros",
+      "creationDate": "2017-05-29T12:53:32.000Z",
+      "lastUpdatedBy": "jmeszaros",
+      "lastUpdateDate": "2017-05-29T12:53:32.000Z",
+      "CREATION_DATE": "2017-05-29T12:53:32.000Z",
+      "LAST_UPDATE_DATE": "2017-05-29T12:53:32.000Z"
+    }
+  ]
+}

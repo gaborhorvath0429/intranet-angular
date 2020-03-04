@@ -5,6 +5,7 @@ import { AuthGuard } from './core/guards/auth-guard.guard'
 import { OverpaymentInclusionComponent } from './module/overpayment-inclusion/overpayment-inclusion.component'
 import { ViekrComponent } from './module/viekr/viekr.component'
 import { RegulationComponent } from './module/regulation/regulation.component'
+import { ExtjsComponent } from './core/components/extjs/extjs.component'
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -12,7 +13,8 @@ const routes: Routes = [
   { path: 'overpayment-inclusion', component: OverpaymentInclusionComponent, canActivate: [AuthGuard] },
   { path: 'viekr', component: ViekrComponent, canActivate: [AuthGuard] },
   { path: 'regulation', component: RegulationComponent, canActivate: [AuthGuard] },
-  { path: 'regulation/:id', component: RegulationComponent, canActivate: [AuthGuard] }
+  { path: 'regulation/:id', component: RegulationComponent, canActivate: [AuthGuard] },
+  { path: 'unident-payment', component: ExtjsComponent, canActivate: [AuthGuard] }
 ]
 
 @NgModule({

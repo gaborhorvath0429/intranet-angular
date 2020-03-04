@@ -7,7 +7,9 @@
   margin: 0;
 }
 
-body{
+body {
+  background: white !important;
+  overflow: hidden !important;
   font-size: 13px;
   font-family: Helvetica, arial, verdana, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -106,4 +108,9 @@ textarea {
   border-bottom: 5px solid #626c77;
   border-right: 5px solid #626c77;
   border-left: 5px solid #626c77;
+}
+
+#extjs {
+  width: 100%;
+  height: calc(100vh - 55px);
 }

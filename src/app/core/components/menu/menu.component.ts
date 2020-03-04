@@ -5,6 +5,8 @@ import { faArchive, faListAlt, faArrowCircleDown, faArrowCircleRight,
   faUser, faClipboard, faCalendar, faCheckSquare, faBan, faCogs, faChartArea,
   faPhoneVolume, faBook, faFlag } from '@fortawesome/free-solid-svg-icons'
 import { MostVisitedMenusService } from '../../services/socket.service'
+import { ExtjsService } from '../../services/extjs.service'
+import { Router } from '@angular/router'
 
 interface MenuItem {
   path: string
@@ -37,7 +39,9 @@ export class MenuComponent implements OnInit {
 
   constructor(
     public menuModel: MenuModel,
-    private mostVisitedMenusService: MostVisitedMenusService
+    private mostVisitedMenusService: MostVisitedMenusService,
+    private extjService: ExtjsService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -80,6 +84,14 @@ export class MenuComponent implements OnInit {
     let target = event.target as HTMLElement
     if (!target.closest('.menu-trigger') && !this.menu.nativeElement.contains(target)) {
       this.hidden = true
+    }
+  }
+
+  public onMenuItemClick(menu: MenuItem): void {
+    this.toggle()
+    if (this.router.url.replace('/', '') !== menu.path) {
+      this.addToMostVisited(menu)
+      this.extjService.hide()
     }
   }
 

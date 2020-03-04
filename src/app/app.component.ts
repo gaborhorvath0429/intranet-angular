@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { Router, NavigationEnd } from '@angular/router'
 import { AuthenticationService } from './core/services/authentication.service'
+import { ExtjsService } from './core/services/extjs.service'
 
 @Component({
   selector: 'app-root',

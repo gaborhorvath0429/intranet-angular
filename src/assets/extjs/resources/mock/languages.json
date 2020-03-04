@@ -1,0 +1,23 @@
+{
+  "en": {
+    "translation": {
+      "common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "next": "Next"
+      }
+    }
+  },
+  "hu": {
+    "translation": {
+      "common": {
+        "save": "Mentés",
+        "cancel": "Mégse",
+        "next": "Tovább"
+      },
+      "dialer": {
+        "campaign": "Kampány"
+      }
+    }
+  }
+}

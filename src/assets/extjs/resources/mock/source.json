@@ -1,0 +1,65 @@
+{
+  "records": [
+    {
+      "id": 1,
+      "source": "Továbbított (2)",
+      "A": 1,
+      "user1": 1,
+      "user2": 0,
+      "user3": 0,
+      "user4": 0,
+      "user5": 0,
+      "user6": 0,
+      "user7": 0,
+      "user8": 0
+    }, {
+      "id": 2,
+      "source": "F1_TEL_G1'_VH (15)",
+      "A": 5,
+      "user1": 3,
+      "user2": 4,
+      "user3": 5,
+      "user4": 0,
+      "user5": 0,
+      "user6": 0,
+      "user7": 0,
+      "user8": 0
+    }, {
+      "id": 3,
+      "source": "F1_TEL_G2'_VH (1)",
+      "A": 0,
+      "user1": 1,
+      "user2": 0,
+      "user3": 0,
+      "user4": 0,
+      "user5": 0,
+      "user6": 0,
+      "user7": 0,
+      "user8": 0
+    }, {
+      "id": 4,
+      "source": "F1_TEL_G3'_VH (2)",
+      "A": 1,
+      "user1": 2,
+      "user2": 0,
+      "user3": 0,
+      "user4": 0,
+      "user5": 0,
+      "user6": 0,
+      "user7": 0,
+      "user8": 0
+    }, {
+      "id": 5,
+      "source": "F1_TEL_G1'_VH (5)",
+      "A": 2,
+      "user1": 2,
+      "user2": 1,
+      "user3": 0,
+      "user4": 0,
+      "user5": 0,
+      "user6": 0,
+      "user7": 0,
+      "user8": 0
+    }
+  ]
+}

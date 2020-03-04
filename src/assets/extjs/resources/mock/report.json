@@ -1,0 +1,684 @@
+{
+  "root": [
+    {
+      "id": 89,
+      "reportName": "2.1_58/2014. MNB rendelet 4. § (1)"
+    },
+    {
+      "id": 88,
+      "reportName": "2.1_58/2014. MNB rendelet 4. § (1) LISTA Igazolás"
+    },
+    {
+      "id": 57,
+      "reportName": "Adós elérhetőségéhez hozzájárult"
+    },
+    {
+      "id": 499,
+      "reportName": "Alacsony egyenlegű ügyek"
+    },
+    {
+      "id": 82,
+      "reportName": "BUNUGYI_KOMMENTEK"
+    },
+    {
+      "id": 135,
+      "reportName": "CB_SkyToll_report"
+    },
+    {
+      "id": 54,
+      "reportName": "CB_report_eredeti_megbizora"
+    },
+    {
+      "id": 73,
+      "reportName": "CC All"
+    },
+    {
+      "id": 129,
+      "reportName": "CC Elveszett hívások éjszaka"
+    },
+    {
+      "id": 127,
+      "reportName": "CC Elveszett hívások óránként"
+    },
+    {
+      "id": 109,
+      "reportName": "CC Hívások Faktor"
+    },
+    {
+      "id": 117,
+      "reportName": "CC Hívások Faktor múlt havi"
+    },
+    {
+      "id": 113,
+      "reportName": "CC Hívások Faktor múlt heti"
+    },
+    {
+      "id": 105,
+      "reportName": "CC Hívások Faktor tegnapi"
+    },
+    {
+      "id": 110,
+      "reportName": "CC Hívások KSI"
+    },
+    {
+      "id": 122,
+      "reportName": "CC Hívások KSI"
+    },
+    {
+      "id": 118,
+      "reportName": "CC Hívások KSI múlt havi"
+    },
+    {
+      "id": 114,
+      "reportName": "CC Hívások KSI múlt heti"
+    },
+    {
+      "id": 106,
+      "reportName": "CC Hívások KSI tegnapi"
+    },
+    {
+      "id": 123,
+      "reportName": "CC Munkamenet Faktor"
+    },
+    {
+      "id": 111,
+      "reportName": "CC Munkamenet Faktor"
+    },
+    {
+      "id": 119,
+      "reportName": "CC Munkamenet Faktor múlt havi"
+    },
+    {
+      "id": 115,
+      "reportName": "CC Munkamenet Faktor múlt heti"
+    },
+    {
+      "id": 107,
+      "reportName": "CC Munkamenet Faktor tegnapi"
+    },
+    {
+      "id": 112,
+      "reportName": "CC Munkamenet KSI"
+    },
+    {
+      "id": 124,
+      "reportName": "CC Munkamenet KSI"
+    },
+    {
+      "id": 120,
+      "reportName": "CC Munkamenet KSI múlt havi"
+    },
+    {
+      "id": 116,
+      "reportName": "CC Munkamenet KSI múlt heti"
+    },
+    {
+      "id": 108,
+      "reportName": "CC Munkamenet KSI tegnapi"
+    },
+    {
+      "id": 132,
+      "reportName": "CC Munkamenet Részletes Faktor"
+    },
+    {
+      "id": 133,
+      "reportName": "CC Munkamenet Részletes KSI"
+    },
+    {
+      "id": 78,
+      "reportName": "CROSS BORDER levél és dokumentum érkezés"
+    },
+    {
+      "id": 45,
+      "reportName": "DAILY_ACTIONS"
+    },
+    {
+      "id": 91,
+      "reportName": "DAILY_PAYMENTS_ANALYSIS"
+    },
+    {
+      "id": 528,
+      "reportName": "Dialer Helytelen számok"
+    },
+    {
+      "id": 530,
+      "reportName": "Dialer Riport"
+    },
+    {
+      "id": 529,
+      "reportName": "Dialer Telefonszám riport"
+    },
+    {
+      "id": 99,
+      "reportName": "EGYOSSZEGU_KEDV_FIZIG"
+    },
+    {
+      "id": 507,
+      "reportName": "FAKTOR - Admin S01 Levél heti riport"
+    },
+    {
+      "id": 523,
+      "reportName": "FAKTOR - Alapítványok, egyesületek riport"
+    },
+    {
+      "id": 526,
+      "reportName": "FAKTOR - Automata Magáncsőd Ügyek lista"
+    },
+    {
+      "id": 524,
+      "reportName": "FAKTOR - Automata Operátori Comment Riport"
+    },
+    {
+      "id": 495,
+      "reportName": "FAKTOR - B6 kóddal jóváírt végrehajtói előlegek"
+    },
+    {
+      "id": 519,
+      "reportName": "FAKTOR - Csamag betöltés utáni manual link ellenörzés"
+    },
+    {
+      "id": 164,
+      "reportName": "FAKTOR - Cím ellenőrző riport"
+    },
+    {
+      "id": 509,
+      "reportName": "FAKTOR - Engedményezési értesítõ kiküldése utáni automata riport"
+    },
+    {
+      "id": 172,
+      "reportName": "FAKTOR - Hagyatéki Queue riport"
+    },
+    {
+      "id": 5,
+      "reportName": "FAKTOR - Havi könyvelés"
+    },
+    {
+      "id": 179,
+      "reportName": "FAKTOR - Külföldi Cím"
+    },
+    {
+      "id": 516,
+      "reportName": "FAKTOR - Operátori Comment Riport"
+    },
+    {
+      "id": 170,
+      "reportName": "FAKTOR - Panasz report"
+    },
+    {
+      "id": 515,
+      "reportName": "FAKTOR - Panasz riport FMH-hoz és VH-hoz"
+    },
+    {
+      "id": 503,
+      "reportName": "FAKTOR - RFM és Fizig riport"
+    },
+    {
+      "id": 177,
+      "reportName": "FAKTOR - Rögzített fizetési ígéretek, ill. RFM-ek és az ebből megtérült összegek havi riportja"
+    },
+    {
+      "id": 178,
+      "reportName": "FAKTOR - Rögzített fizetési ígéretek, ill. RFM-ek és az ebből megtérült összegek heti riportja"
+    },
+    {
+      "id": 176,
+      "reportName": "FAKTOR - Rögzített fizetési ígéretek, ill. RFM-ek és az ebből megtérült összegek negyedéves riportja"
+    },
+    {
+      "id": 532,
+      "reportName": "FAKTOR - SKT TT Batch"
+    },
+    {
+      "id": 518,
+      "reportName": "FAKTOR - Szóbeli panaszkezelési csoport munkái"
+    },
+    {
+      "id": 511,
+      "reportName": "FAKTOR - Telefonszám tisztítás riport"
+    },
+    {
+      "id": 522,
+      "reportName": "FAKTOR - Térülésről szóló tájékoztató"
+    },
+    {
+      "id": 513,
+      "reportName": "FAKTOR - VH kiküldött levelek"
+    },
+    {
+      "id": 169,
+      "reportName": "FAKTOR - Visszavasarlas Altalanos riport"
+    },
+    {
+      "id": 531,
+      "reportName": "FAKTOR - cím módosítások riport v2"
+    },
+    {
+      "id": 494,
+      "reportName": "FAKTOR - Ügyfél elhalálozás vizsgálat"
+    },
+    {
+      "id": 510,
+      "reportName": "FAKTOR Cégközlöny"
+    },
+    {
+      "id": 153,
+      "reportName": "FAKTOR KHR tükörtábla adatok"
+    },
+    {
+      "id": 533,
+      "reportName": "FAKTOR KOVETELESI TIPUSOK"
+    },
+    {
+      "id": 152,
+      "reportName": "FAKTOR Könyvelési sorrend"
+    },
+    {
+      "id": 77,
+      "reportName": "FAKTOR SMS Incoming"
+    },
+    {
+      "id": 171,
+      "reportName": "FAKTOR VH ellenörző riport"
+    },
+    {
+      "id": 156,
+      "reportName": "FAKTOR előző havi sms darabszám"
+    },
+    {
+      "id": 100,
+      "reportName": "FAKTOR_PSZÁF_BANK"
+    },
+    {
+      "id": 102,
+      "reportName": "FAKTOR_PU_NAPI_TULFIZETESEK"
+    },
+    {
+      "id": 527,
+      "reportName": "FAKTOR_PU_NAPI_TULFIZETESEK_2"
+    },
+    {
+      "id": 502,
+      "reportName": "FMH/VH ellenőrző riport"
+    },
+    {
+      "id": 103,
+      "reportName": "FNC_REP_38LAW"
+    },
+    {
+      "id": 98,
+      "reportName": "FRONT_OFFICE_CC_ADOS_HAVI"
+    },
+    {
+      "id": 97,
+      "reportName": "FRONT_OFFICE_CC_ADOS_HETI"
+    },
+    {
+      "id": 96,
+      "reportName": "FRONT_OFFICE_CC_ADOS_NAPI"
+    },
+    {
+      "id": 95,
+      "reportName": "FRONT_OFFICE_KIMUTATAS_HAVI"
+    },
+    {
+      "id": 94,
+      "reportName": "FRONT_OFFICE_KIMUTATAS_HETI"
+    },
+    {
+      "id": 93,
+      "reportName": "FRONT_OFFICE_KIMUTATAS_NAPI"
+    },
+    {
+      "id": 92,
+      "reportName": "FRONT_OFFICE_MUNKAI"
+    },
+    {
+      "id": 497,
+      "reportName": "F_Information Request"
+    },
+    {
+      "id": 56,
+      "reportName": "Felfüggesztett jogi ügyek"
+    },
+    {
+      "id": 87,
+      "reportName": "HAGYATEKI_RIPORT"
+    },
+    {
+      "id": 49,
+      "reportName": "Hét napon belüli hívás"
+    },
+    {
+      "id": 104,
+      "reportName": "Income_riport"
+    },
+    {
+      "id": 534,
+      "reportName": "Jelzálog - Felelős operátorok"
+    },
+    {
+      "id": 149,
+      "reportName": "KHR saját lekérdezés eredménye"
+    },
+    {
+      "id": 525,
+      "reportName": "KSI - Automata OTP Operator Contact & Comment Riport"
+    },
+    {
+      "id": 505,
+      "reportName": "KSI - CROSSBORDER RIPORT"
+    },
+    {
+      "id": 159,
+      "reportName": "KSI - Csomag statisztika riport"
+    },
+    {
+      "id": 168,
+      "reportName": "KSI - Cím ellenőrző riport"
+    },
+    {
+      "id": 174,
+      "reportName": "KSI - Rögzített fizetési ígéretek, ill. RFM-ek és az ebből megtérült összegek havi riportja"
+    },
+    {
+      "id": 175,
+      "reportName": "KSI - Rögzített fizetési ígéretek, ill. RFM-ek és az ebből megtérült összegek heti riportja"
+    },
+    {
+      "id": 173,
+      "reportName": "KSI - Rögzített fizetési ígéretek, ill. RFM-ek és az ebből megtérült összegek negyedéves riportja"
+    },
+    {
+      "id": 154,
+      "reportName": "KSI - Sikerdíj riport"
+    },
+    {
+      "id": 504,
+      "reportName": "KSI - nyitott B2B és CB ügyek riport"
+    },
+    {
+      "id": 508,
+      "reportName": "KSI - nyitott B2B és CB ügyekben több main cím van"
+    },
+    {
+      "id": 498,
+      "reportName": "KSI Cégközlöny"
+    },
+    {
+      "id": 151,
+      "reportName": "KSI Könyvelési sorrend"
+    },
+    {
+      "id": 47,
+      "reportName": "KSI SKT_BM Results"
+    },
+    {
+      "id": 46,
+      "reportName": "KSI SKT_BM for check"
+    },
+    {
+      "id": 76,
+      "reportName": "KSI SMS Incoming"
+    },
+    {
+      "id": 157,
+      "reportName": "KSI előző havi sms darabszám"
+    },
+    {
+      "id": 90,
+      "reportName": "KSI_Csomagzaras_B2B"
+    },
+    {
+      "id": 101,
+      "reportName": "KSI_PSZÁF_BANK"
+    },
+    {
+      "id": 81,
+      "reportName": "KSI_daily_ccteamleader_report_ALL_fnc"
+    },
+    {
+      "id": 7,
+      "reportName": "LEGAL altalanos"
+    },
+    {
+      "id": 20,
+      "reportName": "LEGAL_BATCHES"
+    },
+    {
+      "id": 155,
+      "reportName": "Legal Jogi Riport 2k16"
+    },
+    {
+      "id": 521,
+      "reportName": "Lezart statuszu viekr dokumentumok"
+    },
+    {
+      "id": 136,
+      "reportName": "MONTHLY_BATCH_OLDER"
+    },
+    {
+      "id": 146,
+      "reportName": "Magyar Telekom csomagzáró"
+    },
+    {
+      "id": 147,
+      "reportName": "Magyar Telekom csomagzáró befizetések"
+    },
+    {
+      "id": 520,
+      "reportName": "Manual_send_to_kekkh"
+    },
+    {
+      "id": 138,
+      "reportName": "NOAction_flag"
+    },
+    {
+      "id": 506,
+      "reportName": "Nem kezelt panasz"
+    },
+    {
+      "id": 63,
+      "reportName": "OROKOS_KERESES"
+    },
+    {
+      "id": 158,
+      "reportName": "OTP Faktoring egyenleg update fájl feldolgozás"
+    },
+    {
+      "id": 148,
+      "reportName": "OTP Faktoring eseményfájl feldolgozás"
+    },
+    {
+      "id": 128,
+      "reportName": "PANASZ_NEW"
+    },
+    {
+      "id": 58,
+      "reportName": "PANASZ_OLD"
+    },
+    {
+      "id": 60,
+      "reportName": "PANASZ_OLD"
+    },
+    {
+      "id": 80,
+      "reportName": "PAYMENT TYPES TENDENCIES"
+    },
+    {
+      "id": 134,
+      "reportName": "PENZMOSAS_REPORT"
+    },
+    {
+      "id": 15,
+      "reportName": "PU_BEFIZETESEK"
+    },
+    {
+      "id": 125,
+      "reportName": "PU_FIZJEL_BEFIZETESENKENT_UPC"
+    },
+    {
+      "id": 126,
+      "reportName": "PU_FIZJEL_BEFIZETESENKENT_UPC_CL"
+    },
+    {
+      "id": 27,
+      "reportName": "PU_FIZJEL_SZAMLANKENTI"
+    },
+    {
+      "id": 26,
+      "reportName": "PU_FIZJEL_SZAMLANKENTI"
+    },
+    {
+      "id": 25,
+      "reportName": "PU_FIZJEL_SZAMLANKENTI"
+    },
+    {
+      "id": 16,
+      "reportName": "PU_FIZJEL_SZAMLANKENTI"
+    },
+    {
+      "id": 30,
+      "reportName": "PU_FIZJEL_SZAMLANKENTI_CL"
+    },
+    {
+      "id": 29,
+      "reportName": "PU_FIZJEL_SZAMLANKENTI_CL"
+    },
+    {
+      "id": 28,
+      "reportName": "PU_FIZJEL_SZAMLANKENTI_CL"
+    },
+    {
+      "id": 17,
+      "reportName": "PU_FIZJEL_SZAMLANKENTI_CL"
+    },
+    {
+      "id": 18,
+      "reportName": "PU_NAPI_TULFIZETESEK"
+    },
+    {
+      "id": 41,
+      "reportName": "PU_VISSZAVASAROLT_FIZET"
+    },
+    {
+      "id": 40,
+      "reportName": "PU_VISSZAVASAROLT_ZAR"
+    },
+    {
+      "id": 6,
+      "reportName": "Recovery plan calculation"
+    },
+    {
+      "id": 500,
+      "reportName": "SMS napi riport"
+    },
+    {
+      "id": 42,
+      "reportName": "SMS_AUTOMATA"
+    },
+    {
+      "id": 62,
+      "reportName": "SMS_AUTOMATA"
+    },
+    {
+      "id": 536,
+      "reportName": "Szolgáltatás minősége"
+    },
+    {
+      "id": 55,
+      "reportName": "Szóbeli panasz comment"
+    },
+    {
+      "id": 79,
+      "reportName": "Telefonszám kezelés"
+    },
+    {
+      "id": 61,
+      "reportName": "Túlfizetések visszamenőleg"
+    },
+    {
+      "id": 131,
+      "reportName": "VH_BEFIZETESEK"
+    },
+    {
+      "id": 517,
+      "reportName": "VIEKR - napi összefoglaló riport"
+    },
+    {
+      "id": 140,
+      "reportName": "V_FMH_SIKERTELEN_BETOLT"
+    },
+    {
+      "id": 142,
+      "reportName": "V_K_CEGINFO_ADATOK"
+    },
+    {
+      "id": 141,
+      "reportName": "V_VH_SIKERTELEN_BETOLT"
+    },
+    {
+      "id": 31,
+      "reportName": "daily_ccteamleader_report_A"
+    },
+    {
+      "id": 39,
+      "reportName": "daily_ccteamleader_report_ALL"
+    },
+    {
+      "id": 32,
+      "reportName": "daily_ccteamleader_report_B"
+    },
+    {
+      "id": 37,
+      "reportName": "daily_ccteamleader_report_B2B/FED"
+    },
+    {
+      "id": 33,
+      "reportName": "daily_ccteamleader_report_C"
+    },
+    {
+      "id": 34,
+      "reportName": "daily_ccteamleader_report_D"
+    },
+    {
+      "id": 35,
+      "reportName": "daily_ccteamleader_report_L1"
+    },
+    {
+      "id": 36,
+      "reportName": "daily_ccteamleader_report_L2"
+    },
+    {
+      "id": 72,
+      "reportName": "daily_ccteamleader_report_fnc_ALL"
+    },
+    {
+      "id": 144,
+      "reportName": "daily_check"
+    },
+    {
+      "id": 143,
+      "reportName": "daily_pa_payments_riport"
+    },
+    {
+      "id": 0,
+      "reportName": "param teszt riport"
+    },
+    {
+      "id": 2,
+      "reportName": "testy report2"
+    },
+    {
+      "id": 3,
+      "reportName": "testy report3"
+    },
+    {
+      "id": 1,
+      "reportName": "tesyt riport"
+    },
+    {
+      "id": 137,
+      "reportName": "zarokodok_jogosultsag"
+    }
+  ]
+}
