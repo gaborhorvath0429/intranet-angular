@@ -5,6 +5,7 @@ import { map, catchError } from 'rxjs/operators'
 import { environment } from '../../../environments/environment'
 import { Router } from '@angular/router'
 import { ModalService } from './modal-service.service'
+import { ExtjsService } from './extjs.service'
 
 interface User {
   displayName: string,
@@ -24,7 +25,10 @@ interface User {
 export class AuthenticationService {
   public currentUserSubject: BehaviorSubject<User>
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private extjsService: ExtjsService
+  ) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')))
   }
 
@@ -45,6 +49,7 @@ export class AuthenticationService {
   }
 
   public logout() {
+    this.extjsService.hide()
     localStorage.removeItem('user')
     this.currentUserSubject.next(null)
   }

@@ -10,11 +10,15 @@ import { ExtjsComponent } from './core/components/extjs/extjs.component'
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'overpayment-inclusion', component: OverpaymentInclusionComponent, canActivate: [AuthGuard] },
-  { path: 'viekr', component: ViekrComponent, canActivate: [AuthGuard] },
+  // { path: 'overpayment-inclusion', component: OverpaymentInclusionComponent, canActivate: [AuthGuard] },
+  // { path: 'viekr', component: ViekrComponent, canActivate: [AuthGuard] },
   { path: 'regulation', component: RegulationComponent, canActivate: [AuthGuard] },
   { path: 'regulation/:id', component: RegulationComponent, canActivate: [AuthGuard] },
-  { path: 'unident-payment', component: ExtjsComponent, canActivate: [AuthGuard] }
+  { path: 'unident-payment', component: ExtjsComponent, canActivate: [AuthGuard] },
+  { path: 'file-uploader', component: ExtjsComponent, canActivate: [AuthGuard] },
+  { path: 'viekr', component: ExtjsComponent, canActivate: [AuthGuard] },
+  { path: 'overpayment-inclusion', component: ExtjsComponent, canActivate: [AuthGuard] }
+
 ]
 
 @NgModule({

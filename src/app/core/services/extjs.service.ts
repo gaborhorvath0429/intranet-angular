@@ -5,17 +5,16 @@ import { Injectable } from '@angular/core'
 })
 export class ExtjsService {
 
-  constructor() { }
-
   show(): void {
     Array.from(document.getElementsByClassName('x-window')).forEach((item: HTMLDivElement) => {
-      item.style.display = 'block'
+      item.style['margin-top'] = 0
     })
   }
 
   hide(): void {
     Array.from(document.getElementsByClassName('x-window')).forEach((item: HTMLDivElement) => {
-      item.style.display = 'none'
+      item.style['margin-top'] = '100vh'
     })
   }
+
 }

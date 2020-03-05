@@ -40,6 +40,12 @@ export class ExtjsComponent implements OnInit {
       case 'file-uploader':
         Intranet.getApplication().getController('FileUploader.controller.Main').main()
         break
+      case 'viekr':
+        Intranet.getApplication().getController('Viekr.controller.Main').main()
+        break
+      case 'overpayment-inclusion':
+        Intranet.getApplication().getController('OverpaymentInclusion.controller.Main').main()
+        break
       default:
         console.error('NO EXTJS ROUTE FOR ' + url)
     }
