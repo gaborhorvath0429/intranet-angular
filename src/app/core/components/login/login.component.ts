@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit {
         data => {
           this.modalService.close('login')
           this.menuModel.load()
+          this.taskbarService.items = []
           if (this.returnUrl) this.router.navigateByUrl(this.returnUrl)
         },
         error => {

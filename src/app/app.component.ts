@@ -8,7 +8,6 @@ import { MenuModel } from './core/components/menu/model/menu'
 import { extjsRoutes } from './app-routing.module'
 
 declare const Ext: any
-declare const Core: any
 
 @Component({
   selector: 'app-root',
@@ -54,6 +53,13 @@ export class AppComponent implements OnInit {
             this.taskbarService.set(e.url)
           }
         }
+      }
+    })
+
+    Ext.on({
+      token_expired: () => {
+        this.authenticationService.logout()
+        location.reload(true)
       }
     })
   }

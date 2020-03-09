@@ -27,6 +27,7 @@ export class ExtjsComponent implements OnInit {
       if (url !== '/') {
         let controller = this.initPage(url.replace('/', ''))
         this.extjsService.show()
+        if (controller.getMainWindow()) controller.getMainWindow().center()
 
         Ext.defer(() => { // sometimes the window is not created yet
           var mainWindow = null
@@ -40,6 +41,7 @@ export class ExtjsComponent implements OnInit {
             default:
               mainWindow = controller.getMainWindow()
           }
+
           mainWindow.on('close', () => {
             this.taskbarService.remove(url)
           }, null, { single: true })
