@@ -1,110 +1,109 @@
-<div class="regulation">
-  <div class="window-header">
-    {{ 'regulation.window.main.title' | translate }}
-  </div>
-  <div class="window-body">
-    <div class="regulations-container">
-      <div class="regulations">
-        <div class="trigger" (click)="refreshData()">
-          <fa-icon [icon]="faRedo"></fa-icon>
+<app-page [title]="'regulation.window.main.title'">
+  <div class="regulation">
+    <div class="window-body">
+      <div class="regulations-container">
+        <div class="regulations">
+          <div class="trigger" (click)="refreshData()">
+            <fa-icon [icon]="faRedo"></fa-icon>
+          </div>
+          <div class="trigger" (click)="menuList.toggle()">
+            <fa-icon [icon]="faBars"></fa-icon>
+            <app-menu-list [items]="menuItems" [host]="this" #menuList></app-menu-list>
+          </div>
+          <input type="text" class="search" [placeholder]="'common.search' | translate" (input)="search($event.target.value)">
+          <div class="tree-title">
+            {{ 'regulation.grid.column.title' | translate }}
+          </div>
+          <div class="regulations-tree">
+            <cdk-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl">
+              <cdk-nested-tree-node *cdkTreeNodeDef="let node" (click)="onRegulationClick(node)" [class.selected]="selected === node" [class.closed]="!nestedTreeControl.isExpanded(node)" class="regulation-tree-node">
+                <fa-icon class="type" [icon]="node.TYPE === 'NODE' ? faFolder : faFile"></fa-icon>{{node.TITLE}}
+              </cdk-nested-tree-node>
+              <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasNestedChild" [class.selected]="selected === node && !nestedTreeControl.isExpanded(node)" [class.closed]="!nestedTreeControl.isExpanded(node)" class="regulation-tree-node">
+                <button class="node-toggle" cdkTreeNodeToggle>
+                  <fa-icon [icon]="faChevronRight" *ngIf="!nestedTreeControl.isExpanded(node)"></fa-icon>
+                  <fa-icon [icon]="faChevronDown" *ngIf="nestedTreeControl.isExpanded(node)"></fa-icon>
+                </button>
+                <fa-icon class="type" (click)="selected = node" [icon]="faFolder"></fa-icon><span (click)="selected = node">{{node.TITLE}}</span>
+                <div [class.regulation-tree-invisible]="!nestedTreeControl.isExpanded(node)">
+                  <ng-container cdkTreeNodeOutlet></ng-container>
+                </div>
+              </cdk-nested-tree-node>
+            </cdk-tree>
+          </div>
         </div>
-        <div class="trigger" (click)="menuList.toggle()">
-          <fa-icon [icon]="faBars"></fa-icon>
-          <app-menu-list [items]="menuItems" [host]="this" #menuList></app-menu-list>
-        </div>
-        <input type="text" class="search" [placeholder]="'common.search' | translate" (input)="search($event.target.value)">
-        <div class="tree-title">
-          {{ 'regulation.grid.column.title' | translate }}
-        </div>
-        <div class="regulations-tree">
-          <cdk-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl">
-            <cdk-nested-tree-node *cdkTreeNodeDef="let node" (click)="onRegulationClick(node)" [class.selected]="selected === node" [class.closed]="!nestedTreeControl.isExpanded(node)" class="regulation-tree-node">
-              <fa-icon class="type" [icon]="node.TYPE === 'NODE' ? faFolder : faFile"></fa-icon>{{node.TITLE}}
-            </cdk-nested-tree-node>
-            <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasNestedChild" [class.selected]="selected === node && !nestedTreeControl.isExpanded(node)" [class.closed]="!nestedTreeControl.isExpanded(node)" class="regulation-tree-node">
-              <button class="node-toggle" cdkTreeNodeToggle>
-                <fa-icon [icon]="faChevronRight" *ngIf="!nestedTreeControl.isExpanded(node)"></fa-icon>
-                <fa-icon [icon]="faChevronDown" *ngIf="nestedTreeControl.isExpanded(node)"></fa-icon>
-              </button>
-              <fa-icon class="type" (click)="selected = node" [icon]="faFolder"></fa-icon><span (click)="selected = node">{{node.TITLE}}</span>
-              <div [class.regulation-tree-invisible]="!nestedTreeControl.isExpanded(node)">
-                <ng-container cdkTreeNodeOutlet></ng-container>
-              </div>
-            </cdk-nested-tree-node>
-          </cdk-tree>
+        <div class="document">
+          <div class="no-selected" *ngIf="!selected">
+            {{ 'regulation.window.main.placeholder' | translate }}
+          </div>
+          <div class="attachment" *ngIf="selected">
+            <ngx-extended-pdf-viewer [src]="getDocumentUrl(selected)" height="calc(100vh - 235px)" useBrowserLocale="true"></ngx-extended-pdf-viewer>
+          </div>
         </div>
       </div>
-      <div class="document">
-        <div class="no-selected" *ngIf="!selected">
-          {{ 'regulation.window.main.placeholder' | translate }}
-        </div>
-        <div class="attachment" *ngIf="selected">
-          <ngx-extended-pdf-viewer [src]="getDocumentUrl(selected)" height="calc(100vh - 200px)" useBrowserLocale="true"></ngx-extended-pdf-viewer>
+      <div class="additional-attachments">
+        <div class="attachment" *ngFor="let attachment of attachments" [class.selected]="attachment === selectedAttachment" (click)="onAttachmentClick(attachment)" [attr.id]="attachment.id" #attachmentRef>
+          <fa-icon [icon]="faFilePdf"></fa-icon>
+          <div class="name">{{ attachment.name }}</div>
         </div>
       </div>
     </div>
-    <div class="additional-attachments">
-      <div class="attachment" *ngFor="let attachment of attachments" [class.selected]="attachment === selectedAttachment" (click)="onAttachmentClick(attachment)" [attr.id]="attachment.id" #attachmentRef>
-        <fa-icon [icon]="faFilePdf"></fa-icon>
-        <div class="name">{{ attachment.name }}</div>
-      </div>
-    </div>
   </div>
-</div>
 
-<app-modal id="regulationFolder" class="regulationFolder" #folderModal>
-  <form [formGroup]="folderForm">
-    <input type="hidden" formControlName="id">
-    <div class="row">
-      <div class="label">{{ 'common.name' | translate }}:</div><input type="text" formControlName="name" [form]="folderForm" formInput>
+  <app-modal id="regulationFolder" class="regulationFolder" #folderModal>
+    <form [formGroup]="folderForm">
+      <input type="hidden" formControlName="id">
+      <div class="row">
+        <div class="label">{{ 'common.name' | translate }}:</div><input type="text" formControlName="name" [form]="folderForm" formInput>
+      </div>
+      <div class="row">
+        <div class="label">{{ 'common.description' | translate }}:</div><textarea formControlName="description" [form]="folderForm" formInput></textarea>
+      </div>
+    </form>
+    <div class="modal-footer">
+      <app-button (click)="onFolderFormSubmit()">{{ 'common.save' | translate }}</app-button>
+      <app-button (click)="modalService.close('regulationFolder')">{{ 'common.cancel' | translate }}</app-button>
+      <app-button [hidden]="folderModal.title === 'common.folder.new'" (click)="deleteFolder()">{{ 'common.delete' | translate }}</app-button>
     </div>
-    <div class="row">
-      <div class="label">{{ 'common.description' | translate }}:</div><textarea formControlName="description" [form]="folderForm" formInput></textarea>
-    </div>
-  </form>
-  <div class="modal-footer">
-    <app-button (click)="onFolderFormSubmit()">{{ 'common.save' | translate }}</app-button>
-    <app-button (click)="modalService.close('regulationFolder')">{{ 'common.cancel' | translate }}</app-button>
-    <app-button [hidden]="folderModal.title === 'common.folder.new'" (click)="deleteFolder()">{{ 'common.delete' | translate }}</app-button>
-  </div>
-</app-modal>
+  </app-modal>
 
-<app-modal id="regulationEntry" [title]="'regulation.form.regulation.document'" class="regulationEntry" #regulationModal>
-  <form [formGroup]="regulationForm">
-    <input type="hidden" formControlName="id">
-    <div class="row">
-      <div class="label">{{ 'common.name' | translate }}:</div><input type="text" formControlName="name" [form]="regulationForm" formInput>
-    </div>
-    <div class="row">
-      <div class="label">{{ 'common.description' | translate }}:</div><textarea formControlName="description" [form]="regulationForm" formInput></textarea>
-    </div>
-    <div class="row">
-      <div class="label">{{ 'regulation.form.regulation.document' | translate }}:</div>
-      <div class="file-input">
-        <input type="text" class="file-path" formControlName="document" [form]="regulationForm" disabled formInput>
-        <input type="file" (change)="onDocumentChange($event.target.files)" id="document">
-        <label for="document" class="default-button">{{ 'common.browse' | translate }}</label>
+  <app-modal id="regulationEntry" [title]="'regulation.form.regulation.document'" class="regulationEntry" #regulationModal>
+    <form [formGroup]="regulationForm">
+      <input type="hidden" formControlName="id">
+      <div class="row">
+        <div class="label">{{ 'common.name' | translate }}:</div><input type="text" formControlName="name" [form]="regulationForm" formInput>
       </div>
-    </div>
-    <div class="row">
-      <div class="label">{{ 'common.attachments' | translate }}:</div>
-      <div class="file-input">
-        <input type="text" class="file-path" formControlName="attachment" [form]="regulationForm" disabled formInput>
-        <input type="file" (change)="onAttachmentChange($event.target.files)" id="attachment">
-        <label for="attachment" class="default-button">{{ 'common.browse' | translate }}</label>
+      <div class="row">
+        <div class="label">{{ 'common.description' | translate }}:</div><textarea formControlName="description" [form]="regulationForm" formInput></textarea>
       </div>
+      <div class="row">
+        <div class="label">{{ 'regulation.form.regulation.document' | translate }}:</div>
+        <div class="file-input">
+          <input type="text" class="file-path" formControlName="document" [form]="regulationForm" disabled formInput>
+          <input type="file" (change)="onDocumentChange($event.target.files)" id="document">
+          <label for="document" class="default-button">{{ 'common.browse' | translate }}</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="label">{{ 'common.attachments' | translate }}:</div>
+        <div class="file-input">
+          <input type="text" class="file-path" formControlName="attachment" [form]="regulationForm" disabled formInput>
+          <input type="file" (change)="onAttachmentChange($event.target.files)" id="attachment">
+          <label for="attachment" class="default-button">{{ 'common.browse' | translate }}</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="label">{{ 'common.public' | translate }}:<input type="checkbox" formControlName="public"></div>
+      </div>
+      <div class="groups-title">{{ 'regulation.form.regulation.groups' | translate }}:</div>
+      <div class="groups">
+        <app-checkbox-group [model]="groupsModel" [search]="true" labelAttribute="label" #groups></app-checkbox-group>
+      </div>
+    </form>
+    <div class="modal-footer">
+      <app-button (click)="onRegulationFormSubmit()">{{ 'common.save' | translate }}</app-button>
+      <app-button (click)="modalService.close('regulationEntry')">{{ 'common.cancel' | translate }}</app-button>
+      <app-button [hidden]="newEntry" (click)="deleteRegulation()">{{ 'common.delete' | translate }}</app-button>
     </div>
-    <div class="row">
-      <div class="label">{{ 'common.public' | translate }}:<input type="checkbox" formControlName="public"></div>
-    </div>
-    <div class="groups-title">{{ 'regulation.form.regulation.groups' | translate }}:</div>
-    <div class="groups">
-      <app-checkbox-group [model]="groupsModel" [search]="true" labelAttribute="label" #groups></app-checkbox-group>
-    </div>
-  </form>
-  <div class="modal-footer">
-    <app-button (click)="onRegulationFormSubmit()">{{ 'common.save' | translate }}</app-button>
-    <app-button (click)="modalService.close('regulationEntry')">{{ 'common.cancel' | translate }}</app-button>
-    <app-button [hidden]="newEntry" (click)="deleteRegulation()">{{ 'common.delete' | translate }}</app-button>
-  </div>
-</app-modal>
+  </app-modal>
+</app-page>

@@ -7,32 +7,20 @@ import { Router } from '@angular/router'
 import { ModalService } from './modal-service.service'
 import { ExtjsService } from './extjs.service'
 
-interface User {
-  displayName: string,
-  email: string,
-  faktorId: number,
-  faktorOpid: string,
-  ksiId: number,
-  ksiOpid: string,
-  login: string,
-  perbitId: number,
-  userId: number
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  public currentUserSubject: BehaviorSubject<User>
+  public currentUserSubject: BehaviorSubject<string>
 
   constructor(
     private http: HttpClient,
     private extjsService: ExtjsService
   ) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')))
+    this.currentUserSubject = new BehaviorSubject<string>(localStorage.getItem('user'))
   }
 
-  public get currentUser(): User {
+  public get currentUser(): string {
     return this.currentUserSubject.value
   }
 
@@ -40,7 +28,7 @@ export class AuthenticationService {
     return this.http.post<any>(`${environment.apiUrl}/user/login`, { username, password })
       .pipe(map(user => {
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user.user))
+          localStorage.setItem('user', user.user.userId)
           this.currentUserSubject.next(user)
         }
 
@@ -69,13 +57,22 @@ export class RequestInterceptor implements HttpInterceptor {
     })
 
     return next.handle(request).pipe(catchError(err => {
-      if (err.status === 401 && this.router.url.indexOf('/login') !== 0) {
+      if (err.status === 401) {
         // auto logout if 401 response returned from api
         this.authenticationService.logout()
+      }
+
+      if (err.status === 401 && this.router.url.indexOf('/login') !== 0) {
         location.reload(true)
         return
       }
-      this.modalService.showError(err)
+
+      if (err.status === 401 && this.router.url.indexOf('/login') === 0) {
+        this.modalService.open('login')
+        return
+      }
+
+      if (err.error.error !== 'login_required') this.modalService.showError(err)
 
       return throwError(err)
     }))

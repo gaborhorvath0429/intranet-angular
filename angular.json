@@ -38,10 +38,7 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              { "glob": "**/*", "input": "node_modules/tinymce/skins", "output": "/tinymce/skins/" },
-              { "glob": "**/*", "input": "node_modules/tinymce/themes", "output": "/tinymce/themes/" },
-              { "glob": "**/*", "input": "node_modules/tinymce/plugins", "output": "/tinymce/plugins/" }
+              "src/assets"
             ],
             "styles": [
               "src/styles.scss",
@@ -50,7 +47,6 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
               "src/assets/js/resizableColumns.min.js",
-              "node_modules/tinymce/tinymce.min.js",
               "src/assets/extjs/resources/socket.io-client-2.1.1/dist/socket.io.js",
               "src/assets/extjs/resources/i18next.js",
               "src/assets/extjs/resources/locales/translations.js",

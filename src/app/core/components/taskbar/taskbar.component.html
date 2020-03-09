@@ -1,0 +1,6 @@
+<div class="taskbar">
+  <ng-container *ngFor="let item of service.items">
+    <app-toolbar-button *ngIf="!item.active" (click)="router.navigateByUrl(item.url)" width="120px" class="item">{{ item.text }}</app-toolbar-button>
+    <app-button *ngIf="item.active" width="120px" class="item">{{ item.text }}</app-button>
+  </ng-container>
+</div>

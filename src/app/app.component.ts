@@ -3,6 +3,12 @@ import { TranslateService } from '@ngx-translate/core'
 import { Router, NavigationEnd } from '@angular/router'
 import { AuthenticationService } from './core/services/authentication.service'
 import { ExtjsService } from './core/services/extjs.service'
+import { TaskbarService } from './core/services/taskbar.service'
+import { MenuModel } from './core/components/menu/model/menu'
+import { extjsRoutes } from './app-routing.module'
+
+declare const Ext: any
+declare const Core: any
 
 @Component({
   selector: 'app-root',
@@ -16,6 +22,9 @@ export class AppComponent implements OnInit {
   constructor(
     public router: Router,
     private authenticationService: AuthenticationService,
+    private extjsService: ExtjsService,
+    private taskbarService: TaskbarService,
+    private menuModel: MenuModel,
     translate: TranslateService
   ) {
     translate.addLangs(['hu', 'en'])
@@ -31,8 +40,20 @@ export class AppComponent implements OnInit {
     })
 
     this.router.events.subscribe((e) => {
-      if (e instanceof NavigationEnd && e.url !== '/' && !e.url.includes('/login')) {
-        window.localStorage.setItem('uriToken', e.url)
+      if (e instanceof NavigationEnd) {
+        if (!extjsRoutes.includes(e.url.replace('/', ''))) {
+          this.extjsService.hide()
+        }
+        if (e.url !== '/' && !e.url.includes('/login')) {
+          window.localStorage.setItem('uriToken', e.url)
+          if (!this.menuModel.data.length) {
+            this.menuModel.load().then(() => {
+              this.taskbarService.set(e.url)
+            })
+          } else {
+            this.taskbarService.set(e.url)
+          }
+        }
       }
     })
   }

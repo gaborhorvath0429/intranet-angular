@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core'
 import { ExtjsService } from '../../services/extjs.service'
 import { Router } from '@angular/router'
+import { TaskbarService } from '../../services/taskbar.service'
 
+declare const Ext: any
+declare const Core: any
 declare const Intranet: any
 
 @Component({
@@ -13,41 +16,49 @@ export class ExtjsComponent implements OnInit {
 
   constructor(
     private extjsService: ExtjsService,
-    private router: Router
+    private router: Router,
+    private taskbarService: TaskbarService
   ) { }
 
   ngOnInit() {
-    this.initRoute()
-  }
-
-  private initRoute(): void {
-    let { url } = this.router
-    if (url !== '/') {
-      if (!Intranet.getApplication) {
-        setTimeout(() => { this.initRoute() }, 200)
-        return
+    Ext.onReady(() => {
+      let { url } = this.router
+      if (url !== '/') {
+        let controller = this.initPage(url.replace('/', ''))
+        this.extjsService.show()
+        Ext.defer(() => { // sometimes the window is not created yet
+          controller.getMainWindow().on('close', () => {
+            this.taskbarService.remove(url)
+          }, null, { single: true })
+        }, 1000)
       }
-      this.initPage(url.replace('/', ''))
-      this.extjsService.show()
-    }
+    })
   }
 
-  private initPage(url: string): void {
+  private initPage(url: string) {
+    let controller = null
     switch (url) {
+      case 'report':
+        controller = Intranet.getApplication().getController('Report.controller.Main')
+        break
       case 'unident-payment':
-        Intranet.getApplication().getController('UnidentPayment.controller.Main').main()
+        controller = Intranet.getApplication().getController('UnidentPayment.controller.Main')
         break
       case 'file-uploader':
-        Intranet.getApplication().getController('FileUploader.controller.Main').main()
+        controller = Intranet.getApplication().getController('FileUploader.controller.Main')
         break
       case 'viekr':
-        Intranet.getApplication().getController('Viekr.controller.Main').main()
+        controller = Intranet.getApplication().getController('Viekr.controller.Main')
         break
       case 'overpayment-inclusion':
-        Intranet.getApplication().getController('OverpaymentInclusion.controller.Main').main()
+        controller = Intranet.getApplication().getController('OverpaymentInclusion.controller.Main')
         break
       default:
         console.error('NO EXTJS ROUTE FOR ' + url)
     }
+
+    controller.main()
+
+    return controller
   }
 }

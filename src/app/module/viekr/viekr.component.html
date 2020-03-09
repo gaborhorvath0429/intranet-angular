@@ -1,64 +1,63 @@
-<div class="window-header">
-  Viekr
-</div>
-<app-tab-panel>
-  <app-tab [title]="'common.incoming'">
-    <app-grid
-      module="viekr-incoming"
-      [model]="incomingModel"
-      [rowWidth]="150"
-      (rowDoubleClick)="onIncomingRowDoubleClick($event)"
-      showFilters
-      showPaginator
-      showSavedViews
-      #incomingGrid
-    >
-    <span class="bottom-left-toolbar">
-      <app-toolbar-button (click)="replyMessage()" #toolbarButton>{{ 'common.reply' | translate }}</app-toolbar-button>
-      <app-toolbar-button (click)="showNewMessageWindow()" #toolbarButton>{{ 'common.newMessage' | translate }}</app-toolbar-button>
-    </span>
-    <span class="bottom-toolbar">
-      <form [formGroup]="assignToUserForm">
-        <app-combo-box formControlName="user" [model]="usersModel" listPosition="top" [control]="assignToUserForm.controls.user" [form]="assignToUserForm" formInput></app-combo-box>
-        {{ 'viekr.numberOfMessages' | translate }} <input formControlName="count" class="case-number" type="number" [form]="assignToUserForm" formInput>
-        <app-toolbar-button type="submit" (click)="onAssignToUserFormSubmit()" #toolbarButton>{{ 'viekr.responsible' | translate }}</app-toolbar-button>
-        {{ incomingGrid.selection.length }} {{ 'common.selectedRecord' | translate }}
-      </form>
-      <app-toolbar-button (click)="exportIncoming()" float="right">{{ 'common.excelExport' | translate }}</app-toolbar-button>
-    </span>
-    </app-grid>
-    <app-viekr-attachment [attachmentData]="attachmentData" [attachmentId]="attachmentId"></app-viekr-attachment>
-    <app-viekr-message></app-viekr-message>
-  </app-tab>
-  <app-tab [title]="'common.outgoing'">
-    <app-grid
-      module="viekr-outgoing"
-      [model]="outgoingModel"
-      [rowWidth]="150"
-      showFilters
-      showPaginator
-      showSavedViews
-      #outgoingGrid
-    >
-    <span class="bottom-toolbar">
-      <app-toolbar-button (click)="blockOutgoing()">{{ 'viekr.blocking' | translate }}</app-toolbar-button>
-      <app-toolbar-button (click)="exportOutgoing()" float="right">{{ 'common.excelExport' | translate }}</app-toolbar-button>
-    </span>
-    </app-grid>
-  </app-tab>
-  <app-tab [title]="'common.sent'">
-    <app-grid
-      module="viekr-sent"
-      [model]="sentModel"
-      [rowWidth]="150"
-      showFilters
-      showPaginator
-      showSavedViews
-      #sentGrid
-    >
-    <span class="bottom-toolbar">
-      <app-toolbar-button (click)="exportSent()" float="right">{{ 'common.excelExport' | translate }}</app-toolbar-button>
-    </span>
-    </app-grid>
-  </app-tab>
-</app-tab-panel>
+<app-page [title]="'Viekr'">
+  <app-tab-panel>
+    <app-tab [title]="'common.incoming'">
+      <app-grid
+        module="viekr-incoming"
+        [model]="incomingModel"
+        [rowWidth]="150"
+        (rowDoubleClick)="onIncomingRowDoubleClick($event)"
+        showFilters
+        showPaginator
+        showSavedViews
+        #incomingGrid
+      >
+      <span class="bottom-left-toolbar">
+        <app-toolbar-button (click)="replyMessage()" #toolbarButton>{{ 'common.reply' | translate }}</app-toolbar-button>
+        <app-toolbar-button (click)="showNewMessageWindow()" #toolbarButton>{{ 'common.newMessage' | translate }}</app-toolbar-button>
+      </span>
+      <span class="bottom-toolbar">
+        <form [formGroup]="assignToUserForm">
+          <app-combo-box formControlName="user" [model]="usersModel" listPosition="top" [control]="assignToUserForm.controls.user" [form]="assignToUserForm" formInput></app-combo-box>
+          {{ 'viekr.numberOfMessages' | translate }} <input formControlName="count" class="case-number" type="number" [form]="assignToUserForm" formInput>
+          <app-toolbar-button type="submit" (click)="onAssignToUserFormSubmit()" #toolbarButton>{{ 'viekr.responsible' | translate }}</app-toolbar-button>
+          {{ incomingGrid.selection.length }} {{ 'common.selectedRecord' | translate }}
+        </form>
+        <app-toolbar-button (click)="exportIncoming()" float="right">{{ 'common.excelExport' | translate }}</app-toolbar-button>
+      </span>
+      </app-grid>
+      <app-viekr-attachment [attachmentData]="attachmentData" [attachmentId]="attachmentId"></app-viekr-attachment>
+      <app-viekr-message></app-viekr-message>
+    </app-tab>
+    <app-tab [title]="'common.outgoing'">
+      <app-grid
+        module="viekr-outgoing"
+        [model]="outgoingModel"
+        [rowWidth]="150"
+        showFilters
+        showPaginator
+        showSavedViews
+        #outgoingGrid
+      >
+      <span class="bottom-toolbar">
+        <app-toolbar-button (click)="blockOutgoing()">{{ 'viekr.blocking' | translate }}</app-toolbar-button>
+        <app-toolbar-button (click)="exportOutgoing()" float="right">{{ 'common.excelExport' | translate }}</app-toolbar-button>
+      </span>
+      </app-grid>
+    </app-tab>
+    <app-tab [title]="'common.sent'">
+      <app-grid
+        module="viekr-sent"
+        [model]="sentModel"
+        [rowWidth]="150"
+        showFilters
+        showPaginator
+        showSavedViews
+        #sentGrid
+      >
+      <span class="bottom-toolbar">
+        <app-toolbar-button (click)="exportSent()" float="right">{{ 'common.excelExport' | translate }}</app-toolbar-button>
+      </span>
+      </app-grid>
+    </app-tab>
+  </app-tab-panel>
+</app-page>

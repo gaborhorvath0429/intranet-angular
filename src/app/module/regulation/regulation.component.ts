@@ -117,6 +117,7 @@ export class RegulationComponent implements OnInit {
   }
 
   getDocumentUrl(regulation: RegulationNode): string {
+    if (this.selected.TYPE === 'NODE') return null
     return 'https://docserver.eosksihu.net/F/' + regulation.HASH + '?nodownload'
   }
 

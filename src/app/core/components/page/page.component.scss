@@ -1,0 +1,35 @@
+.window-header {
+  position: relative;
+  display: flex;
+  background-color: #626c77;
+  height: 40px;
+  color: white;
+  white-space: nowrap;
+  font-weight: bold;
+  line-height: 15px;
+  font-family: arial,helvetica,verdana,sans-serif;
+  font-size: 16px;
+  text-transform: none;
+  align-items: center;
+  padding-left: 12px;
+
+  .close {
+    position: absolute;
+    right: 9px;
+    top: 11px;
+    opacity: .5;
+    cursor: pointer;
+    overflow: hidden;
+    border: 0;
+    width: 16px;
+    height: 16px;
+    background-image: url('/assets/tool-sprites.png');
+    background-position: 0 0;
+    &:hover {
+      opacity: .6;
+    }
+  }
+  .title {
+    margin-right: 25px;
+  }
+}

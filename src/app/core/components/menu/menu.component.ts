@@ -5,7 +5,6 @@ import { faArchive, faListAlt, faArrowCircleDown, faArrowCircleRight,
   faUser, faClipboard, faCalendar, faCheckSquare, faBan, faCogs, faChartArea,
   faPhoneVolume, faBook, faFlag } from '@fortawesome/free-solid-svg-icons'
 import { MostVisitedMenusService } from '../../services/socket.service'
-import { ExtjsService } from '../../services/extjs.service'
 import { Router } from '@angular/router'
 
 interface MenuItem {
@@ -20,7 +19,8 @@ interface MenuItem {
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  styleUrls: ['./menu.component.scss'],
+  providers: [MostVisitedMenusService]
 })
 export class MenuComponent implements OnInit {
 
@@ -40,7 +40,6 @@ export class MenuComponent implements OnInit {
   constructor(
     public menuModel: MenuModel,
     private mostVisitedMenusService: MostVisitedMenusService,
-    private extjService: ExtjsService,
     private router: Router
   ) { }
 
@@ -71,6 +70,7 @@ export class MenuComponent implements OnInit {
 
   public toggle(): void {
     this.hidden = !this.hidden
+    this.mostVisitedMenusService.emit('read')
   }
 
   public addToMostVisited(menu: MenuItem): void {
@@ -91,7 +91,6 @@ export class MenuComponent implements OnInit {
     this.toggle()
     if (this.router.url.replace('/', '') !== menu.path) {
       this.addToMostVisited(menu)
-      this.extjService.hide()
     }
   }
 

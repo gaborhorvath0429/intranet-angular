@@ -11,7 +11,8 @@ export interface Notification {
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
-  styleUrls: ['./notifications.component.scss']
+  styleUrls: ['./notifications.component.scss'],
+  providers: [NotificationService]
 })
 export class NotificationsComponent implements OnInit {
 

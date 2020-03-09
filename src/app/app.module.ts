@@ -45,8 +45,10 @@ import { NotificationsComponent } from './core/components/notifications/notifica
 import { CdkTreeModule } from '@angular/cdk/tree'
 import { RegulationComponent } from './module/regulation/regulation.component'
 import { MenuListComponent } from './core/components/menu-list/menu-list.component'
-import { CheckboxGroupSearchPipe } from './core/components/input/checkbox-group/pipe/search.pipe';
+import { CheckboxGroupSearchPipe } from './core/components/input/checkbox-group/pipe/search.pipe'
 import { ExtjsComponent } from './core/components/extjs/extjs.component'
+import { TaskbarComponent } from './core/components/taskbar/taskbar.component'
+import { PageComponent } from './core/components/page/page.component'
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, 'assets/locales/', '.js')
@@ -99,7 +101,9 @@ export const translateModuleLoader = TranslateModule.forRoot({
     RegulationComponent,
     MenuListComponent,
     CheckboxGroupSearchPipe,
-    ExtjsComponent
+    ExtjsComponent,
+    TaskbarComponent,
+    PageComponent
   ],
   imports: [
     BrowserModule,

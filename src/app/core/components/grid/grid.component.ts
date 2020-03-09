@@ -94,7 +94,7 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (!this.height) this.height = window.innerHeight - (this.tabComponent ? 140 : 105)
+    if (!this.height) this.height = window.innerHeight - (this.tabComponent ? 175 : 140)
     $(this.table.nativeElement).resizableColumns()
     if (this.showFilters) this.initDragAndDrop()
     this.model.data$.subscribe(() => this.selection = [])
