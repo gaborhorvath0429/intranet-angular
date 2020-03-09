@@ -6,11 +6,34 @@ import { RegulationComponent } from './module/regulation/regulation.component'
 import { ExtjsComponent } from './core/components/extjs/extjs.component'
 
 export const extjsRoutes = [
-  'report',
-  'unident-payment',
+  'authentication',
+  'logout',
+  'autoreport',
+  'back-office',
+  'bank-account-loader',
+  'complaint',
+  'dialer',
+  'executor-costs-loader',
+  'human-resource-events',
+  'fee-loader',
   'file-uploader',
+  'field-visit-generator',
+  'interest-calc',
+  'manage-queues',
+  'module',
+  'group-management',
+  'user-management',
+  'overpayment-inclusion',
+  'report',
   'viekr',
-  'overpayment-inclusion'
+  'cross-border-loader',
+  'cross-border-uploader',
+  'ksi-letter-delete',
+  'faktor-group-modifier',
+  'commerzbank-transfer-accountant',
+  'unident-payment',
+  'advance-fee-uploader',
+  'vh-visits'
 ]
 
 const routes: Routes = [

@@ -16,6 +16,7 @@
     "interface-over-type-literal": false,
     "member-ordering": false,
     "no-output-on-prefix": false,
+    "no-var-keyword": false,
     "semicolon": [
       true,
       "never"

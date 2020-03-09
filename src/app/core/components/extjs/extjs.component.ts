@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ExtjsService } from '../../services/extjs.service'
 import { Router } from '@angular/router'
 import { TaskbarService } from '../../services/taskbar.service'
+import * as _ from 'lodash'
 
 declare const Ext: any
 declare const Core: any
@@ -26,8 +27,20 @@ export class ExtjsComponent implements OnInit {
       if (url !== '/') {
         let controller = this.initPage(url.replace('/', ''))
         this.extjsService.show()
+
         Ext.defer(() => { // sometimes the window is not created yet
-          controller.getMainWindow().on('close', () => {
+          var mainWindow = null
+          switch (url.replace('/', '')) {
+            case 'cross-border-loader':
+              mainWindow = controller.getLoaderWindow()
+              break
+            case 'cross-border-uploader':
+              mainWindow = controller.getUploadWindow()
+              break
+            default:
+              mainWindow = controller.getMainWindow()
+          }
+          mainWindow.on('close', () => {
             this.taskbarService.remove(url)
           }, null, { single: true })
         }, 1000)
@@ -37,25 +50,19 @@ export class ExtjsComponent implements OnInit {
 
   private initPage(url: string) {
     let controller = null
-    switch (url) {
-      case 'report':
-        controller = Intranet.getApplication().getController('Report.controller.Main')
-        break
-      case 'unident-payment':
-        controller = Intranet.getApplication().getController('UnidentPayment.controller.Main')
-        break
-      case 'file-uploader':
-        controller = Intranet.getApplication().getController('FileUploader.controller.Main')
-        break
-      case 'viekr':
-        controller = Intranet.getApplication().getController('Viekr.controller.Main')
-        break
-      case 'overpayment-inclusion':
-        controller = Intranet.getApplication().getController('OverpaymentInclusion.controller.Main')
-        break
-      default:
-        console.error('NO EXTJS ROUTE FOR ' + url)
+
+    if (url === 'cross-border-loader') {
+      controller = Intranet.getApplication().getController('CrossBorder.controller.Loader')
+    } else if (url === 'cross-border-uploader') {
+      controller = Intranet.getApplication().getController('CrossBorder.controller.Uploader')
+    } else if (url === 'autoreport') {
+      controller = Intranet.getApplication().getController('AutoReport.controller.Main')
+    } else {
+      // convert url to PascalCase and call the appropriate controller
+      controller = Intranet.getApplication().getController(_.upperFirst(_.camelCase(url)) + '.controller.Main')
     }
+
+    if (!controller) return console.error('NO EXTJS ROUTE FOR ' + url)
 
     controller.main()
 
