@@ -14,8 +14,7 @@ import { Location } from '@angular/common'
 
 let mostVisitedMenusServiceStub = jasmine.createSpyObj('mostVisitedMenusService', ['emit'])
 
-let menuModelStub: Partial<MenuModel>
-menuModelStub = {
+let menuModelStub: Partial<MenuModel> = {
   data: []
 }
 
@@ -49,9 +48,15 @@ describe('MenuComponent', () => {
         MenuSearchPipe
       ],
       providers: [
-        { provide: MenuModel, useValue: menuModelStub },
-        { provide: MostVisitedMenusService, useValue: mostVisitedMenusServiceStub }
+          { provide: MostVisitedMenusService, useValue: mostVisitedMenusServiceStub },
+          { provide: MenuModel, useValue: menuModelStub }
       ]
+    }).overrideComponent(MenuComponent, {
+      set: {
+        providers: [
+          { provide: MostVisitedMenusService, useValue: mostVisitedMenusServiceStub }
+        ]
+      }
     })
 
     fixture = TestBed.createComponent(MenuComponent)
@@ -145,7 +150,10 @@ describe('MenuComponent', () => {
   it('should handle menu item click',
     fakeAsync( // routing is asynchronous so we need this to call "tick"
       inject( // we inject location and most visited menus service here because we only use them in this test
-        [Location, MostVisitedMenusService], (location: Location, mostVisitedMenusService: MostVisitedMenusService) => {
+        [Location, MostVisitedMenusService], (location: Location, mostVisitedMenusService: jasmine.SpyObj<MostVisitedMenusService>) => {
+
+          mostVisitedMenusService.emit.calls.reset()
+
           menuModel.data = [
             { id: 1, path: 'dummy-component', title: 'Dummy Component', icon: 'faArchive' }
           ]
@@ -157,7 +165,7 @@ describe('MenuComponent', () => {
           tick() // routing is asynchronous so we have to tick (wait)
 
           expect(location.path()).toBe('/dummy-component')
-          expect(mostVisitedMenusService.emit).toHaveBeenCalledTimes(1)
+          expect(mostVisitedMenusService.emit).toHaveBeenCalledTimes(2) // first is when component created
         }
       )
     )

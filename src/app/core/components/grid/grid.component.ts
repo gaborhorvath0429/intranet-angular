@@ -5,7 +5,7 @@ import Model, { Field } from '../../model/model.class'
 import * as moment from 'moment'
 import { ModalService } from '../../services/modal-service.service'
 import { ToolbarButtonComponent } from './toolbar-button/toolbar-button.component'
-import { faSortAmountDown, faSortAmountDownAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { faSortAmountDown, faSortAmountDownAlt, faTimesCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker'
 import * as _ from 'lodash'
 import { TabComponent } from '../tab-panel/tab/tab.component'
@@ -46,6 +46,7 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
 
   public selection: any[] = []
   public hasToolbar = false
+  public errors = {}
 
   // Attributes needed for filters and sorters
   public showFilters = false
@@ -67,6 +68,7 @@ export class GridComponent implements OnInit, AfterViewChecked, AfterViewInit {
   public faTimesCircle = faTimesCircle
   public faSortAmountDown = faSortAmountDown
   public faSortAmountDownAlt = faSortAmountDownAlt
+  public faExclamationCircle = faExclamationCircle
 
   // Attributes needed for saved views.
   public gridViewService: GridViewService

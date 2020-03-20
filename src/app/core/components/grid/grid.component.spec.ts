@@ -17,6 +17,8 @@ import { AngularMyDatePickerModule } from 'angular-mydatepicker'
 import { HttpClientModule, HttpClient } from '@angular/common/http'
 import { PaymentModel } from '../../../module/overpayment-inclusion/model/payment'
 import { of } from 'rxjs'
+import { Router } from '@angular/router'
+import { MenuModel } from '../menu/model/menu'
 /* tslint:disable */
 const data = [
   {'OP_INCLUSION_ID':241,'OP_CEID':10457371,'INCL_CEID':10249150,'INCLUSION_DATE':'2016.07.07','INCLUSION_AMOUNT':20000,'AFTER_INCLUSION_BALANCE':78580},
@@ -30,6 +32,10 @@ const httpClientStub: jasmine.SpyObj<HttpClient> = jasmine.createSpyObj('HttpCli
 httpClientStub.get.and.returnValue({
   pipe: () => of(data)
 })
+let modalServiceStub = jasmine.createSpyObj('modalService', ['add', 'remove'])
+let routerStub = jasmine.createSpy('Router')
+let menuModelStub = jasmine.createSpyObj('menuModel', ['load'])
+
 const model = new PaymentModel(httpClientStub)
 
 describe('GridComponent', () => {
@@ -58,7 +64,9 @@ describe('GridComponent', () => {
         HttpClientModule
       ],
       providers: [
-        ModalService,
+        { provide: MenuModel, useValue: menuModelStub },
+        { provide: ModalService, useValue: modalServiceStub },
+        { provide: Router, useValue: routerStub },
         ChangeDetectorRef
       ]
     })

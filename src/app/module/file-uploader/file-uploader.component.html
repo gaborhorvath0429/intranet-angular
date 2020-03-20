@@ -1,0 +1,35 @@
+<app-modal id="fileUploader" [openByDefault]="true" [module]="true" [title]="'fileUploader.fileUploader'">
+  <div class="form">
+    <label class="type">{{ 'fileUploader.typeOfUpload' | translate }}</label>
+    <app-combo-box class="type-combobox" [model]="formsModel" labelAttribute="title" [width]="250" (selectionChange)="onSelectionChange($event)"></app-combo-box>
+    <input [id]="'file'" type="file" (change)="onFileInputChange($event.target.files)">
+    <label [class.disabled]="!selectedType" class="default-button" [for]="selectedType ? 'file' : ''">{{ 'fileUploader.selectFile' | translate }}<fa-icon [icon]="faFile"></fa-icon></label>
+    <app-button [disabled]="!selectedFile" (click)="onPreviewClick()">{{ 'common.preview' | translate }}<fa-icon [icon]="faSearch"></fa-icon></app-button>
+  </div>
+  <div class="elements" *ngIf="formElements.length">
+    <div class="element" *ngFor="let item of formElements">
+      <label *ngIf="item.type !== 'Hidden'" class="element-label">{{ item.label }}:</label>
+      <div [ngSwitch]="item.type">
+        <div *ngSwitchCase="'Hidden'">
+          <input type="hidden" [id]="item.description" [name]="item.id" [value]="item.default" #formElement>
+        </div>
+        <div *ngSwitchCase="'Date'">
+          <app-date-picker [width]="400" [name]="item.id" #formElement></app-date-picker>
+        </div>
+        <div *ngSwitchCase="'Number'">
+          <input type="number" [name]="item.id" [value]="item.default" #formElement>
+        </div>
+        <div *ngSwitchCase="'Text'">
+          <input type="text" [name]="item.id" [value]="item.default" #formElement>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="preview-grid" *ngIf="showPreviewGrid">
+    <app-grid [rowWidth]="100" [height]="330" [border]="false" [model]="previewModel" showPaginator #previewGrid></app-grid>
+  </div>
+  <div class="modal-footer">
+    <app-button (click)="onUploadClick()">{{ 'fileUploader.uploadFile' | translate }}</app-button>
+    <app-button (click)="reset()">{{ 'common.reset' | translate }}</app-button>
+  </div>
+</app-modal>

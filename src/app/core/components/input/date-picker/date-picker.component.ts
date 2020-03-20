@@ -25,7 +25,7 @@ export class DatePickerComponent implements AfterViewInit, ControlValueAccessor 
 
   @Input() control: FormControl = new FormControl()
   @Input() formControlName?: string
-
+  @Input() name?: string
   @Input() width?: number
 
   @ViewChild('input') inputRef: ElementRef

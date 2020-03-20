@@ -4,6 +4,7 @@ import { LoginComponent } from './core/components/login/login.component'
 import { AuthGuard } from './core/guards/auth-guard.guard'
 import { RegulationComponent } from './module/regulation/regulation.component'
 import { ExtjsComponent } from './core/components/extjs/extjs.component'
+import { FileUploaderComponent } from './module/file-uploader/file-uploader.component'
 
 export const extjsRoutes = [
   'authentication',
@@ -16,7 +17,7 @@ export const extjsRoutes = [
   'executor-costs-loader',
   'human-resource-events',
   'fee-loader',
-  'file-uploader',
+  // 'file-uploader',
   'field-visit-generator',
   'interest-calc',
   'manage-queues',
@@ -41,7 +42,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'regulation', component: RegulationComponent, canActivate: [AuthGuard] },
-  { path: 'regulation/:id', component: RegulationComponent, canActivate: [AuthGuard] }
+  { path: 'regulation/:id', component: RegulationComponent, canActivate: [AuthGuard] },
+  { path: 'file-uploader', component: FileUploaderComponent, canActivate: [AuthGuard] }
 
 ]
 

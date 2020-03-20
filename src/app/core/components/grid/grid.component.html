@@ -44,13 +44,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="data-row" *ngFor="let row of model.data" (click)="selectRow(row)" (dblclick)="rowDoubleClick.emit(row)" [ngClass]="{'selected-row': isRowSelected(row)}">
+          <tr class="data-row" *ngFor="let row of model.data; index as rowIndex" (click)="selectRow(row)" (dblclick)="rowDoubleClick.emit(row)" [ngClass]="{'selected-row': isRowSelected(row)}">
             <td *ngIf="selectionModel === 'checkbox'"><input type="checkbox" class="selection-checkbox" [checked]="isRowSelected(row)"></td>
             <td
-              *ngFor="let column of model.displayFields"
+              *ngFor="let column of model.displayFields; index as columnIndex"
               [hidden]="hiddenColumns.includes(column)"
-              [title]="formatCellValue(row[column.name], column)"
-            >{{ formatCellValue(row[column.name], column) }}</td>
+              [title]="errors[rowIndex] && errors[rowIndex][columnIndex] ? errors[rowIndex][columnIndex] : formatCellValue(row[column.name], column)"
+            >
+            <ng-container *ngIf="errors[rowIndex] && errors[rowIndex][columnIndex]">
+              <fa-icon [icon]="faExclamationCircle" [title]="errors[rowIndex][columnIndex]"></fa-icon>
+            </ng-container>
+            {{ formatCellValue(row[column.name], column) }}</td>
           </tr>
         <tbody>
       </table>

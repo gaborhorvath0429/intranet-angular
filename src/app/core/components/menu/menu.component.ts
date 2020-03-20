@@ -5,7 +5,6 @@ import { faArchive, faListAlt, faArrowCircleDown, faArrowCircleRight,
   faUser, faClipboard, faCalendar, faCheckSquare, faBan, faCogs, faChartArea,
   faPhoneVolume, faBook, faFlag } from '@fortawesome/free-solid-svg-icons'
 import { MostVisitedMenusService } from '../../services/socket.service'
-import { Router } from '@angular/router'
 
 interface MenuItem {
   path: string
@@ -39,8 +38,7 @@ export class MenuComponent implements OnInit {
 
   constructor(
     public menuModel: MenuModel,
-    private mostVisitedMenusService: MostVisitedMenusService,
-    private router: Router
+    private mostVisitedMenusService: MostVisitedMenusService
   ) { }
 
   ngOnInit(): void {
@@ -50,7 +48,7 @@ export class MenuComponent implements OnInit {
   public initMostVisitedMenus(): void {
     this.mostVisitedMenusService.fromEvent('read').subscribe((items: { score: number, menu: string }[]) => {
       let menus = []
-      items.forEach(function(menu) {
+      items.forEach(menu => {
         let score = menu.score
         let data = JSON.parse(menu.menu)
         menus.push({
@@ -89,9 +87,7 @@ export class MenuComponent implements OnInit {
 
   public onMenuItemClick(menu: MenuItem): void {
     this.toggle()
-    if (this.router.url.replace('/', '') !== menu.path) {
-      this.addToMostVisited(menu)
-    }
+    this.addToMostVisited(menu)
   }
 
 }

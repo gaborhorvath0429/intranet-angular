@@ -49,6 +49,7 @@ import { CheckboxGroupSearchPipe } from './core/components/input/checkbox-group/
 import { ExtjsComponent } from './core/components/extjs/extjs.component'
 import { TaskbarComponent } from './core/components/taskbar/taskbar.component'
 import { PageComponent } from './core/components/page/page.component'
+import { FileUploaderComponent } from './module/file-uploader/file-uploader.component'
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, 'assets/locales/', '.js')
@@ -103,7 +104,8 @@ export const translateModuleLoader = TranslateModule.forRoot({
     CheckboxGroupSearchPipe,
     ExtjsComponent,
     TaskbarComponent,
-    PageComponent
+    PageComponent,
+    FileUploaderComponent
   ],
   imports: [
     BrowserModule,
@@ -131,9 +133,11 @@ export const translateModuleLoader = TranslateModule.forRoot({
 })
 export class AppModule { }
 
-export interface ApiResponse<T> {
+export interface ApiResponse<T = any> {
   success: boolean
   message?: string
   root?: T[]
   record?: T
+  error?: string
+  errors?: any
 }

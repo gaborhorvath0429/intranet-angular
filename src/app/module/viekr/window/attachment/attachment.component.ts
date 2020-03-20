@@ -92,7 +92,7 @@ export class ViekrAttachmentComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     let formControls = this.saveAttachmentForm.controls
     this.saveAttachmentForm.reset()
-    this.commentsModel.loadData([])
+    this.commentsModel.data$.next([])
     this.subscribers = []
     let data = changes.attachmentData.currentValue as AttachmentData
     if (data) {

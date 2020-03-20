@@ -1,0 +1,40 @@
+.form {
+  display: flex;
+  align-items: center;
+
+  fa-icon {
+    color: white;
+    margin-left: 5px;
+    font-size: 11px;
+  }
+
+  .type-combobox {
+    margin-right: 8px;
+  }
+
+  .type {
+    margin-right: 40px;
+    margin-left: 10px;
+  }
+}
+
+.elements {
+  margin-top: 20px;
+  margin-left: 10px;
+  width: 620px;
+
+  .element {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    input {
+      width: 400px;
+    }
+  }
+}
+
+.preview-grid {
+  width: 900px;
+  margin-top: 20px;
+}

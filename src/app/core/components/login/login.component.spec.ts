@@ -13,13 +13,15 @@ import { DebugElement } from '@angular/core'
 import * as _ from 'lodash'
 import { of, throwError } from 'rxjs'
 import { ModalService } from '../../services/modal-service.service'
+import { MenuModel } from '../menu/model/menu'
 
 let authenticationServiceStub = jasmine.createSpyObj('authenticationService', ['login', 'logout'])
+let menuModelStub = jasmine.createSpyObj('menuModel', ['load'])
 
 describe('LoginComponent', () => {
   let component: LoginComponent
   let fixture: ComponentFixture<LoginComponent>
-  let compiled: any
+  let compiled: DebugElement
   let authenticationService: jasmine.SpyObj<AuthenticationService>
   let inputs: { [key: string]: DebugElement }
   let modalService: ModalService
@@ -41,6 +43,7 @@ describe('LoginComponent', () => {
         ButtonComponent,
       ],
       providers: [
+        { provide: MenuModel, useValue: menuModelStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub }
       ]
     })
@@ -48,8 +51,8 @@ describe('LoginComponent', () => {
     fixture = TestBed.createComponent(LoginComponent)
     component = fixture.componentInstance
     compiled = fixture.debugElement
-    authenticationService = fixture.debugElement.injector.get(AuthenticationService) as jasmine.SpyObj<AuthenticationService>
-    modalService = fixture.debugElement.injector.get(ModalService) // no need to stub this
+    authenticationService = TestBed.get(AuthenticationService) as jasmine.SpyObj<AuthenticationService>
+    modalService = TestBed.get(ModalService) // no need to stub this
     component.modal.open = jasmine.createSpy('open')
 
     fixture.detectChanges()
@@ -130,9 +133,11 @@ describe('LoginComponent', () => {
 
     authenticationService.login.and.returnValue(throwError('invalid credentials'))
     modalService.showError = jasmine.createSpy('showError')
+    modalService.close = jasmine.createSpy('close')
 
     component.signIn()
 
     expect(modalService.showError).toHaveBeenCalledTimes(1)
+    expect(modalService.close).toHaveBeenCalledTimes(0)
   })
 })

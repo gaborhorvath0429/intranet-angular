@@ -39,6 +39,10 @@ input[type=number], input[type=text] {
   }
 }
 
+input[type=file] {
+  display: none;
+}
+
 textarea {
   padding: 4px 6px 3px 6px;
   background: white repeat-x 0 0;
@@ -50,11 +54,12 @@ textarea {
 
 .default-button {
   min-width: 75px;
-  height: 25px;
+  height: 24px;
+  padding: 3px 10px;
   color: white;
   font-weight: bold;
-  border-radius: 3px;
-  padding: 3px 3px 3px 3px;
+  font-size: 12px;
+  border-radius: 4px;
   border-width: 1px;
   border-style: solid;
   border-color: #3d4752;
@@ -69,7 +74,6 @@ textarea {
   white-space: nowrap;
   vertical-align: middle;
   text-decoration: none;
-  padding: 3px;
   border-width: 1px;
   border-style: solid;
   background-image: none;
@@ -85,10 +89,15 @@ textarea {
     background-image: -webkit-linear-gradient(top,#495159,#454c54 50%,#495159 51%,#5b6269);
   }
 
-  &:disabled {
+  &:disabled, &.disabled {
     opacity: 0.5;
     cursor: default;
   }
+}
+
+fa-icon {
+  font-size: 14px;
+  color: #626c77;
 }
 
 .window-body {

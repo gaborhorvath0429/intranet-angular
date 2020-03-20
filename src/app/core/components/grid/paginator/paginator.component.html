@@ -5,5 +5,5 @@ Page
 of {{ model.lastPageIndex }}
 <span class="page-next paging-button" [style.cursor]="model.page === model.lastPageIndex ? 'default' : 'pointer'" [style.opacity]="model.page === model.lastPageIndex ? 0.5 : 1" (click)="model.nextPage(searchParams)">&nbsp;</span>
 <span class="page-last paging-button" [style.cursor]="model.page === model.lastPageIndex ? 'default' : 'pointer'" [style.opacity]="model.page === model.lastPageIndex ? 0.5 : 1" (click)="model.lastPage(searchParams)">&nbsp;</span>
-<span class="page-refresh paging-button" (click)="model.load(1, searchParams)">&nbsp;</span>
+<span *ngIf="!model.memoryData.length" class="page-refresh paging-button" (click)="model.load(1, searchParams)">&nbsp;</span>
 {{ model.startIndex }} - {{ model.endIndex }} of {{ model.totalCount }}

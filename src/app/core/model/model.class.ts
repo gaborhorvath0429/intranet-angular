@@ -5,8 +5,8 @@ import { map, tap } from 'rxjs/operators'
 
 export interface ModelProxy {
   type: string
-  url: string
-  reader: {
+  url?: string
+  reader?: {
     root: string
     totalProperty: string
   }
@@ -55,13 +55,16 @@ export default abstract class Model {
   public sorters: Sorter[] = []
   public filters: Filter[] = []
 
+  private memoryData$ = new BehaviorSubject<any[]>([])
+
   constructor(private http: HttpClient) { }
 
   protected init(): void {
     if (this.autoLoad && !this.data.length) this.load()
   }
 
-  get data(): any { return this.data$.getValue() }
+  get data(): any[] { return this.data$.getValue() }
+  get memoryData(): any[] { return this.memoryData$.getValue() }
   get page(): number { return this.page$.getValue() }
   get totalCount(): number { return this.totalCount$.getValue() }
   get startIndex(): number { return (this.page - 1) * this.pageSize + 1 }
@@ -91,7 +94,10 @@ export default abstract class Model {
         map(response => {
           return response[this.proxy.reader.root].map((item: any) => {
             for (let field of this.fields) {
-              if (field.mapping) item[field.name] = item[field.mapping]
+              if (field.mapping) {
+                item[field.name] = item[field.mapping]
+                delete item[field.mapping]
+              }
               if (field.defaultValue) item[field.name] = field.defaultValue
               if (field.convert) item[field.name] = field.convert(item, item[field.name])
             }
@@ -109,24 +115,51 @@ export default abstract class Model {
     })
   }
 
-  loadData(data: any): void {
-    this.data$.next(data)
+  loadData(data: any[]): void {
+    this.memoryData$.next(data)
+    this.page$.next(1)
+    this.data$.next(data.slice(0, this.pageSize))
+    this.totalCount$.next(data.length)
   }
 
   nextPage(extraParams: object = {}): void {
-    if (this.page < this.lastPageIndex) this.load(this.page + 1, extraParams)
+    if (this.page < this.lastPageIndex) {
+      if (this.proxy.type === 'ajax') {
+        this.load(this.page + 1, extraParams)
+      } else {
+        this.data$.next(this.memoryData.slice(this.page * this.pageSize, this.page * this.pageSize + this.pageSize))
+        this.page$.next(this.page + 1)
+      }
+    }
   }
 
   prevPage(extraParams: object = {}): void {
-    if (this.page > 1) this.load(this.page - 1, extraParams)
+    if (this.page > 1) {
+      if (this.proxy.type === 'ajax') {
+        this.load(this.page - 1, extraParams)
+      } else {
+        this.page$.next(this.page - 1)
+        this.data$.next(this.memoryData.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize))
+      }
+    }
   }
 
   firstPage(extraParams: object = {}): void {
-    this.load(1, extraParams)
+    if (this.proxy.type === 'ajax') {
+      this.load(1, extraParams)
+    } else {
+      this.page$.next(1)
+      this.data$.next(this.memoryData.slice(0, this.pageSize))
+    }
   }
 
   lastPage(extraParams: object = {}): void {
-    this.load(this.lastPageIndex, extraParams)
+    if (this.proxy.type === 'ajax') {
+      this.load(this.lastPageIndex, extraParams)
+    } else {
+      this.page$.next(this.lastPageIndex)
+      this.data$.next(this.memoryData.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize))
+    }
   }
 
   hasSorter(field: Field): string {
