@@ -10,10 +10,11 @@ import { GridComponent } from 'src/app/core/components/grid/grid.component'
 import { DatePickerComponent } from 'src/app/core/components/input/date-picker/date-picker.component'
 
 interface Response {
-  error?: string,
-  errors?: any,
+  success: boolean
+  error?: string
+  errors?: any
   root: {
-    header: string[],
+    header: string[]
     data: any[]
   }
 }
@@ -38,6 +39,7 @@ export class FileUploaderComponent {
   selectedFile: File
   showPreviewGrid = false
   formElements: FormElement[] = []
+  shouldWait = false
 
   // icons
   faSearch = faSearch
@@ -60,8 +62,9 @@ export class FileUploaderComponent {
     this.showPreviewGrid = false
   }
 
-  onSelectionChange(type: { title: string, id: string }): void {
+  onSelectionChange(type: { title: string, id: string, await: boolean }): void {
     this.selectedType = type.id
+    this.shouldWait = type.await
     this.showPreviewGrid = false
     this.formElements = []
     this.getFormElements(type.id)
@@ -125,7 +128,11 @@ export class FileUploaderComponent {
 
     this.http.post<Response>(environment.apiUrl + '/fileUploader/sendFormData', formData)
       .subscribe(res => {
-        if (res.errors && res.root.header) this.createPreviewGrid(res)
+        if (res.errors && res.root.header) {
+          this.createPreviewGrid(res)
+        } else if (res.success) {
+          this.modalService.showMessage(this.shouldWait ? 'fileUploader.success' : 'fileUploader.successEmail')
+        }
       })
   }
 
