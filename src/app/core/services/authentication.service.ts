@@ -57,6 +57,7 @@ export class RequestInterceptor implements HttpInterceptor {
     })
 
     return next.handle(request).pipe(catchError(err => {
+
       if (err.status === 401) {
         // auto logout if 401 response returned from api
         this.authenticationService.logout()
@@ -64,12 +65,10 @@ export class RequestInterceptor implements HttpInterceptor {
 
       if (err.status === 401 && this.router.url.indexOf('/login') !== 0) {
         location.reload(true)
-        return
       }
 
       if (err.status === 401 && this.router.url.indexOf('/login') === 0) {
         this.modalService.open('login')
-        return
       }
 
       if (err.error.error !== 'login_required') this.modalService.showError(err)
