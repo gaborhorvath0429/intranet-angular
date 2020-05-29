@@ -9,6 +9,8 @@ import { ComboBoxComponent } from 'src/app/core/components/input/combo-box/combo
 import { GridComponent } from 'src/app/core/components/grid/grid.component'
 import { DatePickerComponent } from 'src/app/core/components/input/date-picker/date-picker.component'
 
+declare const Ext: any
+
 interface Response {
   success: boolean
   error?: string
@@ -126,14 +128,16 @@ export class FileUploaderComponent {
       }
     })
 
+    Ext.Msg.wait('Feltöltés folyamatban, várakozás a szerverre', 'Feltöltés')
     this.http.post<Response>(environment.apiUrl + '/fileUploader/sendFormData', formData)
       .subscribe(res => {
+        Ext.Msg.close()
         if (res.errors && res.root.header) {
           this.createPreviewGrid(res)
         } else if (res.success) {
           this.modalService.showMessage(this.shouldWait ? 'fileUploader.success' : 'fileUploader.successEmail')
         }
-      })
+      }, () => Ext.Msg.close())
   }
 
   reset(): void {
