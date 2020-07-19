@@ -31,7 +31,7 @@
     "angular-mydatepicker": "^0.3.4",
     "core-js": "^2.5.4",
     "jquery": "^3.4.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
     "ngx-extended-pdf-viewer": "^2.0.0-alpha.0",
